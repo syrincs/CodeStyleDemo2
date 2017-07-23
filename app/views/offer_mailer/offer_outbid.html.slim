@@ -1,0 +1,10 @@
+p Hi #{@offer.user.full_name},
+p
+  ' Your offer of #{number_to_currency(@offer.amount)} has been beaten!
+  = link_to 'Do not give up!', product_url(id: @offer.product.id, anchor: 'make-offer')
+
+p Someone placed a new offer for #{link_to @offer.product.title, product_url(@offer.product)}.
+p New highest offer amount is #{number_to_currency(@offer.product.highest_offer.amount)}.
+
+p
+  = link_to 'Make offer', product_url(id: @offer.product.id, anchor: 'make-offer')

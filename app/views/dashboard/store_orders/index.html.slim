@@ -1,0 +1,54 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          i.icon-inbox
+          Store Orders
+      .content
+        - if @total_orders > 0
+          nav.dashboard-nav-links
+            .btn-group
+              button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                ' Filter
+                span class="caret"
+              ul.dropdown-menu
+                - [:all, :open, :paid, :shipped, :delivered].each do |tab|
+                  li class=('active' if params[:scope] == tab.to_s)
+                    = link_to tab.to_s.titleize, dashboard_store_orders_path(scope: tab)
+          table.dashboard-table.store-orders-table
+            thead
+              tr
+                th.photo
+                th Details
+                th Placed
+                th Ship to
+                th Total
+                th Status
+                th
+            tbody
+              - @orders.decorate.each do |order|
+                tr
+                  td.photo= link_to order.product.decorate.thumbnail, dashboard_store_order_path(order.id)
+                  td
+                    = link_to order.product.title, dashboard_store_order_path(order.id)
+                    br
+                    ' Order
+                    br
+                    = order.public_id
+                  td= order.created_at.strftime('%b %d, %Y<br>%l:%M %p').html_safe
+                  td= order.user
+                  td= number_to_currency order.total
+                  td= order.status_short
+                  td.actions
+                    = link_to 'Manage Order', dashboard_store_order_path(order.id), class: 'btn btn-sm btn-default'
+              - if @orders.size == 0
+                tr
+                  td.centered colspan="8" You don't have orders.
+          nav.dashboard-nav
+            = paginate_page_status(@orders)
+            = paginate @orders
+        - else
+          .no-entries
+            .notice You don't have any orders yet.

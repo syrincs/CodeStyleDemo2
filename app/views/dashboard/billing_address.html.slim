@@ -1,0 +1,37 @@
+.container.dashboard-billing-address
+  .dashboard-box
+    = render 'sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          = link_to '<i class="icon-credit-card"></i> Payment Details'.html_safe, :back, class:"gray-part"
+          | Billing Address
+      .content
+        = simple_form_for @address, url: dashboard_billing_address_path, method: :post do |f|
+          .row
+            .col-sm-4
+              = f.input :first_name
+            .col-sm-4
+              = f.input :last_name
+          .row
+            .col-sm-8
+              = f.input :address1
+          .row
+            .col-sm-8
+              = f.input :address2
+          .row
+            .col-sm-4
+              = f.input :city
+            .col-sm-4
+              = f.input :state
+          .row
+            .col-sm-4
+              = f.input :zip_code
+          .actions
+            = link_to 'Cancel', :back, class: 'btn btn-white'
+            | \&nbsp;
+            button.btn.btn-success type="submit" 
+              - if @address.new_record?
+                | Add Address
+              - else
+                | Update Address

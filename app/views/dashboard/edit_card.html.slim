@@ -1,0 +1,15 @@
+.container.dashboard-add-card
+  .dashboard-box
+    = render 'sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          span.gray-part
+            i.icon-credit-card
+            | Payment Details
+          | Edit Card
+          small
+            = @credit_card.type
+            | ****&nbsp;****&nbsp;****&nbsp;#{@credit_card.last_4}
+      .content
+        = render 'card_form'

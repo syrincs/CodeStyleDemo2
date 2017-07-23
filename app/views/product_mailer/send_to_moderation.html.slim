@@ -1,0 +1,6 @@
+p
+  | Hi #{@product.user.full_name},
+p
+  | Your product "#{@product.title}" has just created and sent to moderation. After approve it will appear in products search.
+P
+  | If you want to check and update, do it #{link_to 'here', product_url(@product)}.

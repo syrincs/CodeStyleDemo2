@@ -1,0 +1,13 @@
+p
+  | Hi #{@product.user.full_name},
+p
+  | Your product "#{@product.title}" has been declined by moderator.
+
+p
+  | Sorry, we are unable to approve your product for the following reasons:
+
+P
+  | #{@message}
+
+P
+  | You can check it #{link_to 'here', dashboard_store_product_url(@product)}.

@@ -1,0 +1,17 @@
+header.dashboard-header
+  h1= "Question: #{@question.title}"
+  h1
+    span> Product:
+    a target="_blank" href=category_product_url(product.category, @question.product) = @question.product.title
+
+.content
+  h3 Question
+  div= "Title: #{@question.title}"
+  div= "Description: #{@question.description}"
+
+  br
+  h3 Answer
+  = simple_form_for @question.answer, url: admin_question_answers_path, method: :put, style: 'margin-top: 20px' do |f|
+    = f.input :description, as: :text, label: false
+    = f.button :submit, 'Update answer', class: 'btn btn-success pull-right'
+  = link_to :back, admin_questions_path, class: 'btn btn-action'

@@ -1,0 +1,109 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          span<>= link_to '<i class="icon-tags"></i> Store Products'.html_safe, :back, class: 'gray-part'
+          = 'Product Details'
+      .content
+        section
+          .row
+            a.btn.btn-success.pull-right href=place_again_dashboard_store_product_path(@product) data-method="put" Place again
+            .col-sm-3
+              figure.order-thumbnail
+                = @product.decorate.thumbnail
+            .col-sm-6
+              .order-product-info
+                h4.order-title= link_to @product.title, @product, target: :_blank
+                dl.order-product-info-meta
+                  dt Condition
+                  dd
+                    strong= @product.condition.text
+                  dt Time Left
+                  dd
+                    strong= humanize @product.auction_finish_at.to_i - Time.now.to_i
+                    br
+                    = "(#{@product.auction_finish_at.strftime('%B %d, %Y')})"
+                  dt Item Location
+                  dd
+                    strong= @product.location
+                  dt Shipping
+                  dd
+                    strong Free shipping
+            - if @product.sold?
+              .col-sm-3
+                .order-actions
+                  .red Sold for
+                  h3= number_to_currency @product.price
+                  = link_to 'Manage Order', dashboard_store_order_path(@product.order), class: "btn btn-success"
+        hr.full-width
+        .row
+          .col-md-3
+            h5 List Price
+            h3= number_to_currency @product.original_price
+          .col-md-3
+            h5 Buy Now Price
+            h3= number_to_currency @product.price
+          .col-md-2
+            h5 Bids
+            h3= @product.offers.size
+        hr.full-width
+        - ho = @product.highest_offer
+        - if ho.present?
+          section.store-product-highest-offer-section
+            h4 Highest Offer
+            h3= number_to_currency ho.amount
+            p
+              ' by: #{link_to ho.user.full_name, ho.user}
+              br
+              ' Location: #{ho.user.address}
+              br
+              ' Has made
+              strong<>= @product.highest_offer.user.offers.size
+              | bid(s)
+              - if @product.highest_offer.user.orders.size > 0
+                | , won
+                strong<>= @product.highest_offer.user.orders.size
+                ' auction(s) and paid
+                strong<> all
+                ' items after win.
+            - if @product.sold?
+              = link_to 'Product Order', dashboard_store_order_path(@product.order), class: 'btn btn-action btn-sm'
+            - else
+              = link_to 'Accept offer', accept_offer_path(ho), class: 'btn btn-action btn-sm accept-offer', method: :patch, confirm: "You sure to accept offer #{number_to_currency ho.amount}?"
+          hr.full-width
+        - unless @product.activities.empty?
+          section
+            h4 Updates
+            ul.order-updates
+              - @product.activities.each do |activity|
+                li
+                  span.date= activity.created_at.strftime('%b %d, %Y %I:%M %p')
+                  = activity.text
+          hr.full-width
+        section
+          h4 Product Details
+          ul.product-details-list
+            li
+              span.info> Category:
+              = @product.category
+            li
+              span.info> Brand or Manufacturer:
+              = @product.manufacturer
+            li
+              span.info> Ships To:
+              = 'USA'
+            li.description
+              .info> Description:
+              = @product.description
+        hr.full-width
+        section
+          - if @product.editable?
+            = link_to 'Edit', edit_dashboard_store_product_path(@product), class: 'btn btn-success btn-sm'
+          - else
+            p
+              i.icon-exclamation-circle>
+              | Note: You can't edit this product anymore, because someone already made a bid.
+          - if can?(:delete, @product)
+            = link_to 'Delete this product', dashboard_store_product_path(@product), class: 'btn btn-default btn-sm', method: :delete, data: { confirm: 'Your product cannot be found. Sure?' }

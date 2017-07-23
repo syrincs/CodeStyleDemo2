@@ -1,0 +1,67 @@
+.container.dashboard-settings
+  .dashboard-box
+    = render 'sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          i.icon-cog
+          | Account Settings
+      .content
+        h4 General information
+        = simple_form_for @user, url: dashboard_update_settings_path do |f|
+          .row
+            .col-sm-4
+              = f.input :email, required: true
+            .col-sm-4
+              = f.input :phone_number, required: true, hint: 'e.g. +1.123.456.7890'
+            .col-sm-4
+              = f.input :dob, label: "Date of Birth", order: [:day, :month, :year], start_year: Time.current.year - 100, end_year: Time.current.year, include_blank: true 
+
+          button.btn.btn-success Save
+        hr.full-width
+        = link_to 'View your public profile', user_path(current_user.id), class: "view-public-profile pull-right", target: :_blank
+        h4 Public Profile Information
+        = simple_form_for @user, url: dashboard_update_settings_path do |f|
+          .row
+            .col-sm-4
+              = f.input :username
+          .row
+            .col-sm-4
+              = f.input :first_name, required: false
+            .col-sm-4
+              = f.input :last_name, required: false
+          .row
+            .col-sm-8
+              = f.input :bio, label: 'About you', input_html: { rows: 6 }
+          .row
+            .col-sm-6
+              .avatar-file-upload
+                label for=""  Avatar
+                .row
+                  .col-sm-4
+                    = image_tag f.object.avatar.url(:avatar, secure: request.ssl?)
+                  .col-sm-8
+                    .size 172x172 px
+                    = f.input :avatar, label: false, input_html: { accept: '.jpg,.jpeg,.png,.gif' }
+                    .file-extensions= "*.jpg, .*png., *.gif, max file size 5 Mb"
+          br
+          .actions
+            button.btn.btn-success type="submit"  Save
+        hr.full-width
+        h4 Change Password
+        = form_tag dashboard_update_password_path, remote: true, format: :json, method: :patch, id: 'update-password' do
+          .row
+            .form-group.col-sm-4
+              label for="user-current-password"  Current Password
+              input#user-current-password.form-control name="user[current_password]" required="" type="text"
+          .row
+            .form-group.col-sm-4
+              label for="user-new-password"  New Password
+              input#user-new-password.form-control name="user[new_password]" required="" type="password"
+          .row
+            .form-group.col-sm-4
+              label for="user-confirm--newpassword"  Confirm New Password
+              input#user-confirm-new-password.form-control name="user[confirm_new_password]" required="" type="password"
+          .actions
+            button.btn.btn-success Update password
+            span.status

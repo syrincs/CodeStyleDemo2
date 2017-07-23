@@ -1,0 +1,64 @@
+.container.dashboard-transactions
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          ul.list-inline
+            li
+              a.gray-part href=dashboard_watch_lists_path
+                i.icon-eye
+                span Watch List
+
+      .content
+        - if @watch_lists.total_pages > 0
+          table.dashboard-table.products-table
+            thead
+              tr
+                th
+                th Product
+                th Buy Now Price
+                th Current Offer
+                th Time left
+            tbody
+              - @watch_lists.each do |watch_list|
+                tr
+                  td.photo= link_to watch_list.product.decorate.thumbnail, watch_list.product, target: :_blank, width: 50
+                  td= link_to watch_list.product.title, watch_list.product, target: :_blank
+                  td= number_to_currency watch_list.product.price
+                  td
+                    - if watch_list.product.highest_offer.present?
+                      p= number_to_currency watch_list.product.highest_offer.amount
+                    - else
+                      = "-"
+                  td
+                    - if watch_list.product.auction_finish_at.present?
+                      time.js-countdown datetime=watch_list.product.auction_finish_at.to_s(:iso8601)
+                    - else
+                      = "-"
+                tr
+                  td colspan=5
+                    .btn-group.btn-group-justified
+                      /button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        | Action
+                        span.caret
+                      a.btn.btn-default.btn-sm href=dashboard_watch_list_path(watch_list, return_to: request.path) data-method="delete" data-toggle='tooltip' title='Unwatch'
+                        i.icon-eye-slash aria-hidden="true"
+                        | Unwatch
+
+                      - unless watch_list.product.sold?
+                        = link_to product_path(watch_list.product, anchor: 'make-offer'), class: 'btn btn-default btn-sm', data: {toggle: 'tooltip'}, title: 'Make Offer' do
+                          i.icon-hammer aria-hidden="true"
+                          | Make Offer
+                        = link_to product_path(watch_list.product, anchor: 'buy-now'), class: 'btn btn-default btn-success btn-sm', data: {toggle: 'tooltip'}, title: 'Buy Now' do
+                          i.icon-credit-card aria-hidden="true"
+                          | Buy Now
+
+          nav.dashboard-nav
+            = paginate_page_status(@watch_lists)
+            = paginate @watch_lists
+        - else
+          .no-entries
+            .notice You have no watch list yet.
+            = link_to 'Go to products', root_path, class: 'btn btn-success'

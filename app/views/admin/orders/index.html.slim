@@ -1,0 +1,51 @@
+header.dashboard-header
+  h1
+    = link_to admin_orders_path, class: 'gray-part' do
+      i.icon-inbox
+      |  Orders
+
+.content
+  - if orders.present?
+    .table-responsive
+      table.table.table-hover.table-messages
+        thead
+          th Contact
+          th Public ID
+          th Product
+          th Price
+          th Buyer
+          th Seller
+          th Status
+
+        - orders.each do |order|
+          tr
+            td
+              .btn-group
+                .btn.btn-action.dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                  ' Contact
+                  span.caret
+                ul.dropdown-menu
+                  - if order.buyer
+                    li=<> link_to 'Buyer', new_admin_message_path(recipient_id: order.buyer.id)
+                  li=<> link_to 'Seller', new_admin_message_path(recipient_id: order.seller.id)
+            td
+              nobr= order.public_id
+            td= link_to order.product.title, order.product, target: :_blank
+            td= order.price
+            td
+              - if order.buyer
+                = link_to order.buyer, edit_admin_user_path(order.buyer), target: :_blank
+              - else
+                ' ---------------
+            td= link_to order.seller, edit_admin_user_path(order.seller), target: :_blank
+            td
+              = order.status
+              br
+              = l order.updated_at.in_time_zone('EST'), format: :short
+
+
+    nav.dashboard-nav
+      = paginate_page_status(@orders)
+      = paginate @orders
+  - else
+    p.text-gray.text-center.lead There are no orders yet

@@ -1,0 +1,10 @@
+p Hi #{@product.user.full_name},
+p
+  | Auction for
+  strong<> = @product.title
+  | is ending in
+  strong<> #{distance_of_time_in_words(@product.auction_hours_to_finish.hours)}.
+
+p Nevertheless, your product still has no bids. Maybe price is high?
+p Try to make some discount, so it would help to sale your item.
+a href=edit_dashboard_store_product_url(@product) Make discount

@@ -1,0 +1,52 @@
+.container.dashboard-add-card
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          = link_to '<i class="icon-credit-card"></i> Payment Details'.html_safe, :back, class:'gray-part'
+          | &nbsp; / Add New Card
+
+      div.content
+        = simple_form_for @credit_card do |f|
+          .row
+            .col-sm-4
+              .form-group.string.optional.credit_card_name
+                = label_tag 'cc-name', 'Cardholder Name', class: 'control-label'
+                = text_field_tag 'credit_card[name]', nil, id: 'cc-name', class: 'form-control sensitive', autocomplete: :off
+
+          .row
+            .col-sm-4
+              .form-group.string.optional.credit_card_number
+                = label_tag 'cc-number', 'Card Number', class: 'control-label'
+                = text_field_tag 'credit_card[number]', nil, id: 'cc-number', class: 'form-control sensitive', autocomplete: :off
+
+          .row
+            .col-sm-4
+              .form-group.string.optional
+                = label_tag 'cc-expiration-month', 'Expiration date', class: 'control-label'
+                .row
+                  .col-sm-12
+                    = select_month nil, {use_two_digit_numbers: true, prefix: 'credit_card'}, id: 'cc-expiration-month', class: 'sensitive form-control form-control-inline expiration-month'
+                    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    = select_year nil, {prefix: 'credit_card', start_year: Date.today.year, end_year: Date.today.year + 15, prefix: 'credit_card'}, id: 'cc-expiration-year', class: 'sensitive form-control form-control-inline expiration-year'
+
+          .row
+            .col-sm-2
+              .form-group
+                = label_tag 'cc-security', 'CVV', class: 'control-label'
+                = text_field_tag 'credit_card[verification_value]', nil, id: 'cc-security', class: 'form-control sensitive'
+
+
+          .checkbox
+            label for='credit_card_default_card'
+              = check_box_tag 'credit_card[default_card]'
+              | &nbsp;Use this card by default
+
+
+          .actions
+            = link_to 'Cancel', :back, class: 'btn btn-white'
+            | &nbsp;
+            button type='submit' class='btn btn-success' Add Card
+            span.loader

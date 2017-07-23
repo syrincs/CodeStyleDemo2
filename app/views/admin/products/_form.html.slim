@@ -1,0 +1,46 @@
+= simple_form_for @product, url: admin_product_path(@product) do |f|
+  section.section.product-details
+    aside.leftside
+      h3 Product details
+      p Add a product title and a short description of your item for sale. We encourage our users to give as much information as possible about their products since this is an important factor for potential buyers.
+    aside.rightside
+      = f.input :title, required: false, autofocus: (@product.new_record? || @product.title.blank? ? true : false)
+      = f.simple_fields_for :categorization do |c|
+        = c.input :category_id, required: true, as: :grouped_select, group_method: :children, collection: TopCategory.root.ordered, prompt: 'Select product category', input_html: {class: 'select2', style: 'width:100%;'}
+      = f.input :description, required: false
+
+  section.section.section-images
+    .leftside
+      h3 Images
+      p Your images are the face of your product, we recommend our users to upload from 4 to 5 high resolution pictures of your item. This will provide visual information to potential buyers.
+    .rightside
+      h5 Images
+      .images-list
+        p.help-block First photo in a row will be used as thumbnail. You can use drag & drop to reorder them. Only *.jpg, *.jpeg, .*.png, *.gif. Max file size 5 Mb.
+        .img.img-blank
+          = image_tag ''
+          input.js-photo type="hidden" name="photos[]"
+          span.delete.icon-times-circle
+          .featured-label Featured
+
+        .previews
+          - @product.photos.each do |photo|
+            - if photo.filename.present?
+              .img
+                - if photo.filename.cached?
+                  = image_tag '/uploads/tmp/' + photo.filename_cache
+                - else
+                  = image_tag photo.url(:thumbnail, secure: request.ssl?)
+                input.js-photo type="hidden" name="photos[]" value=""
+                span.delete.icon-times-circle
+                .featured-label Featured
+
+        .new-img.js-image-loader
+          i.fa.fa-picture-o.fa-5x
+          div.loader-hint Drop files or click here
+          .form-group.file.optional
+            input accept=".jpg,.jpeg,.png" class="file optional" id="add-photo_fileupload" multiple="multiple" name="loader" type="file"
+
+
+  .edit-product-actions
+    button type="submit" class="btn btn-success pull-right" Save

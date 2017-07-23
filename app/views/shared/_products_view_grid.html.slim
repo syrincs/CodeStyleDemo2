@@ -1,0 +1,2 @@
+section class = "js-container row#{' list-view tile' if @view == 'list'}" data-view=@view data-page=next_page data-paginate="#{can_load_more? @products}"
+  = render 'shared/meta/products', products: products

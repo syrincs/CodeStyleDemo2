@@ -1,0 +1,135 @@
+/* BASE */
+
+$border-radius: 3px;
+
+*, *:before, *:after {
+  position: relative;
+  @include box-sizing(border-box);
+}
+
+html {
+  background-color: #F0F0F0;
+  height: 100%;
+}
+
+body {
+  color: #2a2b2c;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: $font-size;
+  font-weight: 400;
+  height: 100%;
+//  line-height: $font-height;
+  line-height: 1.45;
+  margin: 0;
+}
+
+input, textarea, button{
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+label + input, label + select, label + textarea {
+  margin-top: 5px
+}
+
+.control-label{
+  margin-bottom: 5px;
+
+  & + input, & + select, & + textarea{
+    margin-top: 0;
+  }
+}
+
+strong {
+  font-weight: 600;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+  transition: all .2s;
+
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: underline;
+  }
+
+//  &[class=""]:visited, &:not([class]):visited {
+//    color: $link-visited-color;
+//  }
+}
+
+// Don't do like this. Anton.
+//input, textarea, button {
+// font: inherit;
+//}
+
+
+.main-header {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid $grey-lighter;
+  height: $main-header-height;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.main-body {
+  margin-bottom: -$main-footer-height;
+  min-height: 100%;
+  padding-bottom: $main-footer-height + ($spacing-single * 3);
+  padding-top: $main-header-height;
+  z-index: 1;
+}
+
+.main-footer {
+  background-color: #222223;
+  color: #FFFFFF;
+  height: $main-footer-height;
+  z-index: 1;
+}
+
+
+label{
+  font-weight: normal
+}
+
+.btn{
+  outline: none;
+}
+.btn-white{
+  border: 1px solid #c2c2c2;
+  color: #2a2b2c;
+}
+
+
+.alert{
+  margin: 20px 0 0 0;
+}
+
+
+.form-control-inline {
+  min-width: 0;
+  width: auto;
+  display: inline;
+}
+
+
+
+.static-page{
+  margin-top: 30px;
+}
+
+.menu-block {
+  background: white;
+  height: 70px;
+  margin-top: 20px;
+  font-size: 1.2em;
+  @include vertical();
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+  }
+}

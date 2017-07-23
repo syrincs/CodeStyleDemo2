@@ -1,0 +1,30 @@
+header.dashboard-header
+  h1
+    = link_to admin_messages_path, class: 'gray-part' do
+      i.fa.fa-envelope( style='top: 0px;' )
+      |  Messages
+
+.content
+  .table-responsive
+    table.table.table-hover.table-messages
+      thead
+        th Address
+        th Type
+        th Sender
+        th Body
+        th Sent at
+
+      - @messages.each do |message|
+        tr
+          td
+            a href=user_path(message.recipient) target="_blank" data-toggle="tooltip" data-placement="right" title=message.recipient_address = message.recipient
+          td= message.type
+          td= message.sender
+          td
+            a data-toggle="popover" data-container="body" data-trigger="hover" href="#" show body
+            .hidden.popover-content = simple_format(strip_tags(message.body))
+          td= l message.created_at, format: :short
+
+    nav.dashboard-nav
+      = paginate_page_status(@messages)
+      = paginate @messages

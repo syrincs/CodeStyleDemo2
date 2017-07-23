@@ -1,0 +1,48 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          a.gray-part href=url_for(:back)
+            i.fa.fa-question( style='top: 0px;' )
+            |  Questions
+
+      .content
+        - if @questions.any?
+          .btn-group
+            button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              ' Filter
+              span class="caret"
+            ul.dropdown-menu
+              li= link_to 'All', dashboard_questions_path, class: 'btn btn-default'
+              li= link_to 'Not answered', url_for(answered: false), class: 'btn btn-default'
+              li= link_to 'Answered', url_for(answered: true), class: 'btn btn-default'
+
+          .table-responsive
+            table.table.table-hover.table-messages
+              thead
+                th Title
+                th Answered
+                th Action
+
+              - @questions.each do |question|
+                tr
+                  td= link_to question.title, question.product, target: :_blank
+                  td
+                    - if question.answer.present?
+                      i.fa.fa-check(style='color: green')
+                    - else
+                      i.fa.fa-close
+                  - if question.answer.present?
+                    td= link_to 'Edit answer',  edit_dashboard_question_answers_path(question), method: :get
+                  - else
+                    td= link_to 'Answer',  new_dashboard_question_answers_path(question), method: :get
+                  td= link_to 'Delete', dashboard_question_path(question), method: :delete
+
+          nav.dashboard-nav
+            = paginate_page_status(@questions)
+            = paginate @questions
+        - else
+          p.text-gray.text-center.lead There are no questions yet

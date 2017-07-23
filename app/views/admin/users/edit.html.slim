@@ -1,0 +1,44 @@
+header.dashboard-header
+  h1
+    = link_to admin_users_path, class: 'gray-part' do
+      i.icon-user
+      |  Users
+    | &nbsp; / Edit User
+
+.content
+  .row
+    .col-sm-8
+      ul.list-inline
+        li: span Roles:
+        li
+          .btn-group
+            - Role::ROLES.each do |role|
+              - next unless can? :assign_role, role
+              - if user.has_role?(role)
+                = link_to remove_role_admin_user_path(user, role: role), method: :put, class: 'btn btn-warning' do
+                  i.icon-check
+                  span = role.to_s.humanize
+              - else
+                = link_to role.to_s.humanize, add_role_admin_user_path(user, role: role), method: :put, class: 'btn btn-default'
+
+  = simple_form_for @user, url: admin_user_path(@user) do |f|
+    .row
+      .col-sm-4= f.input :email
+      .col-sm-4= f.input :phone_number
+      .col-sm-4= f.input :billing_token
+
+    br
+
+    .actions
+      - if can? :login_as, user
+        = link_to 'Login', login_admin_user_path(user), method: :post, class: 'btn btn-white'
+
+      | &nbsp;
+      = link_to 'Cancel', :back, class: 'btn btn-white'
+      | &nbsp;
+      button type="submit" class="btn btn-success"
+        - if @user.new_record?
+          | Add User
+        - else
+          | Update User
+

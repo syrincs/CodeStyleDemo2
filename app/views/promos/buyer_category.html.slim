@@ -1,0 +1,51 @@
+.container.how-to
+  .row
+    .col-md-6.col-md-offset-3
+      h2 =t(".how_to.header.#{@category_name}")
+
+      #easy-steps
+        .step
+          h3
+            span.number 1.
+            Create Create An Account.
+          p It’s Free.Create an account with 1bid1.com in order to start shopping for products. Creating an account has no cost and it takes a few seconds, with 1bid1.com you can also list as many products for sale as you wish.
+
+        .step
+          h3
+            span.number 2.
+            = t(".three_step.step2.#{@category_name}.header")
+          p = t(".three_step.step2.#{@category_name}.text")
+        .step
+          h3
+            span.number 3.
+            Save Money While Shopping.
+          p With 1bid1.com you choose your own price, by participating in auctions you can make your best offer an instantly save money on your purchase. Simply wait for your offer to be accepted by the seller. You can also shop at listed prices and get a great deal, it doesn’t matter how you shop you will always save money.
+
+.full-width-wrapper
+  .container.promoted-products
+    header.centered
+      h2= t(".promoted_products.#{@category_name}.header")
+      p= t(".promoted_products.#{@category_name}.text")
+
+    section.row.slider-showcase.js-slick-slider-showcase
+      = render 'shared/meta/products', products: @products
+
+.what-is.container
+  = render partial: "what_is_1bid1_for_buyer"
+.full-width-wrapper
+  .why-shop.container
+    .row
+      h2 Why Shop With 1bid1.com
+    .row
+      .col-md-4
+        h3 Quality Products
+        p At 1bid1.com you can shop for quality products from a large variety of brands like Samsung, Lenovo, Apple and much more
+      .col-md-4
+        h3 Price Drop
+        p The prices drop each time a user makes an offer. Make your best offer or shop at the most convinient moment and at the best prices.
+      .col-md-4
+        h3 Shop &amp; Earn Rewards
+        p Win $500 in store credit! By making offer you are instantly eligible. 1bid1com offers weekly rewards up to $500 in store credit.  Join now you might be the next winner.
+div class="full-width-wrapper join-now-footer #{@category_name} centered"
+  h2 join now & shop for electronics and devices at great prices
+  =link_to "Join Now", register_path, class: "btn-join-now"

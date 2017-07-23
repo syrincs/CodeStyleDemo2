@@ -1,0 +1,71 @@
+- order = Order.new
+- current_user = self.current_user.decorate
+- cc = current_user.default_credit_card
+header.product-form-header
+  h3 Checkout
+= simple_form_for order, html: { class: 'form-horizontal' }, url: buy_product_path do |f|
+  = f.input :product_id, as: :hidden, input_html: { value: @product.id }
+  input#credit_card_id.hidden.credit_card_id name="credit_card[id]" type="hidden" value=cc.try(:id) /
+  section.product-form-card-details
+    - if cc.blank?
+      = render "cc_form"
+    - else
+      header.row
+        h4.col-sm-3.col-xs-5 Card Details
+        .col-sm-6.col-xs-12.product-form-card-number
+          = cc.card_details
+        .col-sm-3.col-xs-12.product-form-aside
+          a.product-form-change-card data-target="#cards-tooltip-checkout" data-toggle="dropdown" href="javascript:void(0)"  Change Card
+          #cards-tooltip-checkout.cards-tooltip
+            .angle
+            ul.cards-list
+              - current_user.credit_cards.each do |card|
+                li data-expiration_date=card.expiration_date data-id=card.id 
+                  = card.card_details
+      .form-group
+        label.col-sm-3.col-xs-12.control-label Expiration Date
+        .col-sm-3.col-xs-12.product-form-card-exp.expiration-date
+          p.form-control-static
+            = cc.expiration_date
+      .form-group
+        label.col-sm-3.control-label CVV/CVV2
+        .col-sm-2
+          input.form-control autocomplete="off" name="credit_card[verification_value]" type="text" /
+  section.product-form-new-card-details
+    = render "cc_form"
+  section.product-form-shipping-address
+    header.row
+      h4.col-sm-3 Shipping Address
+      .checkbox.col-sm-6
+        - if current_user.address.present?
+          = current_user.address.decorate.full_address_inline
+        - else
+          | Please add default shipping address #{link_to 'here', addresses_path}
+      .col-sm-3.product-form-aside
+        = link_to 'Change Address', 'javascript:;', data: {target: '#js-change-address-target', toggle: 'modal'}, class: 'js-change-address-modal'
+  section.product-form-shipping-address
+    header.row
+      h4.col-sm-3 Delivery
+      .col-sm-6
+        | Between
+        strong<>= Date.current.strftime '%a. %d %B'
+        | and
+        strong<>= 1.week.from_now.to_date.strftime '%a. %d %B'
+  section.product-form-prices
+    .row
+      .col-sm-3.col-xs-12
+      .col-sm-3.col-xs-12
+        .product-form-prices-price
+          span.price data-currency="$" = @product.price
+      .col-sm-3.col-xs-12
+        .product-form-prices-total
+          span.price data-currency="$" = @product.price
+      .col-sm-3.col-xs-12.visible-xs
+        br
+      .col-sm-3.col-xs-12
+        button.btn.btn-success type="submit"  Confirm &amp; Pay
+footer.product-form-footer
+  small
+    | By making this purchase, you agree with the #{link_to 'terms and conditions', page_path('terms-and-conditions')} of 1bid1.com
+
+= render 'change_address_modal'

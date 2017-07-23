@@ -1,0 +1,6 @@
+p
+  | Hi #{@offer.product.user.full_name},
+p
+  ' For your product #{link_to @offer.product.title, product_url(@offer.product)} was placed new offer.
+  ' Offer amount is #{number_to_currency(@offer.amount)}.
+p= link_to 'Accept Offer', dashboard_store_product_url(id: @offer.product.id)

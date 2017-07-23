@@ -1,0 +1,24 @@
+doctype html
+html lang='en'
+  head
+    meta name='fragment' content='!'
+    meta charset="utf-8"
+    title 1bid1.com
+
+    = csrf_meta_tag
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
+    meta name='author' content='Onebidone, LLC'
+    = stylesheet_link_tag :application
+
+  body.error-page class=body_class
+
+    = render 'header'
+    main.main-body
+      .container
+        .error-box
+          .error-content
+            .content= yield
+    = render 'footer'
+
+    = javascript_include_tag :application
+    = render 'layouts/shared/livechat'

@@ -1,0 +1,33 @@
+.breadcrumbs {
+  color: $grey-light;
+  font-size: $font-size-small;
+  margin: 22px 0 30px 0;
+
+  li {
+    margin-right: -0.25em;
+
+    &:before {
+      content: '\00bb';
+      color: $grey-light;
+      margin-right: 0.25em;
+      width: auto;
+    }
+
+    &:first-child:before {
+      content: none;
+    }
+  }
+
+  a > span {
+    color: $body-text-color;
+
+  }
+
+  span {
+    color: $grey-light;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+}

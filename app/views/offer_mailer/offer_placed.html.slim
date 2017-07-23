@@ -1,0 +1,16 @@
+p Hey #{@offer.product.user.full_name},
+p you placed an offer on #{link_to @offer.product.title, product_url(@offer.product)}
+p for #{number_to_currency(@offer.amount)} on #{l(@offer.created_at)}.
+
+p Auction Details
+p Buy Now Price: #{number_to_currency(@offer.product.price)}
+p Current Offer: #{number_to_currency(@offer.amount)}
+
+p If a user makes a higher offer than yours you will get an immediate notification regarding this product
+p Also, you will be notified if the seller accepts your offer.
+br
+br
+br
+| ------------------------------------------------------
+p Thank you for using 1bid1.com
+p The 1bid1.com Team

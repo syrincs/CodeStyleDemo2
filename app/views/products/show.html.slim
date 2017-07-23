@@ -1,0 +1,179 @@
+- if params[:click]
+  - content_for(:extra_js) do
+    javascript:
+      $(document).on("ready", function(){
+        $("<%= params[:click] %>").click();
+      });
+
+.container
+  = render 'breadcrumbs'
+  div itemscope="" itemtype="http://schema.org/Product"
+    .row
+      .col-sm-8
+        - if @product.hidden?
+          h1.product-title-big itemprop="name"
+            | DELETED
+          del= @product.title
+        - else
+          h1.product-title-big itemprop="name"
+           = @product.title
+        .product-images
+          .product-images-large
+            img#zoom-img alt=@product.title itemprop="image" src=@product.decorate.thumbnail_img
+            #zoom-window.product-images-zoomed
+          .product-images-notice.hidden-xs
+            | Mouse over image to zoom or click to see next
+          #thumb-gallery.product-images-thumbs.row
+            - @product.photos.each_with_index do |photo, index|
+              a.col-xs-3.product-images-thumb data-image=@product.decorate.display_photo_url(photo) data-zoom-image=photo.url(:zoom, secure: request.ssl?) href="#"
+                = image_tag photo.url(:thumbnail, secure: request.ssl?), alt: @product.decorate.alt_for_thumbnail(index)
+            - content_for :css do
+              css:
+                #{render_preload_images_css(@product.decorate)}
+        .product-additional-info
+          div role="tabpanel"
+            ul.nav.nav-tabs role="tablist"
+              li.active role="details"
+                a aria-controls="details" class="details-tab" data-toggle="tab" href="#details" role="tab"
+                  span Details
+              li role="presentation"
+                a href="#description" class="description-tab" aria-controls="description" role="tab" data-toggle="tab"  More information
+              li role="presentation"
+                a href="#questions" class="questions-tab" aria-controls="questions" role="tab" data-toggle="tab" Questions and answers
+            /! <li role="presentation"><a href="#shipping-returns" aria-controls="shipping-returns" role="tab" data-toggle="tab">Shipping &amp;amp; Returns</a></li
+            /! Tab panes
+            .tab-content
+              #details.tab-pane.active itemprop="details" role="tabpanel"
+                - if can?(:control, @product)
+                  div.row
+                    div.col-md-3.col-xs-6.attr Placed at
+                    div.col-md-9.col-xs-6 = l @product.created_at.in_time_zone('EST'), format: :long
+                - if @product.manufacturer
+                  div.row
+                    div.col-md-3.col-xs-6.attr = 'Manufacturer'
+                    div.col-md-9.col-xs-6 = link_to @product.manufacturer, search_path(manufacturer: @product.manufacturer), class: 'brand', itemprop: 'brand'
+                  div.row
+                    div.col-md-3.col-xs-6.attr = 'Seller'
+                    div.col-md-9.col-xs-6 = link_to @product.user, @product.user, class: 'user'
+                  div.row
+                    div.col-md-3.col-xs-6.attr = 'Condition'
+                    div.col-md-9.col-xs-6
+                      strong = @product.condition.humanize
+                - if @product.auction_finish_at.present? && @product.auction_finish_at < Time.now
+                  div.row
+                    div.col-md-3.col-xs-6.attr = 'Auction status'
+                    div.col-md-9.col-xs-6 = 'Auction Finished'
+                - if @product.ships_from_address.present?
+                  div.row
+                    div.col-md-3.col-xs-6.attr Item location
+                    div.col-md-9.col-xs-6 = @product.location
+                br
+                div.row
+                  div.col-md-3.col-xs-6.attr = 'Shipping'
+                  div.col-md-9.col-xs-6
+                    strong Free
+                div.row
+                  div.col-md-3.col-xs-6.attr = 'Ships to'
+                  div.col-md-9.col-xs-6
+                    strong USA only
+              #description.tab-pane itemprop="description" role="tabpanel"
+                = simple_format @product.description
+                    - if @product.category.present? && @product.category.parent.present? && @product.category.parent.code == 'automotive-parts'
+                      div.product-info-meta
+                        div.row
+                          div.col-md-3.attr VIN
+                          div.col-md-9 = @product.vin
+                        div.row
+                          div.col-md-3.attr Year
+                          div.col-md-9 = @product.year
+                        div.row
+                          div.col-md-3.attr Mileage
+                          div.col-md-9 = @product.mileage
+                        div.row
+                          div.col-md-3.attr Drive type
+                          div.col-md-9.attr = @product.drive_type
+                        div.row
+                          div.col-md-3.attr Engine
+                          div.col-md-9 = @product.engine
+                        div.row
+                          div.col-md-3.attr Trim
+                          div.col-md-9 = @product.trim
+              #questions.tab-pane itemprop="questions" role="tabpanel"
+                = render 'products/questions'
+              #shipping-returns.tab-pane role="tabpanel"
+      .col-sm-4.product-meta-right
+        .time-left-countdown
+          - unless @product.sold?
+            div.countdown-detail.hidden
+              .title Time left
+              time.js-countdown-detail datetime=@product.auction_finish_at.to_s(:iso8601)
+          - if can?(:control, @product)
+            header.product-info-header
+              .pull-right
+                = link_to '<i class="icon-cog"></i>'.html_safe, dashboard_store_product_path(@product), class: 'edit-product btn btn-default btn-icon', title: 'Manage product'
+                - if can?(:edit, @product)
+                  = link_to '<i class="icon-pencil"></i>'.html_safe, edit_dashboard_store_product_path(@product), class: 'edit-product btn btn-default btn-icon', title: 'Edit product'
+                - if can?(:delete, @product)
+                  = link_to '<i class="icon-trash-o"></i>'.html_safe, dashboard_store_product_path(@product), class: 'edit-product btn btn-default btn-icon', method: :delete, data: { confirm: 'Your product cannot be found. Sure?' }
+        .tile
+          - if @product.sold?
+            .product-actions
+              .product-sold
+                .first-line
+                  | This item has been sold to #{link_to @product.order.user, @product.order.user} for
+                .sold-price= number_to_currency @product.order.price
+                .list-price
+                  | List price #{number_to_currency @product.original_price}
+                .bids-amount
+                  | Total number of offers: #{@product.offers.size}
+                .link
+                  - if current_user && @product.order.user == current_user
+                    = link_to 'Purchase product', dashboard_order_path(@product.order), class: 'btn btn-action'
+                  - else
+                    = link_to 'Find similar items', search_path('similar-product' => @product.id), class: 'btn btn-success'
+          - elsif @product.auction_finish_at < Time.now
+            .product-actions.auction-finished
+              = render 'current_price'
+              = render 'offer_section'
+          - else
+            .product-actions
+              div.moobn Make offer or buy now
+              = render 'offer_section'
+              = render 'current_price'
+              div.other-actions.col-xs-12
+                .watch.col-xs-12.col-sm-6
+                  = render 'watch', watch_list: @watch_list, product: @product
+                .share.col-xs-12.col-sm-6
+                  a.action data-container="body" data-toggle="popover" data-trigger="focus" href="javascript:void(0)"
+                    span
+                      i.icon-share-alt aria-hidden="true"
+                      | Share bidding
+                  .hidden.popover-content
+                    = share @product
+
+          .product-form.checkout-form
+            = render logged_in? ? 'checkout_registered' : 'checkout_guest'
+          .product-form.make-offer-form
+            = render logged_in? ? 'make_offer_registered' : 'make_offer_guest'
+
+        .concept-explanation
+          = render 'concept_explanation'
+
+- if @similar_products.size > 0
+  .products-wrapper
+    .container
+      header.products-header
+        .h3 You may also be interested in
+      section.row
+        .slider-showcase.js-slick-slider-showcase
+          .slider-showcase-wrapper
+            - @similar_products.each do |product|
+              .col-sm-3
+                = render 'shared/product_tile', product: product
+= render 'shared/meta/product', product: @product
+
+- content_for :after_content do
+  erb:
+    <script type="text/javascript">
+      mixpanel.track("Product view", {"category": <%= @product.decorate.category_name.to_json.html_safe %>});
+    </script>

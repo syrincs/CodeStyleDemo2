@@ -1,0 +1,32 @@
+.panel.panel-default
+  .panel-heading
+    h3.panel-title Revenue
+  .panel-body
+    - if @revenue_analytics.periods.present?
+      .col-md-4
+        ul.list-group
+          li.list-group-item.text-center Today / Yesterday
+          li.list-group-item.text-center
+            h3
+              span = number_to_currency @revenue_analytics.periods[:today]
+              span = ' / '
+              span = number_to_currency @revenue_analytics.periods[:yesterday]
+
+      .col-md-4
+        ul.list-group
+          li.list-group-item.text-center Week / Last Week
+          li.list-group-item.text-center
+            h3
+              span = number_to_currency @revenue_analytics.periods[:week]
+              span = ' / '
+              span = number_to_currency @revenue_analytics.periods[:last_week]
+      .col-md-4
+        ul.list-group
+          li.list-group-item.text-center Month / Last Month
+          li.list-group-item.text-center
+            h3
+              span = number_to_currency @revenue_analytics.periods[:month]
+              span = ' / '
+              span = number_to_currency @revenue_analytics.periods[:last_month]
+    - else
+      h3.text-center.text-muted No Data Available

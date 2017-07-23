@@ -1,0 +1,33 @@
+.container.dashboard-shipping-addresses
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          i.icon-truck
+          |  Shipping Details
+
+      .content
+        h4 Shipping Addresses
+
+        .row
+          - @addresses.each do |address|
+            .col-md-4
+              .tile.address-tile class='#{'address-tile-default' if address.default_address?}'
+                = address.full_address_html
+                .address-tile-actions
+                  - if address.default_address?
+                    span.icon-check-circle
+                  - else
+                    = link_to '', make_default_address_path(address), class: 'js-set-default icon-check-circle', data: { remote: true, method: :put }
+                  = link_to '', edit_address_path(address), class: 'icon-pencil'
+                  = link_to '', address_path(address), class: 'delete-icon icon-trash-o', data: { remote: true, method: :delete, confirm: 'Are you sure to delete this address?' }
+
+          .col-md-12.no-shipping-addresses class='#{ 'hidden' if @addresses.size > 0}'
+            div You haven't added an address yet. Please add one.
+
+        .actions
+          = link_to new_address_path, class: 'btn btn-success' do
+            i.icon-plus
+            | Add new address

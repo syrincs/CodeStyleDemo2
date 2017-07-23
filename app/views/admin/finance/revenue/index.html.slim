@@ -1,0 +1,22 @@
+header.dashboard-header
+  h1
+    span> Finance
+    span
+      ' / Revenue
+
+.content
+  ul.hidden-xs
+    li.btn-group
+      .btn.btn-default class=scope_class('month', true)
+        = link_to 'Month', url_for(scope: 'month')
+      .btn.btn-default class=scope_class('week')
+        = link_to 'Week', url_for(scope: 'week')
+      .btn.btn-default class=scope_class('all')
+        = link_to 'All time', url_for(scope: 'all')
+
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        span> Revenue by date
+    .panel-body
+      = line_chart admin_revenue_by_date_chart_path(scope: params[:scope])

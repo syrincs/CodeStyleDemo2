@@ -1,0 +1,33 @@
+table.dashboard-table.transactions-table
+  thead
+    tr
+      th Details
+      th Payment Method
+      th Status
+      th Date & Time (EST)
+      th.righted Amount
+  tbody
+    - @charges.each do |charge|
+      tr
+        td
+          - if charge.offer.present?
+            | Offer #{number_to_currency charge.offer.amount}
+            br
+            | Product #{link_to charge.order.product.title, product_path(charge.order.product)}
+          - else
+            | Charge related to #{link_to charge.order.product.title, product_path(charge.order.product)}
+        td= charge.transactions.where(status: :success).last.try(:payable).to_s.last(9)
+        td= charge.status.titleize
+        td= charge.created_at.in_time_zone('EST').strftime('%b %d, %Y %H:%M:%S')
+        td.righted
+          span.transaction-amount.transaction-charge
+            | -#{number_to_currency charge.amount}
+
+    - if @charges.empty?
+      tr
+        td.centered colspan="5"  You have no charges yet
+
+- if @charges.total_pages > 0
+  nav.dashboard-nav
+    = paginate_page_status(@charges)
+    = paginate @charges

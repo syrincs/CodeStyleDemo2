@@ -1,0 +1,21 @@
+header.row
+  h4.col-sm-3 Card Details
+  .col-sm-6
+.form-group
+  label.col-sm-3.control-label Cardholder Name
+  .col-sm-6
+    input#cc-name.form-control name="credit_card[name]" required="" type="text"
+.form-group
+  label.col-sm-3.control-label Card Number
+  .col-sm-6
+    input#cc-number.form-control name="credit_card[number]" required="" type="text"
+.form-group
+  label.col-sm-3.control-label Expiration Date
+  .col-sm-3
+    = select_month nil, { add_month_numbers: true, prefix: 'credit_card' }, id: 'cc-expiration-month', class: 'form-control'
+  .col-sm-2
+    = select_year nil, { start_year: Date.today.year, end_year: Date.today.year + 15, prefix: 'credit_card' }, id: 'cc-expiration-year', class: 'form-control'
+.form-group
+  label.col-sm-3.control-label CVV/CVV2
+  .col-sm-3
+    input#cc-security.form-control name="credit_card[verification_value]" required="" type="text"

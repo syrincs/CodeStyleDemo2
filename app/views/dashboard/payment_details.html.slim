@@ -1,0 +1,58 @@
+.container.dashboard-payment-details
+  .dashboard-box
+    = render 'sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          i.icon-credit-card
+          | Payment Details
+      .content
+        .credit-cards-list
+          h4 Credit & Debit Cards
+          table.cc-table
+            thead
+              tr
+                th Card
+                th.centered Expires
+                th.centered Default
+                th.actions
+            tbody
+              - @credit_cards.each do |cc|
+                tr
+                  td= cc.card_details
+                  td.centered= cc.expiration_date
+                  td.centered.default class="#{cc.default_card? ? 'default-row' : ''}" data-update-path=make_default_credit_card_path(cc)
+                    i.icon-check-circle
+                  td.actions
+                    = link_to '<i class="icon-trash-o"></i>'.html_safe, credit_card_path(cc), class: 'delete-row-icon', method: :delete, data: { confirm: "Are you sure you want to delete card #{cc.display_number}?" }
+              - if current_user.credit_cards.size == 0
+                tr
+                  td.no-cards colspan="4" 
+                    | You have no added credit cards. Please #{link_to 'add one', new_credit_card_path}
+          .actions
+            = link_to '<i class="icon-plus"></i> Add new card'.html_safe, new_credit_card_path, class: "btn btn-success"
+        hr.full-width
+        .bank-accounts-list
+          h4 Bank Accounts
+          p In order to successfully receive payments from your customers is required to add a bank account number and details.
+          - if @bank_accounts.size > 0
+            table.dashboard-table.ba-table
+              thead
+                tr
+                  th Bank Name
+                  th Number
+                  th.centered Default
+                  th.actions
+              tbody
+                - current_user.decorate.bank_accounts.each do |ba|
+                  tr
+                    td= ba.bank_name
+                    td= ba.display_account_number
+                    td.centered.default class="#{ba.default? ? 'default-row' : ''}" data-update-path=make_default_bank_account_path(ba)
+                      i.icon-check-circle
+                    td.actions
+                      = link_to '<i class="icon-trash-o"></i>'.html_safe, bank_account_path(ba), class: 'delete-row-icon', method: :delete, data: { confirm: "Are you sure you wan to delete bank account details?" }
+          - else
+            p Please add your bank account below.
+          .actions
+            = link_to '<i class="icon-plus"></i> Add new bank account'.html_safe, new_bank_account_path, class: "btn btn-success"

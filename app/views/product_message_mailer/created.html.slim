@@ -1,0 +1,18 @@
+- if @recipient == @message.product.user
+  p
+    | Hello #{@recipient},
+  p
+    | You have new message(s) from buyer about your product "#{@message.product.title}".
+  p
+    = @sender
+    | \: #{@message.body}
+- else
+  p
+    | Hello #{@recipient},
+  p
+    | You have new message(s) from seller of product "#{@message.product.title}".
+  p
+    = @sender
+    | \: #{@message.body}
+p
+  | Feel free to answer #{link_to 'here', dashboard_message_url(id: @message.id)}

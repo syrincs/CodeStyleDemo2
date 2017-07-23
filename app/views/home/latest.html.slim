@@ -1,0 +1,22 @@
+= render 'shared/meta/pages', title: seo_home_page_title
+
+- content_for :before_content do
+  = render 'all_banners'
+
+.categories-wrapper
+  .container
+    = render 'top_menu'
+
+.products-wrapper
+  .container
+    header.products-header.on-index-page
+      h2 Latest Deals
+    = render 'shared/products_view_grid', products: @products
+
+    footer.products-footer
+      a.btn.btn-action.js-loader class=('stop-paginate' unless can_load_more? @products) href=latest_auctions_path(page: next_page)
+        .waiting= 'Load more'
+        .loading
+          i.fa.fa-spinner.fa-lg
+
+= render 'video'

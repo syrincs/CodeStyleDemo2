@@ -1,0 +1,12 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        = @errors
+        = @flash
+        h1
+          = link_to '<i class="icon-tags"></i> Store Products'.html_safe, dashboard_store_products_path, class: "gray-part"
+          |  Add new product
+      .content.edit-product-box
+        = render 'products/form'

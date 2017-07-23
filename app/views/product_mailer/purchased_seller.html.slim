@@ -1,0 +1,4 @@
+p
+  | Hi #{@product.user.full_name},
+p
+  | Your product was just purchased. You can check it #{link_to 'here', dashboard_store_order_url(@product.order)}

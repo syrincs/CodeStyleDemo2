@@ -1,0 +1,25 @@
+.error-page {
+  .main-body {
+    padding-top: 120px;
+  }
+
+  .error-box {
+    margin-top: 20px;
+    background: #ffffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    display: table;
+    width: 100%;
+  }
+
+  .error-content {
+    display: table-cell;
+    vertical-align: top;
+    .content {
+      padding: 20px 30px;
+      text-align: center;
+    }
+  }
+}
+
+

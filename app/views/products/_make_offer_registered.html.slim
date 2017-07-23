@@ -1,0 +1,78 @@
+- offer = Offer.new
+- current_user = self.current_user.decorate
+- cc = current_user.default_credit_card
+header.product-form-header
+  h3 Make Offer
+= simple_form_for offer, html: { class: 'form-horizontal', novalidate: false }, url: bid_product_path do |f|
+  = f.input :product_id, as: :hidden, input_html: { value: @product.id }
+  section.make-offer-bid-amount
+    .form-group
+      label.col-sm-3.control-label
+        h4 Your Offer
+      .col-sm-4.make-offer-bid-amount-input
+        span.currency $
+        = f.input :amount, label: false, input_html: {value: @product.decorate.minimal_price.to_f.ceil, required: true}, hint: @product.decorate.min_price_hint.html_safe
+  - unless @product.free_bid?
+    section.product-form-card-details
+      - if cc.nil?
+        input.form-control name="credit_card[default_card]" type="hidden" value="true"
+        header.row
+          h4.col-sm-3 Card Details
+          .col-sm-6
+            p For each offer we charge a $2 fee
+        .form-group
+          label.col-sm-3.control-label Cardholder Name
+          .col-sm-6
+            input#cc-name.form-control name="credit_card[name]" required="" type="text"
+        .form-group
+          label.col-sm-3.control-label Card Number
+          .col-sm-6
+            input#cc-number.form-control name="credit_card[number]" required="" type="text"
+        .form-group
+          label.col-sm-3.control-label Expiration Date
+          .col-sm-2
+            = select_month nil, { use_two_digit_numbers: true, prefix: 'credit_card' }, id: 'cc-expiration-month', class: 'form-control'
+          .col-sm-2
+            = select_year nil, { prefix: 'credit_card', start_year: Date.today.year, end_year: Date.today.year + 15 }, id: 'cc-expiration-year', class: 'form-control'
+        .form-group
+          label.col-sm-3.control-label CVV/CVV2
+          .col-sm-3
+            input#cc-security.form-control name="credit_card[verification_value]" required="" type="text"
+      - else
+        = hidden_field_tag 'credit_card[id]', cc.id, class: 'credit_card_id'
+        header.row
+          h4.col-sm-3 Card Details
+          .col-sm-6.product-form-card-number
+            = cc.card_details
+          .col-sm-3.product-form-aside
+            a.product-form-change-card data-target="#cards-tooltip-offer" data-toggle="dropdown" href="javascript:void(0)"  Change Card
+            #cards-tooltip-offer.cards-tooltip
+              .angle
+              ul.cards-list
+                - current_user.credit_cards.each do |card|
+                  li data-expiration_date=card.expiration_date data-id=card.id
+                    = card.card_details
+                li.add-new + Add new card
+        .form-group
+          label.col-sm-3.control-label Expiration Date
+          .col-sm-3.expiration-date
+            p.form-control-static= cc.expiration_date
+        .form-group
+          label.col-sm-3.control-label CVV/CVV2
+          .col-sm-2
+            input.form-control autocomplete="off" name="credit_card[verification_value]" type="text" required=""
+
+  section.product-form-prices
+    .row
+      .col-xs-12.col-sm-7.col-sm-offset-1.product-form-aggreement-note
+        p
+          - if @product.free_bid?
+            span.bid_amount_info_short.highlight
+          - else
+            span.bid_amount_info.highlight
+      .col-xs-3.col-sm-3
+        button.btn.btn-success type="submit" Confirm
+
+footer.product-form-footer
+  small
+    | By making this purchase, you agree with the #{link_to 'terms and conditions', page_path('terms-and-conditions')} of 1bid1.com

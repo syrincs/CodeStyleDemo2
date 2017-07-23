@@ -1,0 +1,121 @@
+.container
+  section class="row search-wrap #{@category ? 'category-view' : ''}"
+    aside.search-filters.col-sm-3
+      #search-filters-form.search-filters-form.collapse
+        = form_tag url_for(params), id: 'search-filter', method: :get do
+          input name="q" type="hidden" value=params[:q]
+          - if @user
+            .tile.user-tile
+              figure.tile-thumbnail
+                = link_to image_tag(@user.avatar.url(:avatar, secure: request.ssl?)), @user
+              .tile-info
+                .tile-description= link_to @user, @user
+          section.search-filter-categories
+            - if @category
+              input name="category" type="hidden" value=@category.id
+            ul.popular-categories
+              li.title
+                = link_to all_auctions_path do
+                  span All auctions
+                  .caret-right
+              li.title
+                = link_to latest_auctions_path do
+                  span Latest
+                  .caret-right
+              li.title
+                = link_to trending_auctions_path do
+                  span Trending
+                  .caret-right
+
+              - TopCategory.root.ordered.each do |c|
+                li.title class="#{current_category?(c) ? 'active' : ''}"
+                  = link_to c.name, category_path(c)
+                  i.fa.popular-categories__caret.fa-angle-down
+                  i.fa.popular-categories__caret.fa-angle-right
+                  ul
+                    li= link_to_unless_current "All #{c.name}", category_path(c)
+                    - c.children.ordered.each do |category|
+                      li
+                        - if current_category?(category)
+                          i.fa.fa-angle-right
+                        =< link_to_unless_current category.name, category_path(category)
+
+          - if @category.try(:code) == 'automotive-parts-cars'
+            section.search-filter-list
+              .h4 Year
+              = simple_fields_for 'car' do |f|
+                = f.input :year, as: :select, collection: (2000..Date.current.year).to_a.reverse
+                = f.input :vin, hint: 'The letters "O", "I", and "Q" never appear in a VIN.'
+                .row
+                  .col-xs-6= f.input :mileage_from, label: 'Mileage From'
+                  .col-xs-6= f.input :mileage_to, label: 'To'
+                = f.input :drive_type, as: :select, collection: %w(4WD AWD FWD RWD)
+
+          p.hidden-xs Refine by
+          section.search-filter-list
+            .h4 Condition
+            ul
+              - Product.condition.options.each do |title, key|
+                li
+                  label
+                    => check_box_tag 'condition[]', key, (params[:condition] && key.in?(params[:condition]))
+                    = title
+          section
+            .h4 Price
+            .refine-by-price
+              span $
+              = text_field_tag 'price_from', params['price_from'], class: "form-control"
+              span to
+              = text_field_tag 'price_to', params['price_to'], class: "form-control"
+          button.btn.btn-success type="submit" Submit
+    section.search-results.col-sm-9
+      .container
+        /-binding.pry
+        - if @products.size > 0
+          header.search-results-header.row
+            .col-sm-6
+              - if @category
+                h1.category-title
+                  | #{@category.name}
+              - if params[:q].present?
+                .result-amount
+                  => pluralize @search.total_count, 'result for', 'results for'
+                  span.phrase= params[:q]
+            .col-sm-6
+              = render 'shared/products_view'
+        - else
+          header.search-results-header.row
+            .col-sm-12
+              - if @category
+                center
+                  p.category-text-empty
+                    | Be the first, sell something in <b>#{@category.name.downcase}</b> category!
+            .col-sm-12
+              center
+                - if @category
+                  a.btn.btn-action.sell-item-button.btn-lg href=new_product_path(category: @category.id) Sell Item
+                - else
+                  a.btn.btn-action.sell-item-button.btn-lg href=new_product_path Sell Item
+
+        section class  = "row#{' list-view tile' if @view == 'list'}"
+          - @products.each do |product|
+            - if @view == 'list'
+              = render "shared/product_list_tile", product: product
+            - elsif @view == 'grid'
+              .col-sm-6.col-md-4
+                = render "shared/product_tile", product: product
+            - elsif @view == 'big_grid'
+              .col-sm-6
+                = render "shared/product_tile", product: product
+
+      - if @products.size > 0 && @products.total_pages > 1
+        footer.search-results-footer.tile
+          = paginate @products, theme: :search
+
+- if @category
+  = render 'shared/meta/category', category: @category
+- else
+  - content_for :meta do
+    title
+      = params.fetch(:q, 'Search')
+      | 1bid1

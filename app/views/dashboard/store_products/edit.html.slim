@@ -1,0 +1,10 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          = link_to '<i class="icon-tags"></i> Store Products'.html_safe, :back, class: 'gray-part'
+          |  Product Title
+      .content.edit-product-box
+        = render 'products/form'

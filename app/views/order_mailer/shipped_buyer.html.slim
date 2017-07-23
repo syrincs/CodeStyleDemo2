@@ -1,0 +1,10 @@
+p
+  | Hi #{@order.user.full_name},
+p
+  | Product you bought "#{link_to @order.product.title, dashboard_order_url(@order)}" was shipped.
+  | Shipping tracking id is "#{@order.shipment.tracking_number}".
+  | Please contact buyer #{link_to 'here', new_dashboard_message_url(product_id: @order.product.id)} if you have any questions.
+p Please let us know when you receive it
+p
+  | You can do it
+  a href=dashboard_order_url(@order)  here

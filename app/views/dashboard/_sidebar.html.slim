@@ -1,0 +1,166 @@
+- links = [ { title: 'Dashboard',
+              icon: 'icon-home',
+              url: dashboard_path },
+            { title: 'Watch List',
+              icon: 'icon-eye',
+              url: dashboard_watch_lists_path },
+            { title: 'Messages',
+              icon: 'icon-envelope',
+              url: dashboard_messages_path },
+            { title: 'My Purchases',
+              icon: 'icon-inbox',
+              url: dashboard_orders_path },
+            { title: 'My Offers',
+              icon: 'icon-hammer',
+              url: dashboard_bids_path },
+            { title: 'Transactions',
+              icon: 'icon-dollar',
+              url: dashboard_transactions_path }]
+
+- store_links = [ { title: 'Orders',
+                    icon: 'icon-inbox',
+                    url: dashboard_store_orders_path},
+                  { title: 'Products',
+                    icon: 'icon-tags',
+                    url: dashboard_store_products_path },
+                  { title: 'Q&A',
+                    icon: 'fa fa-question',
+                    url:  dashboard_questions_path },
+                  { title: 'Returns',
+                    icon: 'icon-truck icon-reflect',
+                    url: dashboard_store_returns_path }]
+
+- account_links = [{title: 'Profile',
+                    icon: 'icon-cog',
+                    url: dashboard_settings_path},
+                   {title: 'Payment Details',
+                    icon: 'icon-credit-card',
+                    url: dashboard_payment_details_path},
+                   {title: 'Shipping Details',
+                    icon: 'icon-truck',
+                    url: addresses_path},
+                   {title: 'Logout',
+                    icon: 'icon-sign-out',
+                    data: {method: 'post'},
+                    url: logout_path}]
+
+- top_links =     [{title: 'Latest',
+                    icon: '',
+                    url: latest_auctions_path},
+                   {title: 'Trending',
+                    icon: '',
+                    url: trending_auctions_path},
+                   {title: 'How It Works',
+                    icon: '',
+                    url: page_path('how-it-works')},
+                   {title: 'All Auctions',
+                    icon: '',
+                    url: all_auctions_path}]
+
+aside.sidebar
+  .sidebar-action-buttons.visible-xs
+    - if !logged_in?
+      ul.list-inline
+        li: a.btn.btn-action href=register_path Sign Up
+        li: a.btn.btn-link href=login_path Sign In
+    - else
+      ul.list-group
+        - if can? :read, :admin_dashboard
+          li: a.btn.btn-link href=admin_dashboard_path Manage
+        - if request.fullpath =~ /dashboard/
+          li: a.btn.btn-link href=root_path Home Page
+        - else
+          li: a.btn.btn-link href=dashboard_path My Dashboard
+
+  - if logged_in?
+    .sidebar-avatar.visible-xs
+      figure.header-user-profile-image
+        = link_to dashboard_path do
+          = image_tag current_user.avatar.url(:avatar, secure: request.ssl?)
+      .header-user-text
+        span.header-user-name= link_to current_user, dashboard_path
+        = link_to 'My Account', dashboard_path, class: 'header-user-account'
+
+  - if request.fullpath !~ /dashboard/
+    .main-links.links-group
+      ul
+        - top_links.each do |link|
+          - li_class = []
+          - if request.fullpath == link[:url] && link[:url] == '/dashboard'
+            - li_class << 'active'
+          - elsif request.fullpath =~ /^#{link[:url]}/ && link[:url] != '/dashboard'
+            - li_class << 'active'
+          li class=li_class
+            = link_to link[:url], id: link[:id] do
+              i class=link[:icon]
+              span= link[:title]
+
+    - TopCategory.root.ordered.each do |c|
+      .links-group.links-group_submenu
+        h4.js-open-submenu
+          = c.name
+          i.fa.fa-angle-right.links-group__caret
+        ul.collapsible.js-submenu class="#{current_category?(c) ? 'active' : ''}"
+          li class="#{current_category?(c, children: false) ? 'active' : ''}"
+            = link_to category_path(c) do
+              span= "All #{c.name}"
+          - c.children.ordered.each do |c|
+            li class="#{current_category?(c) ? 'active' : ''}"
+              = link_to category_path(c) do
+                span= c.name
+
+    - if logged_in?
+      .store-links.links-group.links-group_submenu
+        h4.js-open-submenu
+          ' My Account
+          i.fa.fa-angle-right.links-group__caret
+        ul.collapsible.js-submenu
+          - account_links.each do |link|
+            - li_class = []
+            - if request.fullpath == link[:url] && link[:url] == '/dashboard'
+              - li_class << 'active'
+            - elsif request.fullpath =~ /^#{link[:url]}/ && link[:url] != '/dashboard'
+              - li_class << 'active'
+            li class=(li_class.join(' '))
+              = link_to link[:url], data: link[:data] do
+                span= link[:title]
+
+  - else
+    .main-links.links-group.links-group_submenu
+      h4 My Shopping
+      ul
+        - links.each do |link|
+          - li_class = []
+          - if request.fullpath == link[:url] && link[:url] == '/dashboard'
+            - li_class << 'active'
+          - elsif request.fullpath =~ /^#{link[:url]}/ && link[:url] != '/dashboard'
+            - li_class << 'active'
+          li class=li_class
+            = link_to link[:url] do
+              span= link[:title]
+
+    .store-links.links-group.links-group_submenu
+      h4 My Store
+      ul
+        - store_links.each do |link|
+          - li_class = []
+          - if request.fullpath == link[:url] && link[:url] == '/dashboard'
+            - li_class << 'active'
+          - elsif request.fullpath =~ /^#{link[:url]}/ && link[:url] != '/dashboard'
+            - li_class << 'active'
+          li class=(li_class.join(' '))
+            = link_to link[:url] do
+              span= link[:title]
+
+    .store-links.links-group.links-group_submenu
+      h4 My Account
+      ul
+        - account_links.each do |link|
+          - li_class = []
+          - if request.fullpath == link[:url] && link[:url] == '/dashboard'
+            - li_class << 'active'
+          - elsif request.fullpath =~ /^#{link[:url]}/ && link[:url] != '/dashboard'
+            - li_class << 'active'
+          li class=(li_class.join(' '))
+            = link_to link[:url], data: link[:data] do
+              span= link[:title]

@@ -1,0 +1,11 @@
+- content_for :meta
+  - decorated = product.decorate
+  title = decorated.seo_title
+  meta name="description" content=decorated.seo_description
+
+  meta property="og:url" content=category_product_url(product.category, product)
+  meta property="og:title" content=decorated.seo_title
+  meta property="og:description" content=decorated.seo_description
+
+  - @product.photos.each do |photo|
+    meta property="og:image:secure_url" content=photo.url(:fb, secure: true)

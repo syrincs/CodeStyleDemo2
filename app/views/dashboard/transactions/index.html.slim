@@ -1,0 +1,18 @@
+.container.dashboard-transactions
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          ul.list-inline
+            li
+              a.gray-part href=dashboard_transactions_path
+                i.icon-dollar
+                span Transactions
+            li.divider
+            li = scope.titleize
+
+      .content
+        = render partial: 'transactions_payouts' if @payouts
+        = render partial: 'transactions_charges' if @charges

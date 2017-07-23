@@ -1,0 +1,42 @@
+header.dashboard-header
+  h1
+    = link_to admin_offers_path, class: 'gray-part' do
+      i.icon-inbox
+      |  Offers
+
+.content
+  ul.hidden-xs
+    li.btn-group
+      = link_to 'All', admin_offers_path, class: 'btn btn-default'
+      = link_to 'Paid', url_for(paid: true), class: 'btn btn-default'
+      = link_to 'Accepted', url_for(accepted: true), class: 'btn btn-default'
+
+  - if offers.present?
+    .table-responsive
+      table.table.table-hover.table-messages
+        thead
+          th
+          th width="300" Product
+          th Offer
+          th Bidder
+          th width="100" Date
+
+        - offers.select(&:product).each do |offer|
+          tr
+            td== offer.free ? '<i class="fa fa-gift">' : '<i class="fa fa-credit-card">'
+            td
+              = link_to offer.product.title, offer.product, target: :_blank, data: {toggle: 'popover', container: 'body', trigger: 'hover'}
+              .hidden.popover-content
+                ul.list-inline
+                  - offer.product.photos.each_with_index do |photo, index|
+                    li= image_tag photo.url(:thumbnail, secure: request.ssl?), width: '50'
+            td= number_to_currency offer.amount
+            td= link_to offer.buyer, edit_admin_user_path(offer.buyer), target: :_blank
+            td = l offer.created_at, format: :short
+
+
+    nav.dashboard-nav
+      = paginate_page_status(@offers)
+      = paginate @offers
+  - else
+    p.text-gray.text-center.lead There are no offers yet

@@ -1,0 +1,10 @@
+- if device_type == :desktop
+  ul.products-views.links.hidden-sm.hidden-xs
+    li.products-views-text View
+    - query = Rack::Utils.parse_nested_query(request.env['QUERY_STRING'])
+    li
+      a class="icon-th-list #{@view == 'list' ? 'active' : ''}" rel="noindex nofollow" href=url_for(query.merge({view: :list}))
+    li
+      a class="icon-th #{@view == 'grid' ? 'active' : ''}" href=url_for(query.merge({view: :grid}))
+    li
+      a class="icon-th-large #{@view == 'big_grid' ? 'active' : ''}" href  = url_for(query.merge({view: :big_grid}))

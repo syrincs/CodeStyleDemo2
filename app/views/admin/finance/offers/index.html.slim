@@ -1,0 +1,16 @@
+header.dashboard-header
+  h1
+    span> Finance
+    span
+      ' / Offers
+
+.content
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        span> Bids amount by date
+        |(
+        span = number_to_currency Offer::BIDDING_FEE
+        |)
+    .panel-body
+      = line_chart admin_offers_by_date_chart_path

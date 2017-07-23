@@ -1,0 +1,9 @@
+p
+  | Hi #{@offer.user.full_name},
+p
+  | Your offer of #{number_to_currency(@offer.amount)} for product #{link_to @offer.product.title, product_url(@offer.product)} has been accepted!
+  - if !@offer.user.address.present?
+    | You need to add your address and pay to order.
+  | After you pay to order, the seller will contact you for further steps.
+p
+  | #{link_to 'Pay the order', dashboard_order_url(@offer.product.order)} to continue purchase process

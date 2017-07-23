@@ -1,0 +1,4 @@
+p
+  | Hi #{@product.user.full_name},
+p
+  | Your product "#{@product.title}" has just approved by moderator. It appeared in search. You can check it #{link_to 'here', dashboard_store_product_url(@product)}

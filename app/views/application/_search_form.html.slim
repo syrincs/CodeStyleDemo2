@@ -1,0 +1,7 @@
+= form_tag search_path, method: :get, class: 'search-form' do
+  .search
+    - if params[:category].present?
+      input name="category" type="hidden" value=params[:category]
+    input.search-input name="q" placeholder="Search for products..." type="text" value=params[:q]
+    span.search-button
+      button.icon-search type="submit"

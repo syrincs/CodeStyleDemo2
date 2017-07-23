@@ -1,0 +1,4 @@
+p
+  | Hi #{@offer.user.full_name},
+p
+  | Your offer of #{number_to_currency(@offer.amount)} for #{link_to @offer.product.title, product_url(@offer.product)} has been denied!

@@ -1,0 +1,67 @@
+header.dashboard-header
+  h1
+    = link_to admin_products_path, class: 'gray-part' do
+      i.icon-user
+      |  Products
+
+.content
+  ul.hidden-xs
+    - if can? :update_description, Product
+      li.btn-group
+        = link_to 'Active', admin_products_path, class: 'btn btn-default'
+        = link_to 'Deleted', url_for(hidden: true), class: 'btn btn-default'
+      li.btn-group
+        = link_to 'Sold', url_for(sold: true), class: 'btn btn-default'
+        = link_to 'Not Sold', url_for(sold: false), class: 'btn btn-default'
+      li.btn-group
+        = link_to 'With offers', url_for(offers: true), class: 'btn btn-default'
+        = link_to 'Without offers', url_for(offers: false), class: 'btn btn-default'
+
+  - if products.present?
+    .table-responsive
+      table.table.table-hover.table-messages
+        thead
+          th Title
+          th Category
+          - if can? :update_description, Product
+            th Price
+            th Offers
+            th Sold
+          - if can? :update_description, Product
+            th colspan=2 Action
+          - else
+            th colspan=1 Action
+
+        - products.each do |product|
+          tr
+            td
+              = link_to product.title, product, target: :_blank, data: {toggle: 'popover', container: 'body', trigger: 'hover'}
+              .hidden.popover-content
+                ul.list-inline
+                  - product.photos.each_with_index do |photo, index|
+                    li= image_tag photo.url(:thumbnail, secure: request.ssl?), width: '50'
+            td
+              - if product.category
+                = [product.category.parent.try(:name), product.category.try(:name)].compact.join('/')
+              - else
+                ' ------------
+            - if can? :update_description, Product
+              td= product.price
+              td
+                button type='button' class='btn btn-default' data-container='body' data-toggle='popover' data-placement='left' data-content=offers_tooltip(product) =  product.offers.size
+              td
+                - if product.sold?
+                  | Sold
+                - else
+                  | No
+            /- if can? :update_description, Product
+              td= link_to 'Prolong', prolong_admin_product_path(product), method: :post
+            td= link_to 'Edit', edit_admin_product_path(product)
+            - if can? :update_description, Product
+              td= link_to 'Delete', admin_product_path(product), method: :delete, data: { confirm: 'Your product cannot be found. Sure?' }
+
+    nav.dashboard-nav
+      = paginate_page_status(@products)
+      = paginate @products
+  - else
+    p.text-gray.text-center.lead There are no products yet

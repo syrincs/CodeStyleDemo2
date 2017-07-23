@@ -1,0 +1,28 @@
+javascript:
+  var __lc = {};
+  __lc.license = 5884381;
+
+- if current_user
+  javascript:
+    __lc.visitor = {
+      email: #{current_user.email.inspect.html_safe},
+      name: #{current_user.full_name.inspect.html_safe}
+    }
+    __lc.params = [
+      { name: 'Login', value: #{current_user.email.inspect.html_safe} },
+      { name: 'Account ID', value: #{current_user.id.inspect.html_safe} },
+      { name: 'Total order value', value: #{current_user.total_order_value.inspect.html_safe} },
+      { name: 'Orders', value: #{current_user.orders.count.inspect.html_safe} }
+    ];
+
+javascript:
+  if (#{SimpleUserAgent::is_desktop?(request)}) {
+    (function () {
+      var lc = document.createElement('script');
+      lc.type = 'text/javascript';
+      lc.async = true;
+      lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(lc, s);
+    })();
+  }

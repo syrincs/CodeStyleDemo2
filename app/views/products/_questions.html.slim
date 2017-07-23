@@ -1,0 +1,47 @@
+- if @product.questions.any?
+  - @product.questions.each do |question|
+    .panel.panel-default
+      .panel-heading
+        .pull-right
+          - if question.user
+            span>= link_to question.user, user_path(question.user), class: ''
+          = "by #{question.created_at.strftime('%b %d, %Y')}"
+        = question.title
+      .panel-body
+        = question.description
+        .answer
+          - if question.answer
+            = question.answer.description
+          - else
+            - if can? :answer, question
+              .row
+                .col-sm-6
+                  .qa-form
+                    = simple_form_for question.build_answer, url: answers_path, method: :post, style: 'margin-top: 20px' do |f|
+                      = f.input :question_id, as: :hidden
+                      = f.input :description, as: :text, label: false
+                      = f.button :submit, 'Answer', class: 'btn btn-success'
+- else
+  .no-info= 'No questions.'
+
+- if logged_in?
+  .row
+    .col-sm-12
+      h3 Ask a question about "#{@product.title}"
+  .row
+    .col-sm-6
+      .qa-form
+        = simple_form_for @product.questions.build, url: questions_path, method: :post do |f|
+          = f.input :product_id, as: :hidden
+          = f.input :title, label: 'Title:', class: ''
+          = f.input :description, as: :text, label: 'Description:', class: ''
+          = recaptcha_tags
+          = f.button :submit, 'Ask question', class: 'btn btn-success'
+          p.text-muted
+            small The question will be public so everyone can see it
+
+- else
+  div.header-login
+    | Please
+    span<>= link_to 'sign in', login_path, id: 'sign-in-link', class: 'signin-button'
+    | for asking questions.

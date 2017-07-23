@@ -1,0 +1,82 @@
+- if @product.price.to_f > 10
+  - if @product.auction_finish_at < Time.now
+    div.row
+      section.make-offer-section.col-sm-12
+        - if current_user && @product.user == current_user
+          - if @product.offers.size > 0
+            .h4 Current Offer by #{link_to @product.highest_offer.user, @product.highest_offer.user}
+            .price = number_to_currency @product.highest_offer.amount
+            .under-offer From #{@product.offers.size} bids
+            a.btn.btn-action.button-accept-offer href="javascript:void(0)"  Accept offer
+          - else
+            .price No offers.
+            .offer-notice
+              strong Auction is finished.
+              br
+              | No offers made for this product. You can place new product and try to sell it with other description and photos.
+        - else
+          - if @product.offers.size == 0
+            .price No offers.
+            .offer-notice
+            strong Auction is finished.
+            br
+            | You can't make offer, but you still have time to buy item at current price.
+          - elsif current_user && @product.highest_offer.user == current_user
+            .h4 Your offer
+            .price = number_to_currency @product.highest_offer.amount
+            .under-offer Your offer is highest.
+            .offer-notice
+              strong Auction is finished.
+              br
+              | Please wait while seller will accept your offer.
+          - elsif current_user && @product.offers.where(user_id: current_user.id).size > 0
+            .h4 Current Offer
+            .price = number_to_currency @product.highest_offer.amount
+            .under-offer
+              span.my-low-bid Your offer #{number_to_currency(@product.offers.where(user_id: current_user.id).order(amount_cents: :desc).first.amount)}
+            .offer-notice.offer-overbid
+              strong Auction is finished.
+              | You can't make offer, but you still have time to buy item at current price, until highest offer isn't accepted by seller.
+          - else
+            .h4 Current Offer
+            .price = number_to_currency @product.highest_offer.amount
+            .under-offer From #{@product.offers.size} offers
+            .offer-notice.offer-visitor
+              strong Auction is finished.
+              | You can't make offer, but you still have time to buy item at current price, until highest offer isn't accepted by seller.
+
+  - else
+    section.make-offer-section.col-xs-12
+      div.row
+        div.col-md-6
+          - if @product.offers.size == 0
+            .under-offer Be the first!
+            .price No offers.
+            div &nbsp;
+          - elsif current_user.present?
+            - if @product.highest_offer.present? && @product.highest_offer.user == current_user
+              .my-highest Your offer
+            - else
+              div Current Offer
+            .price = number_to_currency @product.highest_offer.amount
+            .under-offer
+              - if @product.highest_offer.user == current_user
+                | Your offer is the highest
+              - elsif @product.offers.where(user_id: current_user.id).size > 0
+                span.my-low-bid Your offer #{number_to_currency(@product.offers.where(user_id: current_user.id).order(amount_cents: :desc).first.amount)}
+              - else
+                | From #{@product.offers.size} offers
+          - else
+            div Current offer
+            .price = number_to_currency @product.highest_offer.amount
+            .under-offer
+              | From #{@product.offers.size} offers
+        div.col-md-6
+          div.pull-right
+            a.btn.btn-composite.btn-action.button-make-offer href="javascript:void(0)"
+              i.icon-hammer
+              | Make offer
+            - if @product.free_bid?
+              .action-notice offer is free!
+            - else
+              .action-notice you pay only $2 fee

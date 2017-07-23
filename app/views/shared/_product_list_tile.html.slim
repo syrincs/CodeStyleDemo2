@@ -1,0 +1,47 @@
+.product-list-tile
+  .row
+    .col-md-4.col-sm-4
+      .product-list-tile-thumbnails-wrapper
+        - if product.photos.any?
+          - if product.photos.size > 4
+            = render 'shared/photo_thumbnail', photos: (product.photos), lazy: 3
+            .product-list-tile-thumbnails.empty.all
+              .product-list-tile-thumb.all
+                = link_to 'See all', product_path(product), class: 'all-images-link'
+
+          - elsif product.photos.size < 4
+            = render 'shared/photo_thumbnail', photos: (product.photos), lazy: product.photos.size
+            = render 'shared/empty_thumbnail', amount: (4 - product.photos.size)
+
+          - else
+            = render 'shared/photo_thumbnail', photos: (product.photos), lazy: 4
+
+        - else
+          = render 'shared/empty_thumbnail', amount: 4
+
+    .col-md-2.col-sm-2
+      .product-list-tile-actions
+        = link_to 'Buy Now', category_product_url(product.category, product, anchor: 'buy-now'), class: "btn btn-action button-buy-now"
+        - if product.price.to_f > 10
+          = link_to 'Make Offer', category_product_url(product.category, product, anchor: 'make-offer'), class: "btn btn-action button-make-offer"
+
+    .col-md-2.col-sm-3
+      .product-price
+        - if product.original_price > product.price
+          span.current-price.price.price-down= number_to_currency product.price
+        - else
+          span.current-price.price= number_to_currency product.price
+        .text-muted Buy Now Price
+        .offers
+          - if product.highest_offer_amount
+            span.price = number_to_currency product.highest_offer_amount
+          - else
+            span No offers
+        .text-muted Current Offer
+
+    .col-md-4.col-sm-3
+      .product-list-tile-top-info
+        = link_to product.title, product, class: 'product-list-tile-description'
+      .product-list-tile-meta.user-info
+        = link_to product.user, product.user, class: 'user'
+

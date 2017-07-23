@@ -1,0 +1,81 @@
+.container.dashboard-add-ba
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          = link_to '<i class="icon-credit-card"></i> Payment Details'.html_safe, :back, class:"gray-part"
+          | &nbsp; / Add New Bank Account
+
+      .content
+        .row
+          .col-lg-6
+            = simple_form_for @bank_account do |f|
+              .row
+                .col-sm-8
+                  = f.input :name_on_account, autocomplete: :off, placeholder: 'e.g. John Smith or Company LLC'
+
+              .row
+                .col-sm-8
+                  = f.input :bank_name, autocomplete: :off, placeholder: 'e.g. Wells Fargo'
+
+              .row
+                .col-sm-8
+                  = f.input :routing_number, autocomplete: :off
+
+              .row
+                .col-sm-8
+                  = f.input :account_number, autocomplete: :off
+
+              .row
+                .col-sm-8
+                  = f.input :address, autocomplete: :off
+
+              .row
+                .col-sm-8
+                  = f.input :phone_number, autocomplete: :off
+
+              .row
+                .col-sm-8
+                  h4 Legal entity:
+
+              .row
+                .col-sm-8
+                  = f.input :legal_entity_address1, autocomplete: :off, label: "Address"
+
+              .row
+                .col-sm-8
+                  = f.input :legal_entity_city, autocomplete: :off, label: "City"
+
+              .row
+                .col-sm-8
+                  = f.input :legal_entity_postal_code, autocomplete: :off, label: "Zipcode"
+
+              .row
+                .col-sm-8
+                  = f.input :legal_entity_state, autocomplete: :off, label: "State"
+
+              .row
+                .col-sm-8
+                  = f.input :legal_entity_ssn_last_4, autocomplete: :off, label: "SSN (only last 4 digits)", maxlength: 4
+
+
+              .row
+                .col-sm-8
+                  div
+                    label for="bank_account_default"
+                      = check_box_tag 'bank_account[default]'
+                      |&nbsp Use this bank account by default
+
+              .actions
+                = link_to 'Cancel', :back, class: 'btn btn-white'
+                | &nbsp
+                button.btn.btn-success type="submit" Add Bank Account
+
+          .col-lg-6
+            .bank-routing-info
+              p:strong What is Routing Number and where I can find it?
+              p US routing numbers are 9 digits and are usually located in the lower left corner of most checks. Common aliases to routing number: RTN (Routing Transit Number), ABA, Bank code.
+              figure.bank-routing-image
+                = image_tag 'routing-help@2x.jpg'

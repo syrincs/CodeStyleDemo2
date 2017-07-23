@@ -1,0 +1,31 @@
+- if defined?(watch_list) && watch_list
+  a.action href=dashboard_watch_list_path(watch_list) data-method="delete"
+    span
+      i.icon-eye-slash aria-hidden="true"
+      | Unwatch
+- else
+  - if logged_in? && current_user.phone_number
+    a.action data-container="body" data-toggle="popover" data-trigger="click" href="javascript:void(0)" data-placement="auto"
+      span
+        i.icon-eye aria-hidden="true"
+        | Watch bidding
+    .hidden.popover-content
+      form.watch-form action=dashboard_watch_lists_path method="post"
+        input type="hidden" name='product_id' value=product.id
+        = token_tag
+        .row
+          .form-group
+            .col-sm-12
+              p Enter phone number
+              input.form-control name="phone_number" required="" type="text" autofocus="autofocus" autocomplete="off"
+        .row
+          .col-sm-12
+            small.text-muted We will keep you updated
+            p
+            button.btn.btn-success.btn-block type="submit"
+              ' Submit
+  - else
+    a.action href=dashboard_watch_lists_path(product_id: product.id) data-method="post"
+      span
+        i.icon-eye aria-hidden="true"
+        | Watch bidding

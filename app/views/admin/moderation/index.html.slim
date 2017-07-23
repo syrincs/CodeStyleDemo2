@@ -1,0 +1,31 @@
+header.dashboard-header
+  h1
+    = link_to admin_moderation_index_path, class: 'gray-part' do
+      i.fa.fa-ban( style='top: 0px;' )
+      |  Moderation
+
+.content
+  - if @products.present?
+    .table-responsive
+      table.table.table-hover.table-messages
+        thead
+          th Title
+          th Pubslished at (EST)
+          th colspan=2 Action
+
+        - @products.each do |product|
+          tr
+            td
+              = link_to product.title, product, target: :_blank, data: {toggle: 'popover', container: 'body', trigger: 'hover'}
+              .hidden.popover-content
+                ul.list-inline
+                  - product.photos.each_with_index do |photo, index|
+                    li= image_tag photo.url(:thumbnail, secure: request.ssl?), width: '50'
+
+            td = l product.created_at.in_time_zone('EST'), format: :short
+            td= link_to 'Decline', message_admin_moderation_path(product.id)
+      nav.dashboard-nav
+        = paginate_page_status(@products)
+        = paginate @products
+  - else
+    p.text-gray.text-center.lead There are no products yet

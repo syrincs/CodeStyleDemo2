@@ -1,0 +1,6 @@
+p
+  | Hi #{@product.user.full_name},
+p
+  | Your product "#{@product.title}" auction has just finished. You don't have any offers.
+P
+  | #{link_to 'see details', dashboard_store_product_url(@product)}.

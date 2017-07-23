@@ -1,0 +1,19 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1= "Create answer for #{@question.title}"
+
+      .content
+        h3 Question
+        div= "Title: #{@question.title}"
+        div= "Description: #{@question.description}"
+
+        br
+        h3 Answer
+        = simple_form_for @question.build_answer, url: dashboard_question_answers_path, method: :post, style: 'margin-top: 20px' do |f|
+          = f.input :description, as: :text, label: false
+          = f.button :submit, 'Answer', class: 'btn btn-success pull-right'
+        = link_to :back, dashboard_questions_path, class: 'btn btn-action'

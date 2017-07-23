@@ -1,0 +1,35 @@
+= render 'shared/meta/pages', title: seo_home_page_title
+
+- content_for :before_content do
+  = render 'all_banners'
+
+.categories-wrapper.hidden-xs
+  .container
+    = render 'top_menu'
+
+.products-wrapper
+  .container
+    header.products-header.on-index-page
+      = render 'shared/products_view'
+      h2 Latest Deals
+    section.row.slider-showcase.js-slick-slider-showcase
+      = render 'shared/meta/products', products: @home_view.latest_deals
+    footer.products-footer.on-index-page
+      a.btn.btn-link href=latest_auctions_path Shop Latest
+
+    header.products-header.on-index-page
+      h2 Trending Deals
+    section.row.slider-showcase.js-slick-slider-showcase
+      = render 'shared/meta/products', products: @home_view.trending
+    footer.products-footer.on-index-page
+      a.btn.btn-link href=trending_auctions_path Shop Trending
+
+    - TopCategory.root.ordered.each do |c|
+      header.products-header.on-index-page
+        h2 = c.name
+      section.row.slider-showcase.js-slick-slider-showcase
+        = render 'shared/meta/products', products: @home_view.in_category(c)
+      footer.products-footer.on-index-page
+        a.btn.btn-link href=category_path(c) Shop #{c.name}
+
+= render 'video'

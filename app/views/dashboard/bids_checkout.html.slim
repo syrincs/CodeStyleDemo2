@@ -1,0 +1,88 @@
+.container
+  .dashboard-box
+    = render 'sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          = link_to '<i class="icon-hammer"></i> My Bids'.html_safe, :back, class:"gray-part"
+          | Checkout
+      .content
+        figure.order-thumbnail
+          img alt="" src="http://unsplash.it/135/?random"
+        .order-product-info
+          h4.order-title
+            a href="javascript:void(0)"  Product Title
+          dl.order-product-info-meta
+            dt Condition
+            dd
+              strong Used
+            dt Item Location
+            dd
+              strong Sarasota, Florida, US
+            dt Shipping
+            dd
+              strong> $38
+              | Standard International shipping.
+        hr.full-width
+        div
+          form.form-horizontal.bids-checkout-form
+            section.product-form-card-details
+              header.row
+                h4.col-sm-3 Card Details
+                .col-sm-6.product-form-card-number
+                  | ****&nbsp;****&nbsp;****&nbsp;1111
+                .col-sm-3.product-form-aside
+                  small
+                    a.product-form-change-card href="javascript:void(0)"  Change Card
+                  .cards-tooltip
+                    .angle
+                    ul.cards-list
+                      - current_user.credit_cards.each do |cc|
+                        li
+                          i.card-icon
+                          | ****&nbsp;****&nbsp;****&nbsp;#{cc.last_4}
+                      li.add-new + Add new card
+              .form-group
+                label.col-sm-3.control-label Expiration Date
+                .col-sm-3.product-form-card-exp
+                  p.form-control-static 01/2016
+              .form-group
+                label.col-sm-3.control-label CVV/CVV2
+                .col-sm-2.product-form-card-cvv
+                  input.form-control type="text"
+            section.product-form-billing-address
+              header.row
+                h4.col-sm-3 Billing Address
+                .col-sm-6
+                  | John Smith
+                  br
+                  | 18 Green Valey, Boston, USA, 10010
+                .col-sm-3.product-form-aside
+                  small
+                    a href="javascript:void(0)"  Change Billing Info
+            section.product-form-shipping-address
+              header.row
+                h4.col-sm-3 Shipping Address
+                .checkbox.col-sm-6
+                  label
+                    input checked="" type="checkbox"
+                    | Ship to Billing Address
+            section.product-form-prices
+              .row
+                .col-sm-3
+                  .product-form-prices-price
+                    span.price data-currency="$" 
+                      | 33895.99
+                .col-sm-3
+                  .product-form-prices-shipping
+                    span.price data-currency="$" 
+                      | 38.00
+                .col-sm-3
+                  .product-form-prices-total
+                    span.price data-currency="$" 
+                      | 33933.99
+                .col-sm-3.product-form-aside
+                  button.btn.btn-success type="submit"  Confirm &amp; Pay
+          footer.product-form-footer
+            small
+              | By making this purchase, you agree with the #{link_to 'terms and conditions', page_path('terms-and-conditions')} of 1bid1.com

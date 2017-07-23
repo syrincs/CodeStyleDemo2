@@ -1,0 +1,33 @@
+.has-error .control-label {
+  color: $body-text-color;
+}
+.has-error .help-block {
+  color: $red-color;
+}
+
+.has-error .form-control {
+  border-color: #ff6565;
+}
+
+.has-error .form-control {
+  @include form-control-focus($color: $red-color);
+}
+
+.form-control {
+//  color: $input-color;
+  border-color: $input-color;
+  @include form-control-focus($color: $input-focused-color);
+  &:focus {
+    color: $body-text-color;
+  }
+}
+
+.form-group.product_photos.has-error {
+  > .help-block {
+    color: #ff6565 !important;
+  }
+}
+
+.make-offer-bid-amount-input .help-block {
+  margin-right: -30px;
+}

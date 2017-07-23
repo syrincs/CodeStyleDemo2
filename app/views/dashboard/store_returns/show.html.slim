@@ -1,0 +1,60 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          ul.list-inline
+            li
+              a.gray-part href=dashboard_store_returns_path
+                i.icon-inbox
+                span Store Returns
+            li.divider
+            li Return details
+
+      .content
+        .row
+          .col-sm-2
+            figure.order-thumbnail = thumbnail order.product
+          .col-sm-7
+            .order-number Order ##{order.public_id}
+            h4.order-title = link_to order.product.title, product_path(order.product), target: :_blank
+            .order-sold-by Sold by: #{order.product.user}
+            = issue.link_to_postage
+          .col-sm-3
+            .pull-right
+              .btn-group.btn-group-vertical
+                - if order.issue.can_edit?(current_user)
+                  a.btn.btn-action href=edit_dashboard_order_return_path(order) Update information
+                - if order.issue.can_mark_shipped?(current_user)
+                  = link_to 'I received item', received_dashboard_order_return_path(order), remote: true, format: :json, method: :post, data: { confirm: 'You sure you received item and it looks as you expected?' }, class: 'btn btn-action button-order-received'
+                a.btn.btn-default href=new_dashboard_message_path(product_id: order.product.id) Contact Buyer
+
+        hr.full-width
+
+        section
+          h4 Description
+          div = auto_link simple_format issue.description
+
+        hr.full-width
+
+        - if issue.photos.present?
+          section
+            h4 Photos
+            ul.list-inline
+              - issue.photos.each do |photo|
+                li
+                  a href=photo.filename target='_blank'
+                    img.img-thumbnail src=photo
+
+          hr.full-width
+
+        - if issue.activities.present?
+          section
+            h4 Updates
+            ul.order-updates
+              - issue.activities.each do |activity|
+                li
+                  span.date = activity.time
+                  = activity.text

@@ -1,0 +1,80 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          = link_to '<i class="icon-inbox"></i> Store Orders '.html_safe, dashboard_store_orders_path, class:"gray-part"
+          ' / Order Details
+      .content
+        .row
+          .col-sm-2
+            figure.order-thumbnail
+              = @order.product.decorate.thumbnail
+          .col-sm-10
+            .order-actions
+              - if @order.issue
+                a.btn.btn-action href=dashboard_order_return_path(@order) Return Details
+            .order-product-info
+              .order-actions.order-actions__contact
+                a.btn.btn-info href=new_dashboard_message_path(product_id: @order.product.id) Contact Buyer
+              .order-number
+                ' Order #{@order.public_id}
+              h4.order-title
+                = link_to @order.product.title, @order.product, target: :_blank
+              .order-buye
+                ' Buyer:
+                = link_to @order.user, user_path(@order.user), target: :_blank
+              br
+              span.order-placed
+                strong Order Placed
+                br
+                = @order.created_at.strftime('%b %d, %Y')
+              span.order-status
+                strong Status
+                br
+                = @order.status_long
+        hr.full-width
+        /- if @order.product.user.bank_accounts.size == 0
+          section
+            h4 Bank Account details
+            p style="color: red;"
+              ' Before you receive money, you need to #{link_to 'add at least one bank account', new_bank_account_path} where 1bid1 will send you money from buyer.
+          hr.full-width
+        - if @order.status.paid? && @order.shipped_at.blank?
+          = render 'buy_shipping_label_form'
+        .row
+          .col-md-4
+            h4 Shipping Address
+            - if @order.address.present?
+              p= @order.address.decorate.full_address_html
+            - else
+              p.text-muted The buyer will specify shipping address when he pays the order
+          .col-md-4
+            h4 Order Summary
+            ul
+              li
+                | Original Item price:
+                span.pull-right= number_to_currency @order.product.original_price
+              li
+                | Sold Item price:
+                span.pull-right= number_to_currency @order.price
+              li
+                | Offers addition:
+                span.pull-right= number_to_currency @order.product.offers.size
+              li
+                | 1bid1 Fee:
+                span.pull-right= number_to_currency @order.price * 0.05
+              li
+                strong
+                  | Total:
+                  span.pull-right= number_to_currency @order.total
+        hr.full-width
+        section
+          h4 Updates
+          ul.order-updates
+            - @order.activities.each do |activity|
+              li
+                span.date= activity.created_at.strftime('%b %d, %Y %H:%M %p')
+                = activity.text
+        hr.full-width

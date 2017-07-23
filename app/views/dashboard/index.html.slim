@@ -1,0 +1,63 @@
+.container
+  .dashboard-box
+    = render 'sidebar'
+    section.dashboard-content
+      .content
+        - if @products_with_bids.size > 0
+          section
+            h4 My Purchases &amp; Offers
+            ul.dashboard-tiles
+              - @products_with_bids.each do |product|
+                li.tile
+                  figure.img_big
+                    = link_to product.decorate.thumbnail, product
+                  div
+                    = link_to product.title, product
+                    span.bullet-before
+                      | Current Price #{number_to_currency product.price}
+                    .dashboard-tile-meta
+                      - user_offer = product.offers.where(user_id: current_user.id).order(amount_cents: :desc).first
+                      - highest_offer = product.highest_offer
+                      - if user_offer == highest_offer
+                        | Your offer of #{number_to_currency user_offer.amount} is the highest
+                        - if product.sold?
+                          |.
+                          strong< Auction finished.
+                        - else
+                          '  for now.
+                      - else
+                        | Your offer #{number_to_currency user_offer.amount} was beaten, current highest offer #{number_to_currency highest_offer.amount}
+                  div.tile__buttons
+                    - if product.sold? && user_offer == highest_offer
+                      - if product.order.status.not_paid?
+                        = link_to 'Purchase', dashboard_order_path(product.order), class: "btn btn-action btn-sm"
+                      - else
+                        = link_to 'Manage', dashboard_order_path(product.order), class: "btn btn-action btn-sm"
+                    - if !product.sold?
+                      = link_to 'Buy Now', product_path(product, anchor: 'buy-now'), class: "btn btn-default btn-sm"
+          hr.full-width
+        - if @store_products.size > 0
+          h4 Store
+          ul.dashboard-tiles
+            - @store_products.each do |product|
+              li.tile
+                figure.img_big
+                  = link_to product.decorate.thumbnail, product, target: :_blank
+                div
+                  = link_to product.title, dashboard_store_product_path(product)
+                  .dashboard-tile-fmeta
+                    - if product.sold?
+                      | Sold
+                    - else
+                      | On sale
+                    ',
+                    - if product.offers.size > 0
+                      | highest offer is #{number_to_currency product.highest_offer.amount}
+                    - else
+                      | no offers placed
+                    ',
+                    | list price #{number_to_currency product.price}.
+                    - if product.auction_finish_at < Time.now
+                      strong Auction finished.
+                div
+                  = link_to 'Manage', dashboard_store_product_path(product), class: 'btn btn-action btn-sm'

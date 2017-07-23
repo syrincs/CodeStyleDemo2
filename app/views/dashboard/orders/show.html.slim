@@ -1,0 +1,125 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          a.gray-part href=url_for(:back)
+            i.icon-inbox
+            span> Orders
+          ' / Order Details
+
+      .content
+        .row
+          .col-sm-2
+            figure.order-thumbnail = @order.product.decorate.thumbnail
+          .col-sm-10
+            .order-actions.order-actions__contact
+              - if @order.shipped_at.present? && @order.received_at.blank?
+                = link_to 'I received item', received_dashboard_order_path(@order), remote: true, format: :json, method: :post, data: { confirm: 'You sure you received item and it looks as you expected?' }, class: 'btn btn-action button-order-received'
+              a.btn.btn-info href=new_dashboard_message_path(product_id: @order.product.id) Contact Seller
+              - if @order.issue.present? && @order.status.delivered?
+                a href=dashboard_order_return_path(@order) class="btn btn-action" Return details
+              - if @order.can_return?
+                a href=new_dashboard_order_return_path(@order) class="btn btn-action" Return Item
+            .order-product-info
+              .order-number Order ##{@order.public_id}
+              h4.order-title = link_to @order.product.title, product_path(@order.product), target: :_blank
+              .order-sold-by Sold by: #{@order.product.user}
+              br
+              span.order-placed
+                strong Order Placed
+                br
+                = @order.created_at.strftime('%b %d, %Y')
+              span.order-status
+                strong Status
+                br
+                = @order.status_long
+
+        hr.full-width
+
+        - if @order.status.not_paid?
+          - if !current_user.address.present?
+            h4 Step 1 - Add address
+            hr.full-width
+            = link_to 'Add address', new_address_path(return_to: url_for), class: 'btn btn-success'
+            br
+            br
+            h4 Step 2 - Pay to order
+          - else
+            div
+              h4 Step 1 - Shipping Address
+              hr.full-width
+              section.product-form-shipping-address
+                header.row
+                  .col-sm-6
+                    = current_user.address.decorate.full_address_html
+                    = hidden_field_tag 'user[address_id]', current_user.address.id
+                    = link_to 'Change address', edit_address_path(current_user.address, return_to: url_for)
+              hr.full-width
+              h4 Step 2 - Pay to order
+              hr.full-width
+              = form_tag purchase_dashboard_order_path(@order), class: 'form-horizontal bids-checkout-form' do
+                - if current_user.default_credit_card
+                  = render 'card'
+                - else
+                  = render 'new_card'
+
+                section.product-form-prices
+                  .row
+                    .col-sm-3
+                      .product-form-prices-price
+                        span.price data-currency="$" = @order.price
+                    .col-sm-3
+                      .product-form-prices-shipping
+                        span.price data-currency="$"  0.00
+                    .col-sm-2
+                      .product-form-prices-total
+                        span.price data-currency="$" = @order.price
+                    .col-sm-2.product-form-aside
+                      button.btn.btn-success type="submit"  Confirm &amp; Pay
+                    .col-sm-2.product-form-aside
+                      a href=cancel_dashboard_order_path(@order) data-method="delete" class="btn btn-default" Cancel Order
+
+                footer.product-form-footer
+                  small
+                    | By making this purchase, you agree with the #{link_to 'terms and conditions', page_path('terms-and-conditions')}  of 1bid1.com
+
+        - else
+          .row
+            .col-md-4
+              h4 Shipping Address
+              p = @order.address.decorate.full_address_html if @order.address.present?
+
+            - if @order.status.in?(['paid', 'shipped', 'delivered'])
+              .col-md-4
+                h4 Payment Method
+                = @order.payment_method
+
+            .col-md-4
+              h4 Order Summary
+              ul
+                li
+                  | Original Item price:
+                  span.pull-right = number_to_currency @order.product.original_price
+                li
+                  | Item price:
+                  span.pull-right = number_to_currency @order.price
+                li
+                  | Shipping &amp; Handling:
+                  span.pull-right Free
+                li
+                  strong
+                    | Total:
+                    span.pull-right = number_to_currency @order.price
+
+        hr.full-width
+
+        section
+          h4 Updates
+          ul.order-updates
+            - @order.activities.each do |activity|
+              li
+                span.date = activity.time
+                = activity.text

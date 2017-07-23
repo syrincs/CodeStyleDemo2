@@ -1,0 +1,25 @@
+.panel.panel-default
+  .panel-heading
+    h3.panel-title Orders by statuses
+  .panel-body
+    - unless @analytics.statuses.present?
+      h3.text-center.text-muted No Data Available
+    - @analytics.statuses.each do |status|
+      .col-md-3
+        ul.list-group
+          li.list-group-item.text-center = status['key'].humanize
+          li.list-group-item
+            span.label.label-primary.pull-right= number_to_currency status['total']['sum']
+            span Total
+          li.list-group-item
+            span.label.label-primary.pull-right= status['total']['count']
+            span Count
+          li.list-group-item
+            span.label.label-primary.pull-right= number_to_currency status['total']['min']
+            span Min
+          li.list-group-item
+            span.label.label-primary.pull-right= number_to_currency status['total']['max']
+            span Max
+          li.list-group-item
+            span.label.label-primary.pull-right= number_to_currency status['total']['avg']
+            span Avg

@@ -1,0 +1,90 @@
+.col-md-10
+  .panel.panel-default
+    .panel-body
+      .col-md-12
+        .dashboard_heading
+          h3 Purchase #{@offer.product.title}
+
+      .col-md-12#offer-purchase
+        = form_for post_offer_purchase_offer_path do
+          .row
+            .col-md-6
+              .shipping_address
+                h3 style="font-size:16px"
+                  b Shipping Address
+                  - if logged_in? and !current_user.address.nil?
+                    a data-toggle="modal" data-target="#shippingModal" change
+
+                  - else
+                    a data-toggle="modal" data-target="#shippingModal" add new
+
+                - if logged_in? and !current_user.address.nil?
+                  = hidden_field_tag :address_id, nil, value: current_user.address.id
+                  p.shipping_address
+                    = current_user.profile.full_name
+
+                    - if current_user.address.address1.present?
+                      br
+                      = "#{current_user.address.address1}"
+
+                    - if current_user.address.address2.present?
+                      br
+                      = "#{current_user.address.address2}"
+
+                    br
+                    = "#{current_user.address.city}, #{current_user.address.state} #{current_user.address.zip_code}"
+
+                - else
+                  p.shipping_address Please add a shipping address
+
+            .col-md-6
+              - if logged_in?
+                .payment_method
+                  h3 style='font-size:16px;'
+                    b Payment Method
+
+                  p
+                    - cards = current_user.credit_cards.collect {|cc| [cc.to_s, cc.id]}
+                    = select_tag 'credit_card_id', options_for_select(cards), prompt: 'Select your payment method', class: 'select2', id: 'cc-list'
+
+          .row
+            .col-md-6
+              p.fleft
+                | Product Price:
+
+              p.fright.price-amount
+                = number_to_currency(@offer.product.price)
+
+              .clearfix
+
+              p.fleft
+                | Accepted Offer Price:
+
+              p.fright.price-amount
+                = number_to_currency(@offer.amount)
+
+              .clearfix
+
+          .row
+            .col-md-6
+              p.fleft
+                b Order total:
+
+              p.fright.total-amount
+                b= number_to_currency(@offer.amount)
+          .row
+            .col-md-6
+              span  style='line-height: 35px;'
+                | * Shipping address and Payment method are mandatory
+            .col-md-6
+              = submit_tag 'Purchase', class: 'btn btn-primary btn-lg'
+
+= content_for :scripts do
+  javascript:
+    $(function() {
+      $('#offer-purchase #cc-list').on('change', function(event) {
+        if (event.val !== '') {
+          $('#offer-purchase #href').val(event.val);
+        }
+      });
+    });

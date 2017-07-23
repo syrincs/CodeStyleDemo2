@@ -1,0 +1,45 @@
+#js-change-address-target.modal.fade {
+  .modal-dialog {
+    @media (min-width: 768px) {
+      margin-top: 100px;
+    }
+
+    > .modal-content {
+      > .modal-header {
+        position: relative;
+        > h2 {
+          margin: 0 20px;
+          text-align: left;
+          color: #898B8D;
+        }
+      }
+
+      > .modal-body {
+        text-align: left;
+
+        .hidden {
+          display: none;
+        }
+
+          > .row {
+            margin: 0 20px;
+
+            .form-group {
+              margin-right: 15px;
+              margin-bottom: 10px;
+
+              > label {
+                margin-bottom: 5px;
+              }
+            }
+          }
+      }
+
+      > .modal-footer {
+        > .btn {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+}

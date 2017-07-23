@@ -1,0 +1,32 @@
+.panel.panel-default
+  .panel-heading
+    h3.panel-title Offers
+  .panel-body
+    - if @analytics.offers_fee.present?
+      .col-md-4
+        ul.list-group
+          li.list-group-item.text-center Today / Yesterday
+          li.list-group-item.text-center
+            h3
+              span = @analytics.offers_fee[:today]
+              span = ' / '
+              span = @analytics.offers_fee[:yesterday]
+
+      .col-md-4
+        ul.list-group
+          li.list-group-item.text-center Week / Last Week
+          li.list-group-item.text-center
+            h3
+              span = @analytics.offers_fee[:week]
+              span = ' / '
+              span = @analytics.offers_fee[:last_week]
+      .col-md-4
+        ul.list-group
+          li.list-group-item.text-center Month / Last Month
+          li.list-group-item.text-center
+            h3
+              span = @analytics.offers_fee[:month]
+              span = ' / '
+              span = @analytics.offers_fee[:last_month]
+    - else
+      h3.text-center.text-muted No Data Available

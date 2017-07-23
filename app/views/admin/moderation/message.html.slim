@@ -1,0 +1,12 @@
+header.dashboard-header
+  h1
+    = link_to admin_moderation_index_path, class: 'gray-part' do
+      i.fa.fa-ban( style='top: 0px;' )
+      |  Moderation
+
+.content
+  = form_tag decline_admin_moderation_path(@product.id), method: :put, class: '' do |f|
+    h3 Write decline message to product owner
+    = text_area_tag :message, nil, class: 'text form-control'
+    br
+    = submit_tag 'Decline', class: 'button btn btn-success pull-right'

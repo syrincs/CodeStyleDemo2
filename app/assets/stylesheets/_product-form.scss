@@ -1,0 +1,253 @@
+.product-form {
+  display: none;
+  padding: $spacing-single $spacing-3over2;
+
+  p b {
+    font-weight: bold;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -#{$spacing-half};
+    background: #FFFFFF;
+    border: solid #E6E6E6;
+    border-width: 0 0 1px 1px;
+    width: $spacing-single;
+    height: $spacing-single;
+    @include transform(translateX(-50%) rotate(-45deg));
+  }
+
+  section > header > * {
+    padding-top: $spacing-half;
+    padding-bottom: $spacing-half;
+  }
+
+  h4 {
+    text-align: right;
+    font-size: 1.2em;
+    font-weight: 200;
+    padding-right: $spacing-single;
+  }
+
+  .product-form-card-number{
+
+  }
+
+  label h4 {
+    padding: 0;
+  }
+}
+
+.checkout-form:before {
+  left: 22.5%;
+}
+
+.make-offer-form:before {
+  left: 67.5%;
+}
+
+.product-form-header,
+.checkout-create-account,
+.product-form-prices {
+  margin-bottom: $spacing-single;
+}
+
+.product-form-prices {
+  border-top: 1px solid #E6E6E6;
+  padding: $spacing-single 0;
+  margin-top: $spacing-single;
+}
+
+.register-page {
+  section.content {
+    border: none;
+    padding: 0;
+  }
+
+  .product-form-header {
+
+    h3 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    small {
+      font-size: 15px;
+
+      a {
+        font-weight: bold;
+      }
+    }
+  }
+
+}
+
+
+.checkout-create-account .info {
+  top: -#{$spacing-single};
+}
+
+.product-form-prices-price,
+.product-form-prices-shipping,
+.product-form-prices-total {
+//  font-size: 1.2em;
+  font-size: 18px;
+
+  &:before {
+    font-weight: normal;
+    font-size: 12px;
+    color: #898b8d;
+    display: block;
+  }
+}
+
+.product-form-prices-price:before {
+  content: 'Price';
+}
+
+.product-form-prices-shipping:before {
+  content: 'Shipping';
+}
+
+.product-form-prices-total {
+  font-weight: 600;
+
+  &:before {
+    content: 'Total';
+  }
+}
+
+.product-form-aggreement-note {
+  text-align: right;
+  margin-top: $spacing-half;
+  font-weight: 300;
+  font-size: $font-size;
+  display: inline-block;
+}
+
+.make-offer-bid-amount {
+  background-color: #FFFCE9;
+  padding: $spacing-single $spacing-single $spacing-half;
+  border-radius: $border-radius;
+  margin-bottom: $spacing-single;
+
+  .form-group {
+    margin-bottom: 0;
+    @media (max-width: $screen-xs-max) {
+      margin-right: 0;
+    }
+  }
+}
+
+.make-offer-bid-amount-input {
+  padding-left: 50px;
+  position: relative;
+  .currency{
+    position: absolute;
+    left: 15px;
+    top: 0;
+    line-height: 34px;
+  }
+  .bid-message{}
+}
+
+.product-form {
+  .content {
+    button {
+      display: block;
+      width: 100%;
+    }
+
+    .terms.actions {
+      margin: 10px 0;
+    }
+
+    .terms.checkbox {
+      margin: 10px 0;
+    }
+  }
+}
+
+.product-form-aside {
+  text-align: right;
+  position: relative;
+  padding-top: 3px;
+
+  .cards-tooltip{
+    background: #ffffff;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 35px;
+    left: 18px;
+    display: none;
+    z-index: 2;
+
+    .angle{
+      background: #fff;
+      -webkit-transform: rotate(-135deg);
+      -ms-transform: rotate(-135deg);
+      transform: rotate(-135deg);
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      margin-left: -5px;
+    }
+    .cards-list{
+      margin: 0;
+
+      li{
+        height: 40px;
+        border-top: 1px solid #e6e6e6;
+        text-align: center;
+        line-height: 40px;
+        cursor: pointer;
+        padding: 0 10px;
+        white-space: nowrap;
+
+        &:hover{
+          color: #5db0c4;
+        }
+
+        &:first-child{
+          border-top: none;
+        }
+        &.add-new{
+
+        }
+
+
+        .card-icon{
+          vertical-align: middle;
+          margin-right: 12px;
+        }
+      }
+    }
+
+    &.open{
+      display: block;
+    }
+  }
+}
+
+.bids-checkout-form{
+  .cards-tooltip{
+    left: 67px;
+    top: 30px;
+  }
+}
+
+.product-form-footer {
+  text-align: center;
+}
+
+.product-form-new-card-details {
+  display: none;
+}
+
+.sortable-ghost {
+  opacity: .4
+}

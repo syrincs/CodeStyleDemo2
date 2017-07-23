@@ -1,0 +1,37 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          i.icon-truck.icon-reflect
+          span Store Returns
+      .content
+        - if @total_issues > 0
+          table.dashboard-table.store-returns-table
+            thead
+              tr
+                th Issue ID
+                th Issue Subject
+                th Order
+                th Status
+                th
+            tbody
+              - @issues.decorate.each do |issue|
+                tr
+                  td = issue.id
+                  td = link_to issue.subject, dashboard_store_return_path(issue)
+                  td = link_to issue.order.product.title, dashboard_store_order_path(issue.order)
+                  td = issue.status
+                  td
+
+              - if @issues.size == 0
+                tr
+                  td.centered colspan="8"  You don't have orders.
+
+          nav.dashboard-nav
+            = paginate_page_status(@issues)
+            = paginate @issues
+        - else
+          .no-entries
+            .notice You don't have any issues yet.

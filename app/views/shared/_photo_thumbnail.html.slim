@@ -1,0 +1,4 @@
+.product-list-tile-thumbnails.js-galary
+  - photos.take(lazy).each do |photo|
+    a.product-list-tile-thumb.persist href=photo.url(:zoom, secure: request.ssl?)
+      = image_tag photo.url(:thumbnail, secure: request.ssl?)

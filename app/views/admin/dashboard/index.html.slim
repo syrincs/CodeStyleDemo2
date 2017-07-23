@@ -1,0 +1,5 @@
+header.dashboard-header
+  h1 Dashboard
+
+.content
+  = render 'finance_on_dashboard' if can?(:read, :finance)

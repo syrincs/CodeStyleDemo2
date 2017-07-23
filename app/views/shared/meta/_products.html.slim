@@ -1,0 +1,10 @@
+.slider-showcase-wrapper
+  - products.each do |product|
+    - if @view == 'list'
+      = render 'shared/product_list_tile', product: product
+    - elsif @view == 'grid'
+      .col-sm-6.col-md-3.col-xs-6
+        = render 'shared/product_tile', product: product
+    - elsif @view == 'big_grid'
+      .col-sm-6.col-md-4.col-xs-6
+        = render 'shared/product_tile', product: product

@@ -1,0 +1,8 @@
+p Hi #{@product.user.full_name},
+p
+  ' Price of
+  a> href=product_url(@product) = @product.title
+  ' has been reduced.
+
+p
+  a href=product_url(@product) Check it out

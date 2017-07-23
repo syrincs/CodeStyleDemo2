@@ -1,0 +1,205 @@
+$promo-vertical-gutter: 56px;
+
+.promos-page {
+  text-align: center;
+  .full-width-wrapper {
+    background: $lighter-gray-color;
+  }
+  .intro {
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 20px 0 100px 0;
+    nav {
+      .btn-join-now {
+        float: right;
+      }
+      .header-logo {
+        float: left;
+      }
+    }
+    h1 {
+      margin-top: $promo-vertical-gutter;
+      text-transform: uppercase;
+      font-size: 36px;
+      font-stretch: condensed;
+      line-height: 42px;
+    }
+  }
+  &.promos-electronics {
+    &.seller .intro {
+      background-image: image-url("promos/sell-electronics-bg.jpg");
+    }
+    &.buyer .intro {
+      background-image: image-url("promos/buy-electronics-bg.jpg");
+    }
+  }
+  &.promos-furniture {
+    &.seller .intro {
+      background-image: image-url("promos/sell-furniture-bg.jpg");
+    }
+  }
+  &.promos-automotive_and_parts {
+    &.seller .intro {
+      background-image: image-url("promos/sell-automotive-parts-bg.jpg");
+    }
+    &.buyer .intro {
+      background-image: image-url("promos/buy-automotive-parts-bg.jpg");
+    }
+  }
+  &.promos-mens_fashion {
+    &.seller .intro {
+      background-image: image-url("promos/sell-mens-fashion-bg.jpg");
+    }
+    &.buyer .intro {
+      background-image: image-url("promos/buy-mens-fashion-bg.jpg");
+    }
+  }
+  &.promos-womens_fashion {
+    &.seller .intro {
+      background-image: image-url("promos/sell-womens-fashion-bg.jpg");
+    }
+    &.buyer .intro {
+      background-image: image-url("promos/buy-womens-fashion-bg.jpg");
+    }
+  }
+  .centered {
+    margin: 0 auto;
+  }
+  .main-body {
+    background-color: #fff;
+    padding-top: 30px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    h2 {
+      font-size: 26px;
+      line-height: 32px;
+    }
+  }
+  .join-now {
+    p {
+      margin: 1em;
+    }
+  }
+  .btn-join-now {
+    border-width: 0;
+    background-color: $darker-green-color;
+    border-radius: 6px;
+  	border: solid 1px lighten($darker-green-color, 2);
+    color: #fff;
+    padding: 4px 20px;
+    font-size: 18px;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .how-to {
+    padding-top: 20px;
+    background: #fff;
+  }
+  .promoted-products {
+    background: $lighter-gray-color;
+    padding: $promo-vertical-gutter 0;
+    header {
+      margin-bottom: $promo-vertical-gutter;
+    }
+    h2 {
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase;
+      font-size: 26px;
+    }
+    p {
+      text-transform: uppercase;
+    }
+    .slider-showcase {
+      padding: 0 20px;
+    }
+  }
+  .what-is {
+    padding: $promo-vertical-gutter 0 $promo-vertical-gutter / 2;
+    h2 {
+      font-size: 26px;
+      text-decoration: underline;
+    }
+    p {
+      padding: 0 40px 40px;
+    }
+  }
+  .why-shop, .why-sell {
+    background: $lighter-gray-color;
+    padding: $promo-vertical-gutter 0 0;
+    h2 {
+      font-size: 26px;
+      text-decoration: underline;
+      margin-bottom: 2em;
+    }
+    h3 {
+      font-size: 18px;
+      text-decoration: underline;
+    }
+    p {
+      padding: 0 40px 40px;
+    }
+  }
+  .join-now-footer {
+    padding: $promo-vertical-gutter 0 $promo-vertical-gutter / 2;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: image-url("promos/default-footer.jpg");
+    min-height: 320px;
+    background-position: 0 50%;
+    h2 {
+      text-transform: uppercase;
+      max-width: 580px;
+      margin: 1em auto
+    }
+    &.electronics {
+      // background-image: image-url("promos/footer-electronics.jpg");
+      // &.seller {
+      //   background-image: image-url("promos/footer-electronics.jpg");
+      // }
+    }
+    &.automotive_and_parts {
+      background-image: image-url("promos/footer-automotive-parts.jpg");
+      &.seller {
+        background-image: image-url("promos/footer-sell-automotive-parts.jpg");
+      }
+      h2 {
+        color: #fff;
+      }
+    }
+    &.mens_fashion {
+      background-image: image-url("promos/footer-mens-fashion.jpg");
+      &.seller {
+        background-image: image-url("promos/footer-sell-mens-fashion.jpg");
+      }
+      h2 {
+        color: #fff;
+      }
+    }
+    &.womens_fashion {
+      background-image: image-url("promos/footer-womens-fashion.jpg");
+      &.seller {
+        background-image: image-url("promos/footer-sell-womens-fashion.jpg");
+      }
+      h2 {
+        color: #fff;
+      }
+    }
+  }
+}
+
+
+#easy-steps {
+  h3 {
+    font-size: 20px;
+  }
+  p {
+    margin-bottom: 2em;
+  }
+  .number {
+    color: $green-color;
+    padding-right: 4px;
+  }
+}

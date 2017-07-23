@@ -1,0 +1,31 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          a.gray-part href=dashboard_messages_path
+            i.icon-envelope
+            span> My Messages
+          | / New Message
+      .content.product-message-details
+        = simple_form_for @message, url: dashboard_messages_path do |f|
+          = hidden_field_tag :product_id, @message.product_id
+          .row
+            .col-md-1
+              - if @message.sender.avatar.present?
+                = image_tag @message.sender.avatar.url(:avatar, secure: request.ssl?), width: 43
+              - else
+                = gravatar_image_tag @message.sender.email, gravatar: {size: 43}
+            .col-md-9
+              h3.message-subject
+                = f.input :subject, label: false, placeholder: 'Subject'
+            .col-md-2
+
+          hr
+
+          .row
+            .col-md-9.col-md-offset-1
+              = f.input :body, label: false, placeholder: 'Type your message here'
+              = f.submit 'Send', class: 'btn btn-success pull-right'

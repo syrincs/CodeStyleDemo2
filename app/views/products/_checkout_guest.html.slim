@@ -1,0 +1,30 @@
+.register-page
+  header.product-form-header
+    h3 Sign up & Buy
+    small Already have an account? #{link_to 'Sign In', "#", :"data-toggle" => "modal", :"data-target" => "#loginModal"}
+  section.checkout-create-account.content
+    = simple_form_for User.new, url: register_process_path, html: {class: 'register-form', id: nil} do |f|
+      = hidden_field_tag :buy_product_id, @product.id
+      .row
+        .col-sm-6
+          = f.input :first_name, required: false, autofocus: true, input_html: {tabindex: 1}
+        .col-sm-6
+          = f.input :last_name, required: false, input_html: {tabindex: 2}
+      .row
+        .col-sm-6
+          = f.input :email, required: false, input_html: {tabindex: 3}
+        .col-sm-6
+          = f.input :password, required: false, input_html: {tabindex: 4}
+      .clearfix
+        .row
+          .col-sm-12
+            .terms.checkbox
+              label for="terms"
+                input#terms name="terms" tabindex="5" type="checkbox"
+                | I agree with
+                | the #{link_to 'terms and conditions', page_path('terms-and-conditions')} of 1bid1.com
+        .row
+          .col-sm-12
+            .terms.actions
+              button.btn.btn-success.submit-button type="submit"  Create account and buy now
+              span.loader

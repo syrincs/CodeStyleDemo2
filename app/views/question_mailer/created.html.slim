@@ -1,0 +1,4 @@
+p
+  | Hi #{@product.user.full_name},
+p
+  | Your have new question about product "#{@product.title}". You can check it and answer #{link_to 'here',  new_dashboard_question_answers_url(@question.id)}

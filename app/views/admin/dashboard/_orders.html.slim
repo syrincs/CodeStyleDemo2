@@ -1,0 +1,31 @@
+.panel.panel-default
+  .panel-heading
+    h3.panel-title Orders
+  .panel-body
+    - if @analytics.orders_income_by_purchesed.present?
+      .col-md-4
+        ul.list-group
+          li.list-group-item.text-center Today / Yesterday
+          li.list-group-item.text-center
+            h3
+              span = number_to_currency @analytics.orders_income_by_purchesed[:today]
+              span = ' / '
+              span = number_to_currency @analytics.orders_income_by_purchesed[:yesterday]
+      .col-md-4
+        ul.list-group
+          li.list-group-item.text-center Week / Last Week
+          li.list-group-item.text-center
+            h3
+              span = number_to_currency @analytics.orders_income_by_purchesed[:week]
+              span = ' / '
+              span = number_to_currency @analytics.orders_income_by_purchesed[:last_week]
+      .col-md-4
+        ul.list-group
+          li.list-group-item.text-center Month / Last Month
+          li.list-group-item.text-center
+            h3
+              span = number_to_currency @analytics.orders_income_by_purchesed[:month]
+              span = ' / '
+              span = number_to_currency @analytics.orders_income_by_purchesed[:last_month]
+    - else
+      h3.text-center.text-muted No Data Available

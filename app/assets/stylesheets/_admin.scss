@@ -1,0 +1,20 @@
+ul.list-group{
+  h3 {
+    margin: 0;
+    font-size: 21px;
+  }
+  h4 {
+    margin: 0;
+    line-height: 30px;
+  }
+}
+
+.links-group {
+  li {
+    .badge {
+      margin-top: 10px;
+      margin-right: 10px;
+      float: right;
+    }
+  }
+}

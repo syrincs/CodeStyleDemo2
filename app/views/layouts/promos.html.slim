@@ -1,0 +1,45 @@
+doctype html
+html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#"
+  head
+    meta charset="UTF-8"
+    - if content_for? :meta
+      = yield :meta
+    = csrf_meta_tag
+    - for_device_type :tablet do
+      meta content="width=1065, maximum-scale=5, minimum-scale=0.5, shrink-to-fit=no" name="viewport"
+    - for_device_type :desktop, :mobile do
+      meta content="width=device-width, initial-scale=1.0" name="viewport"
+
+    meta content="Onebidone, LLC" name="author"
+    - if no_robots?
+      meta content=meta_robots_content name="robots"
+    title= strip_tags t("promos.intro.tagline.#{@category_name}_#{@audience}_html")
+
+    = stylesheet_link_tag :application
+    = yield :css
+    = render 'layouts/shared/rollbar'
+  body class=body_class
+    = render 'layouts/shared/google_tag_manager'
+
+    div class="promos-page promos-#{@category_name} #{@audience}"
+      header.intro.full-width-wrapper
+        nav.container
+          .row
+            .col-xs-6.logo_center
+              = link_to root_path, class: 'header-logo' do
+                | 1bid1
+                .header-logo__tagline sell high, buy low
+            .col-xs-6
+              =link_to "Join Now", register_path, class: "btn-join-now"
+
+        .container
+          .row
+            .col-md-6.col-md-offset-3
+              = render partial: "intro"
+
+      main.main-body
+        = yield
+
+      = render 'footer'
+
+    = javascript_include_tag :application

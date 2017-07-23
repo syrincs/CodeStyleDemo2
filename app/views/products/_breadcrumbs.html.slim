@@ -1,0 +1,25 @@
+nav.breadcrumbs
+  - position = 0
+  ul.links itemscope="" itemtype="http://schema.org/BreadcrumbList" 
+    li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" 
+      = link_to root_path, itemprop: 'item' do
+        span itemprop="name"  Home
+    meta content=(position+=1) itemprop="position"
+    - if @product.category && @product.category.parent
+      li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"
+        = link_to category_path(@product.category.parent), itemprop: 'item' do
+          span itemprop="name" = @product.category.parent.name
+      meta content=(position+=1) itemprop="position"
+    - if @product.category
+      li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"
+        = link_to category_path(category: @product.category.code), itemprop: 'item' do
+          span itemprop="name" = @product.category.name
+      meta content=(position+=1) itemprop="position"
+    - if @product.manufacturer.present? && @product.category.present?
+      li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"
+        = link_to category_path(@product.category, manufacturer: @product.manufacturer.downcase), itemprop: 'item' do
+          span itemprop="name" = @product.manufacturer
+      meta content=(position+=1) itemprop="position"
+    li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"
+      span itemprop="name" = @product.title
+    meta content=(position+=1) itemprop="position"

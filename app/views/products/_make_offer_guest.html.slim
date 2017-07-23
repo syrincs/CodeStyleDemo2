@@ -1,0 +1,31 @@
+.register-page
+  header.product-form-header
+    h3 Sign up & Make offer
+    small Already have an account? #{link_to 'Sign in', "#", :"data-toggle" => "modal", :"data-target" => "#loginModal"}
+  section.checkout-create-account.content
+    = simple_form_for User.new, url: register_process_path, html: {class: 'register-form', id: nil} do |f|
+      = hidden_field_tag :make_offer_product_id, @product.id
+      = hidden_field_tag :destination_url, url_for(make_offer: "1")
+      .row
+        .col-sm-6
+          = f.input :first_name, required: false, input_html: {tabindex: 2}
+        .col-sm-6
+          = f.input :last_name, required: false, input_html: {tabindex: 3}
+      .row
+        .col-sm-6
+          = f.input :email, required: false, input_html: {tabindex: 4}
+        .col-sm-6
+          = f.input :password, required: false, input_html: {tabindex: 5}
+      .clearfix
+        .row
+          .col-sm-12
+            .terms.checkbox
+              label for="terms"
+                input#terms name="terms" tabindex="6" type="checkbox"
+                | I agree with
+                | the #{link_to 'terms and conditions', page_path('terms-and-conditions')} of 1bid1.com
+        .row
+          .col-sm-12
+            .terms.actions
+              button.btn.btn-success.submit-button type="submit"  Create account and make offer
+              span.loader

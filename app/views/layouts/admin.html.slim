@@ -1,0 +1,37 @@
+doctype html
+html lang="en"
+  head
+    meta charset="UTF-8"
+    title 1bid1
+    = csrf_meta_tag
+    meta content="width=device-width, initial-scale=1.0" name="viewport"
+    meta content="Onebidone, LLC" name="author"
+    = stylesheet_link_tag :application
+    = render 'layouts/shared/rollbar'
+    = javascript_include_tag '//www.google.com/jsapi', 'chartkick'
+    = javascript_include_tag :application
+    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.6/js/lightgallery.js'
+    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js'
+    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.6/js/lg-thumbnail.js'
+    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.6/js/lg-fullscreen.js'
+  body.admin class=body_class
+    .main-panel
+      = render 'admin/header'
+      - if content_for? :before_content
+        = yield :before_content
+      main.main-body
+        = render 'layouts/shared/flash'
+        .container
+          .dashboard-box
+            = render 'admin/sidebar'
+            section.dashboard-content
+              - if content_for? :content
+                = yield :content
+              - else
+                = yield
+      - if content_for? :after_content
+        = yield :after_content
+      = render 'footer'
+
+    nav.slideout-menu
+      = render 'admin/sidebar'

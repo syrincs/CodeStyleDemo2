@@ -1,0 +1,138 @@
+ruby:
+ links = [
+   {
+     title: 'Dashboard',
+     icon: 'icon-home',
+     url: admin_dashboard_path,
+     can_access: can?(:read, :admin_dashboard)
+   },
+   {
+     title: 'Users',
+     icon: 'icon-user',
+     url: admin_users_path,
+     can_access: can?(:manage, User),
+     counter: User.count
+   },
+   {
+     title: 'Q&A',
+     icon: 'fa fa-question',
+     url: admin_questions_path,
+     can_access: can?(:answer, Question),
+     counter: Question.count
+   },
+   {
+     title: 'Moderation',
+     icon: 'fa fa-ban',
+     url: admin_moderation_index_path,
+     can_access: can?(:manage, Product),
+     counter: Product.moderating.count
+   },
+   {
+     title: 'Products',
+     icon: 'icon-tags',
+     url: admin_products_path,
+     can_access: can?(:manage, Product),
+     counter: Product.approved.on_sale.count
+   },
+   {
+     title: 'Offers',
+     icon: 'icon-hammer',
+     url: admin_offers_path,
+     can_access: can?(:manage, Offer),
+     counter: Offer.count
+   },
+   {
+     title: 'Orders',
+     icon: 'icon-inbox',
+     url: admin_orders_path,
+     can_access: can?(:manage, Order),
+     counter: Order.real.count
+   },
+   {
+     title: 'Messages',
+     icon: 'fa fa-envelope',
+     url: admin_messages_path,
+     can_access: can?(:manage, AdminMessage),
+     counter: AdminMessage.count
+   },
+   {
+     title: 'Contacts',
+     icon: 'fa fa-phone',
+     url: admin_contacts_path,
+     can_access: can?(:manage, Contact),
+     counter: Contact.count
+   }
+ ]
+
+ finance_links = [
+   {
+     title: 'Revenue',
+     icon: 'icon-dollar',
+     url: admin_finance_revenue_index_path,
+     can_access: can?(:read, :finance)
+   },
+   {
+     title: 'Offers',
+     icon: 'icon-hammer',
+     url: admin_finance_offers_path,
+     can_access: can?(:read, :finance)
+   },
+   {
+     title: 'Orders',
+     icon: 'icon-inbox',
+     url: admin_finance_orders_path,
+     can_access: can?(:read, :finance)
+   },
+ ]
+
+aside.sidebar
+  .main-links.links-group
+    ul
+      - links.select { |item| item[:can_access] }.each do |link|
+        ruby:
+           li_class = []
+           if link[:url] == '/dashboard'
+             if request.path == '/dashboard'
+               li_class << 'active'
+             end
+           elsif request.path =~ /^#{link[:url]}/
+             li_class << 'active'
+           end
+
+        li class=li_class.join(' ')
+          = link_to link[:url] do
+            span = link[:title]
+            span.badge = link[:counter]
+
+  - finance_links.select { |item| item[:can_access] }.any?
+    .main-links.links-group
+      h4 Finance
+      ul
+        - finance_links.select { |item| item[:can_access] }.each do |link|
+          ruby:
+            li_class = []
+            if link[:url] == '/dashboard'
+              if request.path == '/dashboard'
+                li_class << 'active'
+              end
+            elsif request.path =~ /^#{link[:url]}/
+              li_class << 'active'
+            end
+
+          li class=li_class.join(' ')
+            = link_to link[:url] do
+              span = link[:title]
+
+  - if can? :read, :finance
+    .main-links.links-group
+      h4 Links
+      ul
+        li
+          a href="https://www.google.com/analytics/web/?#report/visitors-overview/a61956074w96801194p100999211/" target="_blank"
+            span Google Analytics
+        li
+          a href="https://www.easypost.com/account/shipments" target="_blank"
+            span Easy Post
+        li
+          a href="https://account.authorize.net/" target="_blank"
+            span Authorize.NET

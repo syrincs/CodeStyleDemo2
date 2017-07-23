@@ -1,0 +1,279 @@
+.register-page{
+  max-width: 840px;
+  &.register-page__rewards {
+    max-width: 1176px;
+    .content {
+      margin-top: 50px;
+      @media (max-width: $screen-xs-max) {
+        padding: 40px 15px;
+      }
+    }
+    .register-page__rewards__title {
+      font-weight: 100;
+      font-size: 32px;
+      line-height: 40px;
+    }
+    .register-page__rewards__title_subtitle {
+      font-weight: 100;
+      font-size: 24px;
+      line-height: 30px;
+    }
+    .register_page__delimeter{
+      height: 400px;
+      border-right: 1px solid #E6E6E6;
+      @media (max-width: $screen-xs-max) {
+        height: 90px;
+        border-right: 0;
+      }
+    }
+    .register_page__making_offers{
+      border-top: 1px solid #E6E6E6;
+      border-bottom: 1px solid #E6E6E6;
+      margin: 40px -50px 50px -50px;
+      padding: 20px;
+    }
+    .register_page__making_offers__title {
+      text-transform: capitalize;
+      font-size: 25px;
+      letter-spacing: 2.9px;
+      border-bottom: 1px solid black;
+      width: 210px;
+      display: inline-block;
+    }
+    .register_page__making_offers__body {
+      font-size: 20px;
+      padding: 10px;
+    }
+    h1{
+      text-transform: uppercase;
+      text-decoration: underline;
+      font-size: 30px;
+      padding: 0;
+      margin: 0;
+    }
+    .register-page__rewards__subtitle__main {
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+    p {
+      padding: 0 20px;
+    }
+  }
+  .header{
+    margin-top: 40px;
+    margin-bottom: 30px;
+
+    h1{
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 300;
+      padding: 0;
+      margin: 0;
+    }
+    .already-have-account{
+      line-height: 32px;
+      z-index: 2;
+      padding-top: 5px;
+      text-align: right;
+    }
+  }
+
+  .content{
+    padding: 40px 45px;
+    background: #ffffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+
+    .left-col{
+      padding: 0 25px 0 15px;
+    }
+
+    .right-col{
+      padding: 0 15px 0 25px;
+    }
+
+    form{
+      .form-group{
+        margin-bottom: 10px;
+        label{
+          line-height: 30px;
+        }
+      }
+    }
+
+    .credit_cards_fields{
+
+      .user_credit_cards_number{
+        label{
+          display: block;
+        }
+        input{
+          width: 234px;
+        }
+        .cards-icons{
+          position: absolute;
+          top: 36px;
+          right: 5px;
+          height: 34px;
+          padding-top: 6px;
+        }
+      }
+
+      .user_credit_cards_name{
+        width: 234px;
+      }
+
+      .user_credit_cards_expiration_date{
+        label{
+          display: block;
+        }
+        .expiration-month{
+          width: 160px;
+          margin-right: 13px;
+          display: inline-block;
+        }
+        .expiration-year{
+          width: 94px;
+          display: inline-block;
+        }
+      }
+
+      .user_credit_cards_cvv{
+        input{
+          width: 100px;
+        }
+      }
+
+    }
+
+    .notes{
+      margin: 20px 0 0 0;
+      line-height: 19px;
+
+      .note1{
+        padding-left: 25px;
+        color: #000;
+        margin-bottom: 7px;
+
+        .icon{
+          color: #ffcb71;
+          position: absolute;
+          left: 2px;
+          top: 3px;
+        }
+      }
+      .data-protected{
+        color: #363637;
+        padding-left: 25px;
+        .icon{
+          color: #ffcb71;
+          position: absolute;
+          left: 2px;
+          top: 3px;
+        }
+      }
+    }
+
+    .terms {
+      display: block;
+      margin-bottom: 24px;
+      margin-top: 20px;
+      font-size: 11px;
+    }
+
+    .actions{
+      button{}
+    }
+
+    .certificate{
+      margin-top: 20px;
+      text-align: center;
+
+      a{
+        color: #777777;
+        text-decoration: underline;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.reset-password-block{
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  background: #ffffff;
+  margin-top: 53px;
+  padding: 60px 115px;
+
+  h1{
+    font-size: 32px;
+    font-weight: 300;
+    padding: 0;
+    margin: 0 0 20px;
+    line-height: 1;
+  }
+}
+
+.login-page{
+  padding: 50px 20px;
+}
+
+.session-sign-in{
+  border-right: 1px solid #e6e6e6;
+  height: 470px;
+
+  .session-sign-in-form-wrapper {
+    width: 60%;
+    margin: 40px auto;
+  }
+
+  h3{
+    font-size: 32px;
+    font-weight: 300;
+    margin: 0 0 20px;
+    line-height: 1;
+  }
+
+  .session-forgot-password{
+    color: $link-color;
+  }
+  .facebook {
+    margin: 15px 0;
+  }
+  .session-button {
+    margin: 15px 0;
+  }
+}
+
+.session-sign-up{
+  height: 470px;
+  text-align: center;
+  background: #fafafa;
+
+  .session-sign-up-wrapper {
+    display: table;
+    height: 100%;
+    width: 100%;
+
+    .session-sign-up-inner {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+
+  h2{
+    font-weight: 300;
+    font-size: 32px;
+    margin: 0 0 12px;
+    line-height: 1;
+  }
+  h3{
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1;
+    color: #777777;
+    margin: 0 0 25px;
+
+  }
+}

@@ -1,0 +1,44 @@
+header.main-header_mobile.visible-xs
+  .container.navbar-nav
+    .logo_center
+      = link_to root_path, class: 'header-logo' do
+        | 1bid1
+        .header-logo__tagline backend
+
+    /.cta_button
+      - if logged_in?
+        a.btn.btn-action href=new_product_path Sell
+      - else
+        a.btn.btn-action href=register_path Sign Up
+
+    .slide_menu_button
+      a.btn.btn-link.js-slide-menu-open href="javascript:void(0)"
+        i.fa.fa-bars
+
+    - if has_url?(controller: controller_path, action: :search)
+      = form_tag url_for(controller: controller_path, action: :search), method: :get, class: 'search-form' do
+        .search
+          input.search-input name="q" placeholder="Search..." type="text" value=params[:q]
+          span.search-button
+            button.icon-search type='submit'
+    - else
+      .search.invisible
+        input.search-input name="q" placeholder="Search..." type="text" value=params[:q]
+        span.search-button
+          button.icon-search type='submit'
+
+header.main-header.hidden-xs
+  .container.navbar-nav
+    = link_to '1bid1::Backend', root_path, class: 'header-logo backend'
+
+    - if has_url?(controller: controller_path, action: :search)
+      = form_tag url_for(controller: controller_path, action: :search), method: :get, class: 'search-form' do
+        .search
+          input.search-input name="q" placeholder="Search..." type="text" value=params[:q]
+          span.search-button
+            button.icon-search type='submit'
+    - else
+      .search.invisible
+        input.search-input name="q" placeholder="Search..." type="text" value=params[:q]
+        span.search-button
+          button.icon-search type='submit'

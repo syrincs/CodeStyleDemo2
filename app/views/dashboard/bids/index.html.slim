@@ -1,0 +1,84 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          i.icon-hammer
+          | My Offers
+      .content
+        - if @products.total_pages > 0
+          nav.dashboard-nav-links
+            .btn-group
+              button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                ' Filter
+                span class="caret"
+              ul.dropdown-menu
+                li class=scope_class('all') = link_to 'All Offers', dashboard_bids_path
+                li class=scope_class('wins') = link_to 'Wins', dashboard_bids_path(scope: :wins)
+                li class=scope_class('outbid') = link_to 'Outbid', dashboard_bids_path(scope: :outbid)
+          table.dashboard-table.offers-table
+            thead
+              tr
+                th.photo
+                th Product
+                th List Price
+                th Current Price
+                th Current Offer
+                th Your Offer
+                th Offers
+                th Auction end
+                th.righted Status
+            tbody
+              - @products.each do |product|
+                - offer = product.offers.where(user_id: current_user.id).order(amount_cents: :desc).first
+                tr
+                  td.photo = link_to product.decorate.thumbnail, product, target: :_blank
+                  td.product-name
+                    = link_to product.title, product, target: :_blank
+                    - if product.manufacturer.present?
+                      br
+                      = product.manufacturer
+                    - if product.category.present?
+                      br
+                      = product.category.name
+                  td= number_to_currency product.original_price
+                  td= number_to_currency product.price
+                  td= number_to_currency product.highest_offer.amount
+                  td
+                    span.bid.if.offer.else.end class=(offer == product.highest_offer ? 'highest-bid' : 'overbid')
+                      = number_to_currency offer.amount
+                  td= product.offers.size
+                  td
+                    - if product.auction_finish_at.present?
+                      = humanize product.auction_finish_at.to_i - Time.now.to_i, last: 2
+                    - else
+                      |-
+                  td.righted
+                    - if product.sold?
+                      - if product.order.user == current_user
+                        - if product.order.status.not_paid?
+                          p: span style="color:#60b760" Win
+                          = link_to 'Pay', dashboard_order_path(product.order), class: 'btn btn-action btn-sm'
+                        - else
+                          = link_to 'Order', dashboard_order_path(product.order), class: 'btn btn-default btn-sm'
+                      - else
+                        | Sold
+                    - elsif offer.present? && offer != product.highest_offer
+                      p.bid.overbid Overbid
+                      = link_to 'Make bid', product_path(offer.product, anchor: 'make-offer'), target: :_blank , class: 'btn btn-action btn-sm'
+                    - else
+                      nobr On Sale
+
+              - if @products.size == 0
+                tr
+                  td.centered colspan="9"  No bids found
+
+          nav.dashboard-nav
+            = paginate_page_status(@products)
+            = paginate @products
+        - else
+          .no-entries
+            .notice You haven't placed any bids yet.
+            = link_to 'Go shopping!', root_path, class: 'btn btn-success'

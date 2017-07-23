@@ -1,0 +1,665 @@
+/** _main.scss **/
+@media (max-width: $screen-xs-max) {
+  .main-header {
+    position: relative;
+  }
+
+  .main-body {
+    padding-top: 0;
+  }
+
+  .products-header.on-index-page {
+    padding-top: 0px;
+    h2 {
+      font-size: 21px;
+      line-height: normal;
+    }
+  }
+}
+
+/** _footer.scss **/
+@media (max-width: $screen-xs-max) {
+  .main-footer {
+    height: 170px;
+  }
+}
+
+/** _banner.scss **/
+@media (max-width: $screen-xs-max) {
+  .banner-wrapper {
+    padding-top: 0;
+    margin-bottom: 15px;
+
+    &.how-banner {
+      padding-top: $spacing-double;
+      padding-bottom: $spacing-double;
+
+      .banner-tagline {
+        font-size: 34px;
+        margin-bottom: 20px;
+      }
+
+      .banner-info {
+        font-size: 20px;
+        margin-bottom: 40px;
+        padding-bottom: 80px;
+
+        h3 {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+
+  .banner-tagline {
+    font-size: 34px;
+    margin-bottom: 40px;
+  }
+
+  .banner-info {
+    font-size: 20px;
+
+    h3 {
+      font-size: 24px;
+    }
+  }
+
+  .how-actions-separator {
+    display: block;
+    padding: 10px 0;
+  }
+}
+
+/** _sessions.scss **/
+@media (max-width: $screen-sm-max) {
+  .session-sign-in .session-sign-in-form-wrapper {
+    width: 80%;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .session-sign-in {
+    border-right: none;
+  }
+
+  .register-page .header .already-have-account {
+    text-align: left;
+  }
+}
+
+
+/** _how-page.scss **/
+@media (max-width: $screen-sm-max) {
+  .an-stage1, .an-stage2 {
+    width: 470px;
+    margin: 0 auto;
+    @include scale(0.5);
+    @include transform-origin(0 0 0);
+  }
+
+  .an-stage1 {
+    height: 200px;
+  }
+
+  .an-stage2 {
+    height: 250px;
+  }
+
+  .how-wrapper-main, .how-wrapper-aux {
+    padding: 60px 0;
+  }
+
+  .how-wrapper-aux {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .an-stage1, .an-stage2 {
+    width: 290px;
+    margin: 0 auto;
+    @include scale(0.3);
+    @include transform-origin(0 0 0);
+  }
+
+  .an-stage1 {
+    height: 150px;
+  }
+
+  .an-stage2 {
+    height: 200px;
+  }
+
+  .how-wrapper-main, .how-wrapper-aux {
+    padding: 30px 0;
+
+    h1 {
+      font-size: 34px;
+      line-height: 44px;
+    }
+  }
+
+  .how-wrapper-aux {
+    padding-top: 0;
+  }
+}
+
+
+/** _header.scss **/
+@media (max-width: $screen-xs-max) {
+  .main-header {
+    height: auto;
+
+    #mobile-header {
+      display: block;
+    }
+
+    & > .container {
+      display: block;
+      height: 100%;
+      padding: 20px 15px;
+
+      .main_header__links {
+        padding-left: 0;
+        margin: 7px 0;
+      }
+      .header-logo {
+        padding-top: 10px;
+      }
+
+      .search-form {
+        display: block;
+        padding-left: 0;
+      }
+
+      .header-logo {
+        display: inline-block;
+        margin: 0;
+        font-size: 33px;
+        padding: 0;
+      }
+      .slide_menu_button {
+        padding: 0;
+      }
+    }
+
+    hr {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .header-logo__tagline {
+      font-size: 11px;
+    }
+
+    .collapse {
+      display: none !important;
+
+      &.in {
+        display: block !important;
+      }
+    }
+
+    .collapsing {
+      display: block !important;
+    }
+  }
+
+  .categories-dropdown {
+    padding: 6px 0;
+    margin: 0;
+  }
+
+  .categories.open {
+    .categories-dropdown {
+      box-shadow: none;
+    }
+
+    .categories-list {
+      padding-top: 0;
+
+      li {
+        line-height: 30px;
+      }
+    }
+  }
+
+  .header-user-dropdown {
+    .dropdown-menu {
+      padding-top: 15px;
+      margin-top: 0;
+    }
+
+    .profile-block {
+      padding: 0;
+    }
+
+    .header-user-name {
+      line-height: 30px;
+    }
+  }
+}
+
+/** _product-page.scss **/
+@media (max-width: $screen-xs-max) {
+  .product-images-thumbs {
+    margin: 10px 0;
+  }
+
+  .product-actions {
+    .other-actions {
+      min-height: 100px;
+      background: #fff;
+      border-top: 1px solid #E6E6E6;
+
+      .share {
+        border-bottom: none;
+        border-right: 1px solid #E6E6E6;
+      }
+    }
+
+    &.auction-finished {
+      section.make-offer-section {
+        border-left: none;
+        border-top: 1px solid #E6E6E6;
+      }
+    }
+
+    .btn-composite {
+      font-size: 14px;
+      padding-left: 40px;
+      padding-right: 8px;
+    }
+  }
+}
+
+/** _product-page.scss **/
+@media (max-width: $screen-sm-max) {
+  .result-sort-by {
+    float: right;
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  .search-filters-form {
+    display: block;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .search-results {
+    margin-top: 20px;
+  }
+
+  .result-sort-by {
+    float: left;
+  }
+
+  .search-filters {
+    padding: 0 30px;
+
+    .expand-search-form {
+      font-size: 16px;
+      color: $text-color;
+      text-decoration: none;
+
+      &:hover, &:active, &:focus {
+        color: $link-hover-color;
+      }
+    }
+
+    .search-filter-categories, .search-filter-list {
+      line-height: 25px;
+    }
+  }
+}
+
+
+/** components/_product-tile.scss **/
+@media (max-width: $screen-xs-max) {
+  .product-tile-thumbnail {
+    .thumbnail-wrap {
+      a {
+        position: relative;
+        z-index: 100;
+      }
+    }
+  }
+}
+
+/** components/_search.scss **/
+@media (max-width: $screen-xs-max) {
+  input[type=text], input[type=password], input[type=number], input[type=email], textarea {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .table-responsive .table {
+    &, thead, tbody, th, td, tr {
+      display: block;
+    }
+
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    tr {
+      display: block;
+    }
+    td {
+      /* Behave  like a "row" */
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+    }
+
+    td:before {
+      /* Now like a table header */
+      position: absolute;
+      /* Top/left values mimic padding */
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+    }
+  }
+}
+
+/* pagination-responsive */
+@media (max-width: $screen-xs-max) {
+  .pagination {
+    width: 100%;
+    margin-top: 10px;
+    display: inline-block;
+    .gap {
+      line-height: 42px;
+    }
+  }
+
+  .pagination > li > a,
+  .pagination > li > span {
+    width: 100%;
+    margin: 0;
+    line-height: 40px;
+    padding: 0;
+    border-radius: 0px!important;
+  }
+  .pagination > li {
+    float: left;
+    width: 50%;
+    margin-top: -1px;
+    text-align: center;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .dashboard-box .sidebar {
+    width: 50px;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  main.main-body {
+    padding-top: 0!important;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .zoomWindowContainer {
+    display: none;
+  }
+  .zoomContainer {
+    display: none;
+  }
+}
+
+/** _profile-page.scss **/
+@media (max-width: $screen-xs-max) {
+  .profile-info {
+    margin-right: 70px;
+  }
+  .profile-details {
+    .user-info {
+      & > * {
+        white-space: nowrap;
+      }
+      .user-location {
+        margin-left: 0;
+      }
+      .user-location:before {
+        display: none;
+      }
+      .seller-since {
+        white-space: normal;
+      }
+    }
+  }
+}
+
+.dashboard {
+  @media (max-width: $screen-xs-max) {
+    .dashboard-box {
+      display: block;
+    }
+    .dashboard-content {
+      display: block;
+    }
+    .dashboard-table {
+      display: inline-block;
+      width: auto;
+      white-space: nowrap;
+    }
+  }
+  .dashboard-table {
+    /*!
+    // IE needs inline-block to position scrolling shadows otherwise use:
+    // display: block;
+    // max-width: min-content;
+    */
+    vertical-align: top;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: auto;
+
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  .dashboard-table,
+  .dashboard-table--flip tbody {
+    -webkit-overflow-scrolling: touch;
+    @include background(radial-gradient(ellipse at left, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%) 0 center,
+                                  radial-gradient(ellipse at right, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%) 100% center);
+    background-size: 10px 100%, 10px 100%;
+    background-attachment: scroll, scroll;
+    background-repeat: no-repeat;
+  }
+
+  .dashboard-table td:first-child:last-child,
+  .dashboard-table th:first-child:last-child {
+      background: white;
+  }
+
+  // change these gradients from white to your background colour if it differs
+  // gradient on the first cells to hide the left shadow
+  .dashboard-table td:first-child,
+  .dashboard-table th:first-child,
+  .dashboard-table--flip tbody tr:first-child {
+    @include background-image(linear-gradient(to right, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%));
+    background-repeat: no-repeat;
+    background-size: 20px 100%;
+  }
+
+  // gradient on the last cells to hide the right shadow
+  .dashboard-table td:last-child,
+  .dashboard-table th:last-child,
+  .dashboard-table--flip tbody tr:last-child {
+    @include background-image(linear-gradient(to left, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%));
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+    background-size: 20px 100%;
+  }
+
+  .dashboard-table th {
+    font-size: 11px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 6px 12px;
+  }
+
+  .dashboard-table--flip {
+    display: flex;
+    overflow: hidden;
+    background: none;
+  }
+
+  .dashboard-table--flip thead {
+    display: flex;
+    flex-shrink: 0;
+    min-width: min-content;
+  }
+
+  .dashboard-table--flip tbody {
+    display: flex;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .dashboard-table--flip tr {
+    display: flex;
+    flex-direction: column;
+    min-width: min-content;
+    flex-shrink: 0;
+  }
+
+  .dashboard-table--flip td,
+  .dashboard-table--flip th {
+    display: block;
+  }
+
+  .dashboard-table--flip td {
+    background-image: none !important;
+    // border-collapse is no longer active
+    border-left: 0;
+  }
+
+  // border-collapse is no longer active
+  .dashboard-table--flip th:not(:last-child),
+  .dashboard-table--flip td:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  .dashboard-table a {
+    overflow: hidden;
+    display: inline-block;
+    width: 100px;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .order-title a {
+    overflow: hidden;
+    display: inline-block;
+    width: 100px;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+  .dashboard-tiles .tile .bullet-before {
+    display: block;
+    margin-left: auto;
+    &:before {
+      content: "";
+      width: 0;
+    }
+  }
+  .dashboard-tiles .tile {
+    display: block;
+  }
+  .dashboard-tiles .tile > * {
+    display: block;
+  }
+  .dashboard-tiles .tile figure {
+    width: auto;
+  }
+  .dashboard-tiles .tile figure.img_big img {
+    width: auto;
+  }
+  .dashboard-tiles .tile__buttons {
+    text-align: center;
+    margin: 20px 0;
+    .btn-sm {
+      font-size: 14px;
+      line-height: 1.42857143;
+    }
+  }
+  .dashboard-tiles .tile > *:last-child {
+    text-align: center;
+    padding-right: 0;
+  }
+
+  .countdown {
+    float: none!important;
+    width: 100%;
+    margin-top: 0;
+  }
+  .countdown .title {
+    text-align: center;
+  }
+
+  .countdown time {
+    font-size: 26px;
+    margin-left: 0;
+    display: block;
+    text-align: center;
+  }
+
+  .product-form-aside, .product-form h4 {
+    text-align: left;
+  }
+
+  .checkout-form, .make-offer-form {
+    h4 {
+      margin-bottom: 0;
+    }
+    .btn {
+      padding: 10px 16px;
+      font-size: 18px;
+      line-height: 1.3333333;
+    }
+  }
+  .make-offer-form {
+    .product-form-aggreement-note {
+      text-align: left;
+      padding-bottom: 16px;
+    }
+  }
+  .dashboard-header .gray-part {
+    display: block;
+  }
+  .new-product-box {
+    .section {
+      display: block;
+      .leftside {
+        display: block;
+        width: 100%;
+      }
+      .rightside {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+}

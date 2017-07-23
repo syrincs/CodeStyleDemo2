@@ -1,0 +1,53 @@
+.tile.product-tile
+  figure.product-tile-thumbnail
+    .thumbnail-wrap
+      = link_to product do
+        = product.decorate.thumbnail
+
+    .product-tile-overlay
+      = link_to '', category_product_url(product.category, product), class: 'clickable'
+
+      - if logged_in?
+        span.wrapper
+          a.btn.btn-composite.btn-action.button-buy-now href=category_product_url(product.category, product, anchor: 'buy-now')
+            i.icon-credit-card
+            span Buy Now
+          - if product.price.to_f > 10
+            a.btn.btn-composite.btn-action.button-make-offer href=category_product_url(product.category, product, anchor: 'make-offer')
+              i.icon-hammer
+              span Make Offer
+      - else
+        span.wrapper
+          a.btn.btn-action href=category_product_url(product.category, product)
+            span See Auction
+
+    .square
+
+  .product-tile-info
+    .product-title
+      a.product-tile-description href=category_product_url(product.category, product)
+        = product.title
+    .product-price
+      .row
+        .col-md-6.col-xs-12
+          - if product.original_price > product.price
+            span.current-price.price.price-down= number_to_currency product.price
+          - else
+            span.current-price.price= number_to_currency product.price
+          span.text-muted.visible-xs.visible-sm Buy Now Price
+        .col-md-6.col-xs-12
+          .offers
+            - if product.highest_offer_amount
+              span.price = number_to_currency product.highest_offer_amount
+            - else
+              span No offers
+          span.text-muted.visible-xs.visible-sm Current Offer
+      .row
+        .col-md-6.hidden-xs.hidden-sm
+          span.text-muted Buy Now Price
+        .col-md-6.hidden-xs.hidden-sm
+          .text-right
+            span.text-muted Current Offer
+      .row
+        .col-xs-12.text-right
+          time.js-countdown datetime=product.auction_finish_at.to_s(:iso8601) = distance_of_time_in_words(product.auction_finish_at, Time.now)

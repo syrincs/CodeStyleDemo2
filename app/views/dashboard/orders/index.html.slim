@@ -1,0 +1,66 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1 
+          i.icon-inbox 
+          span My Purchases
+
+      .content
+        nav.dashboard-nav-links
+          .btn-group
+            button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              ' Filter
+              span class="caret"
+            ul.dropdown-menu
+              li class=scope_class('all') = link_to 'All Orders', dashboard_orders_path
+              li class=scope_class('open') = link_to 'Open', dashboard_orders_path(scope: :open)
+              li class=scope_class('paid') = link_to 'Paid', dashboard_orders_path(scope: :paid)
+              li class=scope_class('delivered') = link_to 'Delivered', dashboard_orders_path(scope: :delivered)
+              li class=scope_class('cancelled') = link_to 'Сancelled', dashboard_orders_path(scope: :cancelled)
+
+        - if @orders.total_pages > 0
+          .orders-content
+            - @orders.decorate.each do |order|
+              .order-tile.tile
+                .order-tile-top
+                  figure = link_to order.product.decorate.thumbnail, dashboard_order_path(order)
+                  .order-title
+                    = link_to order.product.title, dashboard_order_path(order)
+                    br
+                    span.info Sold by: #{link_to order.seller, order.seller}
+                  .actions
+                    = link_to 'Order details', dashboard_order_path(order), class: 'btn btn-action'
+                    - if order.can_return?
+                      a href=new_dashboard_order_return_path(order) class="btn btn-action" Return this item
+                    - if order.issue.present?
+                      a href=dashboard_order_return_path(order) class="btn btn-action" Return Details
+                    a href=cancel_dashboard_order_path(order) data-method="delete" class="btn btn-default" Cancel Order
+
+                .order-tile-bottom
+                  .order-placed
+                    strong Order Placed
+                    br
+                    = order.created_at.strftime('%b %d, %Y')
+                  .order-price
+                    strong Total
+                    br
+                    = number_to_currency order.price
+                  .order-status
+                    strong Status
+                    br
+                    = order.status_short
+                .order-actions
+                  nobr Order ##{order.public_id}
+
+            - if @orders.size == 0
+              h4 You have no purchases at this moment
+
+          nav.dashboard-nav
+            = paginate_page_status(@orders)
+            = paginate @orders
+        - else
+          .no-entries
+            .notice You don't have any purchases yet.

@@ -1,0 +1,51 @@
+.container.how-to
+  .row
+    .col-md-6.col-md-offset-3
+      h2 Join now and start selling products right away. List as many products as you wish for free!
+
+      #easy-steps
+        .step
+          h3
+            span.number 1.
+            Create Create An Account. It's free.
+          p Join the 1bid1.com community and start selling products right away. Creating an account with 1bid1.com  has no cost and it takes only a few seconds. With 1bid1.com you can list unlimited products for sale at no cost.
+
+        .step
+          h3
+            span.number 2.
+            |List Products &amp; Start Selling.
+          p Upload your products and start selling at listed prices and through auctions. At 1bid1.com we offer the lowest seller fees over national competitors, we sell it and you earn. Lowest sellers fees, guaranteed.
+        .step
+          h3
+            span.number 3.
+            Ship Your Product &amp; Get Paid.
+          p Once you have completed a sale simply pack and ship your product to the buyer and get paid. With only one click you can easily manage and monitor all your sales and auctions, 1bid1.com offers a user friendly dashboard for sellers and buyers to keep track of any activity.
+
+.container.promoted-products
+  header.centered
+    h2= t(".promoted_products.#{@category_name}.header")
+    p= t(".promoted_products.#{@category_name}.text")
+
+  section.row.slider-showcase.js-slick-slider-showcase
+    = render 'shared/meta/products', products: @products
+
+.what-is.container
+  = render partial: "what_is_1bid1_for_seller"
+
+.full-width-wrapper
+  .why-sell.container
+    .row
+      h2 Why Sell With 1bid1.com
+    .row
+      .col-sm-4
+        h3 Earn What You Expect
+        p At 1bid1.com sellers earn what they expect and not less. By selling your products through auctions sellers can accept or decline any offer. Keep track of your sales with a user friendly dashboard.
+      .col-sm-4
+        h3 Price Drop
+        p The prices drop each time a user makes an offer. Make your best offer or shop at the most convinient moment and at the best prices.
+      .col-sm-4
+        h3 Shop &amp; Earn Rewards
+        p Win $500 in store credit! By making offer you are instantly eligible. 1bid1com offers weekly rewards up to $500 in store credit.  Join now you might be the next winner.
+div class="join-now-footer #{@category_name} seller full-width-wrapper centered"
+  h2= t(".footer_tagline.#{@category_name}")
+  =link_to "Join Now", register_path, class: "btn-join-now"

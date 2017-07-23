@@ -1,0 +1,27 @@
+table.dashboard-table.transactions-table
+  thead
+    tr
+      th Details
+      th Destination
+      th Status
+      th Time
+      th.righted Amount
+  tbody
+    - @payouts.each do |payout|
+      tr
+        td Payment for #{link_to payout.order.product.title, dashboard_store_product_path(payout.order.product)}
+        td = payout.transactions.where(status: :success).last.try(:payable)
+        td = payout.status.titleize
+        td = payout.created_at.strftime('%b %d, %Y %H:%M:%S')
+        td.righted
+          span.transaction-amount.transaction-income
+            = number_to_currency payout.amount
+
+    - if @payouts.empty?
+      tr
+        td.centered colspan="5"  You have no income yet
+
+- if @payouts.total_pages > 0
+  nav.dashboard-nav
+    = paginate_page_status(@payouts)
+    = paginate @payouts

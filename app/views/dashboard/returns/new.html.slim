@@ -1,0 +1,46 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          ul.list-inline
+            li
+              a.gray-part href=dashboard_orders_path
+                i.icon-inbox
+                span Orders
+            li.divider
+            li: a.gray-part href=dashboard_order_path(@order) #{@order.product.title}
+            li.divider
+            li Return Item
+
+      .content
+        = simple_form_for @issue, html: {multipart: true}, url: dashboard_order_return_path(@order), class: 'form-horizontal' do |f|
+          .row
+            .col-sm-3
+            .col-sm-6
+              = f.input :subject, collection: @subjects, label: 'Reason'
+            .col-sm-3
+          .row
+            .col-sm-3
+            .col-sm-6
+              = f.input :description, hint: 'Please provide us any helpful information', input_html: {rows: 10}
+            .col-sm-3
+          .row
+            .col-sm-3
+            .col-sm-6
+              label class="text optional control-label" for="issue_photos_filename" Images
+              = f.hint 'If photos of the item would be helpful for documenting the condition of the item you bought and received, you can upload photos'
+              = f.hint 'You can choose multiple images at once <br> (max 10 photos allowed)'.html_safe
+              = file_field_tag('issue_photos_filename', multiple: true, name: 'issue[photos_attributes][][filename]', accept: '.jpg,.jpeg,.png,.gif')
+              = f.hint 'Only *.jpg, *.jpeg, .*.png, *.gif. Max file size 5 Mb. '
+            .col-sm-3
+
+          hr.full-width
+
+          .row
+            .col-sm-3
+            .col-sm-6
+              = f.submit 'Return Item', class: 'btn btn-success'
+            .col-sm-3

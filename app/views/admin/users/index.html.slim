@@ -1,0 +1,44 @@
+header.dashboard-header
+  .pull-right.actions
+    = link_to 'Invite User', new_admin_user_path, class: 'btn btn-success'
+  h1
+    = link_to admin_users_path, class: 'gray-part' do
+      i.icon-user
+      ' Users
+      - if params[:staff]
+        ' :: Staff
+
+
+.content
+  ul.hidden-xs
+    li.btn-group
+      = link_to 'All', admin_users_path, class: 'btn btn-default'
+      = link_to 'Staff', admin_users_path(staff: true), class: 'btn btn-default'
+
+  .table-responsive
+    table.table.table-hover.table-messages
+      thead
+        th Name
+        th Email
+        th Confirmed
+        th Public profile
+        th Roles
+        th Action
+
+      - users.each do |user|
+        tr
+          td: strong= user.full_name
+          td= user.email
+          td= user.email_confirmed_at.present?
+          td= link_to user.username, user
+          td= user.roles.map(&:name).map(&:capitalize).to_sentence
+          td
+            ul.inline-list
+              - if can? :edit, user
+                li= link_to 'Edit', edit_admin_user_path(user)
+              - if can? :login_as, user
+                li= link_to 'Login', login_admin_user_path(user), method: :post
+
+  nav.dashboard-nav
+    = paginate_page_status(@users)
+    = paginate @users

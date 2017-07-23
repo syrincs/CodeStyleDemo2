@@ -1,0 +1,24 @@
+section.buy-now-section(
+  class="col-xs-12"
+  itemprop="offers"
+  itemscope=""
+  itemtype="http://schema.org/AggregateOffer")
+
+  div.row
+    div.col-md-6
+      div Buy now price
+      .price itemprop="lowPrice" = number_to_currency @product.price
+      meta itemprop="priceCurrency" content="USD"
+      - if @product.original_price > @product.price
+        div.starting-price From #{number_to_currency @product.original_price}
+        - if @product.discount > 1
+          span.price-save You save #{@product.discount}
+      - else
+        .under-offer &nbsp;
+
+    div.col-md-6
+      div.pull-right
+        a.btn.btn-composite.btn-action.button-buy-now href="javascript:void(0)"
+          i.icon-credit-card
+          | Buy Now
+        .action-notice at #{number_to_currency(@product.price)}

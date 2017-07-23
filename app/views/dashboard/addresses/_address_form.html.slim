@@ -1,0 +1,38 @@
+= simple_form_for @address, url: url_for([@address, return_to: @return_to]) do |f|
+  - if @address.errors.present?
+    = @address.errors.messages.map { |k, v| v }.join(', ')
+
+  .errors
+
+  .row
+    .col-sm-4= f.input :first_name
+    .col-sm-4= f.input :last_name
+
+  .row
+    .col-sm-8= f.input :address1
+
+  .row
+    .col-sm-8= f.input :address2
+
+  .row
+    .col-sm-4= f.input :city
+    .col-sm-4= f.input :state
+
+  .row
+    .col-sm-4= f.input :zip_code
+
+  .field.boolean.checkbox.field-default
+    label for="address_default_address"
+      = check_box_tag 'address[default_address]', 1, @address.default_address?
+      | Make this my primary shipping address
+
+  br
+
+  .actions
+    = link_to 'Cancel', :back, class: 'btn btn-white'
+    | &nbsp;
+    button type="submit" class="btn btn-success"
+      - if @address.new_record?
+        | Add Address
+      - else
+        | Update Address

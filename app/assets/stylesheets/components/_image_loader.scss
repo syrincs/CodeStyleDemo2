@@ -1,0 +1,60 @@
+@import "variables";
+
+.js-image-loader {
+  border: 2px dashed #999999;
+  text-align: center;
+  color: #777777;
+  font-size: 12px;
+  margin: 0 0 15px;
+  overflow: hidden;
+  position: relative;
+
+  > i,
+    h5 {
+    display: inline-block;
+  }
+
+  > i {
+    margin-top: 25px;
+  }
+
+  &:hover {
+    color: #07141e;
+    border-color: #07141e;
+  }
+
+  > .form-group.file.optional {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: block;
+
+    > input[type=file] {
+      display: block;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+    }
+
+    + .help-block {
+      display: none;
+    }
+  }
+
+  &.error {
+    border-color: $red-color;
+
+    > .form-group.file.optional {
+      + .help-block {
+        display: block;
+        color: $red-color;
+      }
+    }
+  }
+
+  .loader-hint {
+    padding: 20px
+  }
+}

@@ -1,0 +1,80 @@
+// initial font-size
+$font-size         : 15px;
+$font-height       : 20px;
+
+$font-size-title   : 42px;
+$font-size-heading : 32px;
+$font-size-subhead : 24px;
+$font-size-small   : 12px;
+
+$spacing-single    : 16px;
+$spacing-double    : 32px;
+$spacing-3over2    : 24px;
+$spacing-half      : 8px;
+
+/* TYPOGRAPHY */
+
+h1, h2, h3, h4, p, ul, ol {
+  margin-bottom: $spacing-single;
+}
+
+p:last-child{
+  margin-bottom: 0;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 400;
+}
+
+h1 {
+  font-size: $font-size-title;
+  font-weight: 700;
+  line-height: $font-height * 3;
+  padding: $spacing-single 0;
+}
+
+h2 {
+  font-size: $font-size-heading;
+  line-height: $font-height * 2;
+}
+
+h3 {
+  font-size: $font-size-subhead;
+//  line-height: $font-height * 2;
+  line-height: 30px;
+}
+
+strong {
+  font-weight: 600;
+}
+
+small {
+  font-size: $font-size-small;
+}
+
+dl {
+  margin-bottom: $spacing-single;
+  @include clearfix;
+
+  dt, dd {
+    float: left;
+  }
+
+  dt {
+    clear: left;
+    color: #777777;
+    width: 100px;
+    text-align: right;
+    margin-right: $spacing-single;
+
+    &:after {
+      content: ':';
+    }
+  }
+}
+
+.list-inline .divider:before {
+  content: '/';
+  display: inline-block;
+}
+

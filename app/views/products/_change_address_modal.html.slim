@@ -1,0 +1,29 @@
+#js-change-address-target.modal.fade aria-hidden='true' role='dialog' tabindex='-1' data-backdrop='false'
+  = simple_form_for @address, url: url_for([@address, return_to: @return_to]),
+                    remote: true, method: :post, html: {class: 'js-change-address-form'} do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h2
+            | Add New Address
+        .modal-body.js-container
+          .row
+            .col-sm-4= f.input :first_name
+            .col-sm-4= f.input :last_name
+
+          .row
+            .col-sm-8= f.input :address1
+
+          .row
+            .col-sm-4= f.input :city
+            .col-sm-4= f.input :state
+
+          .row
+            .col-sm-4= f.input :zip_code
+
+          .hidden
+            = check_box_tag 'address[default_address]', 1, true
+
+        .modal-footer
+          button.js-submit.btn.btn-success.pull-right type='submit' Submit
+          .btn.btn-white data-dismiss="modal" Close

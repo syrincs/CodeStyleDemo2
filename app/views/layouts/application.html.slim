@@ -1,0 +1,55 @@
+doctype html
+html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#"
+  head
+    meta charset="UTF-8"
+    - if content_for? :meta
+      = yield :meta
+    = csrf_meta_tag
+    - for_device_type :tablet do
+      meta content="width=1065, maximum-scale=5, minimum-scale=0.5, shrink-to-fit=no" name="viewport"
+    - for_device_type :desktop, :mobile do
+      meta content="width=device-width, initial-scale=1.0" name="viewport"
+
+    meta content="Onebidone, LLC" name="author"
+    - if no_robots?
+      meta content=meta_robots_content name="robots"
+
+    = stylesheet_link_tag :application
+    = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.6/css/lightgallery.css'
+    = yield :css
+    = render 'layouts/shared/rollbar'
+  body class=body_class
+    = render 'layouts/shared/google_tag_manager'
+
+    .main-panel
+      = render 'header'
+      .categories-list__cover
+      - if content_for? :before_content
+        = yield :before_content
+      main.main-body
+        = render 'layouts/shared/flash'
+        - if content_for? :content
+          = yield :content
+        - else
+          = yield
+      - if content_for? :after_content
+        = yield :after_content
+      = render 'footer'
+    nav.slideout-menu
+      = render 'dashboard/sidebar'
+
+    =render partial: "sessions/modal_login_form"
+
+
+    = javascript_include_tag :application
+    = javascript_include_tag 'https://js.stripe.com/v2/'
+    javascript:
+      Stripe.setPublishableKey("#{Rails.configuration.stripe[:publishable_key]}");
+
+    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.6/js/lightgallery.js'
+    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js'
+    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.6/js/lg-thumbnail.js'
+    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.6/js/lg-fullscreen.js'
+
+    - if content_for? :extra_js
+      = yield :extra_js

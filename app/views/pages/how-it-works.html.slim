@@ -1,0 +1,116 @@
+- content_for :before_content do
+  .banner-wrapper.how-banner
+    .container
+      h1.banner-tagline itemprop="title"
+        | How it works
+      .banner-info
+        ' We offer a unique auction system. <br> When a user places a bid a small fee of $2 is charged.
+        ' <br> The $2 fee is divided in two parts:
+        ' $1 as a services fee <br> and the other $1 goes to lowering
+        ' the price of the product by $1,
+        ' <br> and finally to the seller once the auction/sale has ended.
+        .banner-action
+          | Let's see an example
+          br
+          a.how-banner-circle href="#an-stage-1"
+
+.wrapper.how-wrapper-main
+  .container
+    #an-stage-1.an-stage1.an-anim-init
+      .an-shadow
+      .an-clock
+        .an-clock-hour
+        .an-clock-minute
+        .an-clock-center
+      .an-start-price
+      .an-coins
+        .an-coins-coin
+        .an-coins-coin
+        .an-coins-coin
+        .an-coins-coin
+        .an-coins-coin
+        .an-coins-coin
+        .an-coins-coin
+        .an-coins-coin
+        .an-coins-coin
+        .an-coins-coin
+      .an-current-price
+        .an-current-price-label
+        .an-current-price-symbol
+        .an-current-price-mask
+          .an-current-price-digit1
+          .an-current-price-digit2
+      .an-bids
+        .an-bids-label
+        .an-bids-mask
+          .an-bids-digit1
+          .an-bids-digit2
+    p
+      ' A user uploads a clock starting at $50. When a user places a bid a $2 fee is charged,
+      ' $1 goes to 1bid1 as a services fee and the other $1 goes to reducing the price of the clock.
+      ' After 10 bids are placed the starting price of the clock has gone down to $40.
+
+.wrapper.how-wrapper-main
+  .container
+    #an-stage-2.an-stage1.an-anim-init
+      .an-box
+        .an-box-top
+        .an-box-bottom
+        .an-box-stamp
+    p
+      | Now anyone can buy the clock for as low as $40 and save $10,
+      | <br>although towards the end of the auction the price might be even lower.
+      | <br>Make purchases at the right time.
+
+.wrapper.how-wrapper-aux
+  .container
+    #an-stage-3.an-stage2.an-anim-init
+      .an-lhand
+        .an-lhand-money
+          .an-lhand-money-bill
+        .an-lhand-money
+          .an-lhand-money-bill
+        .an-lhand-money
+          .an-lhand-money-bill
+        .an-lhand-money
+          .an-lhand-money-bill
+        .an-lhand-finger
+      .an-rhand
+        .an-rhand-coins
+          .an-rhand-coins-coin1
+          .an-rhand-coins-coin2
+          .an-rhand-coins-coin3
+          .an-rhand-coins-coin4
+          .an-rhand-coins-coin1
+          .an-rhand-coins-coin2
+          .an-rhand-coins-coin4
+          .an-rhand-coins-coin3
+          .an-rhand-coins-coin3
+          .an-rhand-coins-coin3
+        .an-rhand-finger
+    p
+      | Once the item has sold the seller will receive a total of $50, $40 from the sold clock and $10 from the
+      | bids placed through out the auction. This auction method gives access to products at lower prices and
+      | sellers can earn money as expected.
+
+.wrapper.how-wrapper-main
+  .container
+    h1
+      | Simple and Easy.
+      br
+      | Join Us
+    p
+      ' Explore our market place or start selling products through our unique auction for a sell high,
+      ' buy low experience. More questions?
+      a.hidden-xs href="#video" id="watch-video"
+        | Watch the video.
+        i class="icon-play"
+      a.visible-xs href="#video" id="watch-video-xs"
+        | Watch the video.
+        i class="icon-play"
+    p.how-actions
+      a.btn.btn-lg.btn-action href=register_path Create Account
+
+= render 'shared/meta/pages', title: 'How it works!'
+
+= render 'video'

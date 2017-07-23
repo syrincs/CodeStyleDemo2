@@ -1,0 +1,24 @@
+section.product-form-card-details
+  header
+    .row
+      .col-sm-3
+        h4 Card Number
+      .col-sm-6
+        .product-form-card-number
+          = text_field_tag 'credit_card[number]', nil, id: 'cc-number', class: 'form-control sensitive', autocomplete: :off, placeholder: '4111 2222 3333 4444'
+    .row
+      .col-sm-3
+        h4 Cardholder Name
+      .col-sm-6
+          = text_field_tag 'credit_card[name]', nil, id: 'cc-name', class: 'form-control sensitive', autocomplete: :off, placeholder: 'John Smith'
+  .form-group
+    h4.col-sm-3.control-label Expiration Date
+    .col-sm-3.product-form-card-exp
+      .form-control-static
+        = select_month nil, {use_two_digit_numbers: true, prefix: 'credit_card'}, id: 'cc-expiration-month', class: 'sensitive form-control form-control-inline expiration-month'
+        | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        = select_year nil, {prefix: 'credit_card', start_year: Date.today.year, end_year: Date.today.year + 15, prefix: 'credit_card'}, id: 'cc-expiration-year', class: 'sensitive form-control form-control-inline expiration-year'
+  .form-group
+    label.col-sm-3.control-label CVV/CVV2
+    .col-sm-2
+      input type="text" name="credit_card[verification_value]" autocomplete="off" class="form-control"

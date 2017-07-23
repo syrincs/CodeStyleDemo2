@@ -1,0 +1,184 @@
+
+%btn-common {
+  outline: none;
+  box-shadow: inset 0 1px 1px rgba(#FFF, 0.5);
+  
+  &:hover, &:focus {
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+  }
+
+  &:active, &.active {
+    box-shadow: inset 0 4px 5px rgba(#000, 0.18);
+    outline: none !important;
+  }
+
+  &[disabled] {
+    background-color: #F2F2F2;
+    border-color: #C2C2C2;
+    color: #8C9094;
+  }
+
+  [class^="icon-"], [class*=" icon-"] {
+    margin-right: 5px;
+  }
+}
+
+.btn-default {
+  @extend %btn-common;
+  background-color: #FBFBFB;
+  border-color: #C2C2C2;
+
+  &:hover, &:focus,
+  &:active, &.active {
+    background-color: #F7F7F7;
+  }
+}
+
+.btn-link {
+  @extend %btn-common;
+  border-color: $link-color;
+  color: $link-color;
+  border-radius: 3px;
+  &:hover, &:focus,
+  &:active, &.active {
+    border-color: $link-color;
+  }
+}
+
+.btn-warning {
+  @extend %btn-common;
+  background-color: #FF6565;
+  border-color: #FF4E4E;
+  color: #FFF;
+
+  &:hover, &:focus,
+  &:active, &.active {
+    background-color: #FF5858;
+    border-color: #DB3030;
+  }
+}
+
+.btn-success {
+  @extend %btn-common;
+  background-color: #60B760;
+  border-color: #4FAC50;
+  color: #FFF;
+
+  &:hover, &:focus,
+  &:active, &.active {
+    background-color: #55AD55;
+    border-color: #3FA141;
+  }
+}
+
+.btn-action {
+  @extend %btn-common;
+  background-color: #FFCB71;
+  border-color: #FFB12A;
+  color: #2A2B2C;
+
+  &:hover, &:focus,
+  &:active, &.active {
+    background: #FFC35C;
+    color: #2A2B2C;
+  }
+}
+
+.btn-composite {
+  $icon: '[class^="icon-"], [class*=" icon-"]';
+
+  position: relative;
+  padding-left: 44px;
+
+  #{$icon} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 34px;
+    height: 100%;
+    border-right: 1px solid rgba(0,0,0, 0.1);
+//    box-shadow: inset 0 1px 1px rgba(255,255,255, 0.5);
+    line-height: 32px;
+  }
+
+  &.btn-default #{$icon} {
+    background-color: #FBFBFB;
+  }
+
+  &.btn-warning #{$icon} {
+    background-color: #FF6565;
+  }
+
+  &.btn-success #{$icon} {
+    background-color: #60B760;
+  }
+
+  &.btn-action #{$icon} {
+//    background-color: #FFCB71;
+  }
+
+  &.btn-sm #{$icon} {
+    line-height: 22px;
+  }
+
+  &.btn-lg #{$icon} {
+    line-height: 42px;
+  }
+}
+
+// for buttons with only icons and no text
+.btn-icon {
+  [class^="icon-"], [class*=" icon-"] {
+    margin-right: 0;
+  }
+}
+
+.btn-sm {
+  line-height: 12px;
+}
+
+.btn-lg {
+  border-radius: 4px;
+}
+
+@include keyframes(btn-spinner) {
+  0% {
+    @include transform(translate(-50%, -50%) rotate(0deg));
+  }
+
+  100% {
+    @include transform(translate(-50%, -50%) rotate(360deg));
+  }
+}
+
+[disabled].btn-spinner {
+  color: rgba(0, 0, 0, 0); // hide text
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translate(-50%, -50%));
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    border: 3px solid #C2C2C2;
+    border-right-color: #8C9094;
+    @include animation(btn-spinner 500ms linear infinite);
+  }
+}
+
+.btn-facebook {
+  margin-top: 0;
+  outline: none;
+  box-shadow: inset 0 1px 1px rgba(#FFF, 0.5);
+  background-color: #3b5998;
+  color: white;
+
+  &:hover,&:focus {
+    color: white;
+  }
+}

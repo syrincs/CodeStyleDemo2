@@ -1,0 +1,30 @@
+header.dashboard-header
+  h1
+    = link_to admin_messages_path, class: 'gray-part' do
+      i.fa.fa-envelope style='top: 0px;'
+      |  Messages
+    | &nbsp; / Write new
+
+.content
+  = simple_form_for @message, url: admin_messages_path do |f|
+    .row
+      .col-sm-6
+        = f.input :recipient_id, as: :hidden
+        label> Recipient:
+        h4 #{link_to @message.recipient, edit_admin_user_path(@message.recipient), target: :_blank} &lt;#{@message.recipient_address}&gt;
+      .col-sm-3
+        = f.input :type, required: true, collection: [['SMS', 'sms'], ['Email', 'email']], prompt: false
+
+    - if @message.recipient_address.present?
+      .row
+        .col-sm-12
+          - if @message.type == 'email'
+            = f.input :subject, required: true
+          = f.input :body, required: true, hint: "0/#{@message.max_body_length}", input_html: { rows: 5 }
+      .row
+        .col-sm-12
+          = f.submit 'Send message', class: 'btn btn-success'
+    - else
+      .row
+        .col-sm-12
+          h4.text-danger Recipient has no address for this type of message

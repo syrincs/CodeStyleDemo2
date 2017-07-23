@@ -1,0 +1,146 @@
+.product-tile {
+  overflow: hidden;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
+  margin-bottom: $spacing-single;
+  &:hover .product-tile-overlay {
+    opacity: 1;
+    z-index: 1;
+    @include transition(opacity 200ms);
+  }
+}
+
+@media (min-width: $screen-md-min) {
+  margin-bottom: $spacing-double;
+}
+
+.product-tile-thumbnail{
+  .thumbnail-wrap{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  img {
+    height: auto;
+    vertical-align: middle;
+    top: 50%;
+    position: absolute;
+    @include translate(-50%, -50%);
+    max-height: 100%;
+    max-width: 100%;
+    left: 50%;
+  }
+}
+
+.product-tile-overlay {
+  background-color: transparent;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  @include transition(opacity 200ms, z-index 0ms 200ms);
+
+  a {
+    display: block;
+    margin-bottom: $spacing-half;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .wrapper {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    @include transform(translate(-50%, -50%));
+  }
+
+  .clickable {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
+}
+
+.product-tile-info {
+  padding: 13px 13px;
+  font-size: 13px;
+  line-height: 18px;
+  background: #F6F6F6;
+}
+
+.product-tile-description {
+  color: #2a2b2c;
+  display: block;
+  line-height: $font-height;
+  padding-bottom: 1px;
+  text-decoration: none;
+
+  &:hover, &:focus {
+    color: #2a2b2c;
+    text-decoration: underline;
+  }
+}
+
+.product-title{
+  height: 21px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.product-price {
+  @include clearfix;
+  white-space: nowrap;
+  .current-price{
+    font-weight: 700;
+  }
+}
+
+.list-view .product-price .offers {
+  text-align: left;
+}
+
+@media (max-width: $screen-md-min) {
+  .product-price {
+    text-align: left;
+    .offers {
+      text-align: left;
+    }
+  }
+}
+@media (min-width: $screen-md-min) {
+  .product-price {
+    text-align: left;
+    .offers {
+      text-align: right;
+    }
+  }
+}
+
+
+.square{
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+}

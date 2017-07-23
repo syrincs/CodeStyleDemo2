@@ -1,0 +1,70 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          i.icon-envelope
+          | My Messages
+
+      .content
+        nav.dashboard-nav-links
+          .btn-group
+            button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              ' Filter
+              span class="caret"
+            ul.dropdown-menu
+              li class=scope_class('inbox', true)
+                = link_to 'Inbox', scope: 'inbox'
+              li class=scope_class('sent')
+                = link_to 'Sent', scope: 'sent'
+
+        - if @messages.present?
+          - if scope == 'inbox'
+            table.table.table-hover.table-messages
+              thead
+                th From
+                th Subject
+                th Product
+                th Sent At
+
+              - @messages.each do |message|
+                tbody
+                  td
+                    = link_to message.sender, target: :_blank do
+                      - if message.sender.avatar.present?
+                        = image_tag message.sender.avatar.url(:avatar, secure: request.ssl?), width: 43, alt: message.sender.to_s, title: message.sender.to_s
+                      - else
+                        = gravatar_image_tag message.sender.email, gravatar: {size: 43}, alt: message.sender.to_s, title: message.sender.to_s
+
+                  td= link_to message.subject, dashboard_message_path(message)
+                  td
+                    - if message.product
+                      = link_to message.product.title, message_product_path(message)
+                  td= l message.created_at, format: :short
+
+          - if scope == 'sent'
+            table.table.table-hover.table-messages
+              thead
+                th To
+                th Subject
+                th Product
+                th Sent At
+
+              - @messages.each do |message|
+                tbody
+                  td
+                    = link_to message.recipient, target: :_blank do
+                      - if message.recipient.avatar.present?
+                        = image_tag message.recipient.avatar.url(:avatar, secure: request.ssl?), width: 43, alt: message.recipient.to_s, title: message.recipient.to_s
+                      - else
+                        = gravatar_image_tag message.recipient.email, gravatar: {size: 43}, alt: message.recipient.to_s, title: message.recipient.to_s
+
+                  td= link_to message.subject, dashboard_message_path(message)
+                  td= link_to message.product.title, message_product_path(message)
+                  td= l message.created_at, format: :short
+        - else
+          .no-entries
+            .notice You don't have any messages yet.
+

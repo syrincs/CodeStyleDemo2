@@ -1,0 +1,111 @@
+header.main-header_mobile.visible-xs
+  .container.navbar-nav
+    .logo_center
+      = link_to root_path, class: 'header-logo' do
+        | 1bid1
+        .header-logo__tagline sell high, buy low
+
+    .cta_button
+      - if logged_in?
+        a.btn.btn-action href=new_product_path Sell
+      - else
+        a.btn.btn-action href=register_path Sign Up
+
+    .slide_menu_button
+      a.btn.btn-link.js-slide-menu-open href="javascript:void(0)"
+        i.fa.fa-bars
+
+    = render 'search_form'
+
+header.main-header.hidden-xs
+  .container.navbar-nav
+    .logo_center
+      = link_to root_path, class: 'header-logo' do
+        | 1bid1
+        .header-logo__tagline sell high, buy low
+    .categories.dropdown.collapse data-header-navbar=""
+      button#shop-by-category.categories-dropdown aria-expanded="false" aria-haspopup="true" data-hover="dropdown" data-toggle="dropdown" type="button"
+        | Categories
+        span.caret
+      ul.categories-list.dropdown-menu aria-labelledby="shop-by-category"
+        - TopCategory.root.ordered.each do |c|
+          li.title
+            = link_to category_path(c) do
+              i.fa.fa-angle-right.categories-list__caret
+              span = c.name
+            ul.categories-list__sub-categories
+              li= link_to "All #{c.name}", category_path(c)
+              - c.children.ordered.each do |category|
+                li= link_to category.name, category_path(category)
+        li.title
+          = link_to latest_auctions_path do
+            span Latest Deals
+        li.title
+          = link_to trending_auctions_path do
+            span Trending Deals
+        li.title
+          = link_to all_auctions_path do
+            span All Auctions
+
+    = form_tag search_path, method: :get, class: 'search-form' do
+      .search
+        - if params[:category].present?
+          input name="category" type="hidden" value=params[:category]
+        input.search-input name="q" placeholder="Search for products..." type="text" value=params[:q]
+        span.search-button
+          button.icon-search type="submit"
+
+    ul.main_header__links.list-inline.visible-xs
+      li= link_to 'Shop by Categories', search_path
+      li= link_to 'Trending', trending_auctions_path
+      li= link_to 'How It Works', page_path('how-it-works')
+
+    div.reward-banner-wrapper.hidden-xs onclick="window.location=#{rewards_path.inspect}"
+      .reward-banner.reward_red-banner
+        - if logged_in?
+          div Make Offers & Win
+        -else
+          div Sign Up & Win
+        div $500 in Rewards
+      .reward-banner.reward_green-banner
+        div: small Last Week Winner
+        div = last_week_winner
+
+    - if logged_in?
+      .header-user-dropdown.collapse data-header-navbar=""
+        .dropdown
+          .profile-block data-hover="dropdown"
+            figure.header-user-profile-image
+              = link_to dashboard_path do
+                = image_tag current_user.avatar.url(:avatar, secure: request.ssl?)
+            .header-user-text
+              span.header-user-name= link_to current_user, dashboard_path
+              span.caret.visible-xs-inline-block
+              = link_to 'My Account', dashboard_path, class: 'header-user-account hidden-xs'
+          ul.dropdown-menu
+            li= link_to 'My Profile', current_user, class: 'visible-xs'
+            - if can? :read, :admin_dashboard
+              li
+                a href=admin_dashboard_path
+                  | Manage
+            - unless current_user.staff?
+              li= link_to 'My Dashboard', dashboard_path
+              li= link_to 'My Purchases', dashboard_orders_path
+              li= link_to 'Transactions', dashboard_transactions_path
+              li= link_to 'Messages', dashboard_messages_path
+              li= link_to 'Payment Details', dashboard_payment_details_path
+              li= link_to 'Account Settings', dashboard_settings_path
+              - if current_user && current_user.products.size > 0
+                li= link_to 'Products', dashboard_store_products_path
+              li= link_to 'Sell Products', new_product_path
+              li.divider role="separator"
+            li
+              = link_to logout_path, method: :post, class: 'sign-out' do
+                ' Sign Out
+                i.icon-sign-out
+    - else
+      .header-login.collapse data-header-navbar=""
+        a.btn.btn-action.sell-item-button#sell-item-button> href=register_path
+          | Sign Up
+        span.header-login-seperator
+        = link_to 'Sign In', login_path, id: 'sign-in-link', class: 'signin-button'

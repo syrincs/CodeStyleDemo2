@@ -1,0 +1,25 @@
+footer.main-footer
+  .container
+    ul.links.footer-links
+      li= link_to 'https://www.instagram.com/1bid1com/', target: :_blank do
+        i.fa.fa-instagram
+        span<>= 'Instagram'
+      li= link_to 'https://facebook.com/1bid1', target: :_blank do
+        i.fa.fa-facebook-square
+        span<>= 'Facebook'
+      li= link_to 'https://twitter.com/1bid1com', target: :_blank do
+        i.fa.fa-twitter-square
+        span<>= 'Twitter'
+    ul.links.footer-links
+      li= link_to 'Terms and Conditions', page_path('terms-and-conditions')
+      li= link_to 'Privacy Policy', page_path('privacy-policy')
+      li= link_to 'Return Policy', page_path('return-policy')
+      li= link_to 'FAQ', page_path('faq')
+    div.call-us.footer-links
+      span> Contact:
+      a> href="tel:+19413650011" +1.941.365.0011
+    - if request.path == '/how-it-works'
+      div style="position: absolute; right: 0;"
+        <a href="https://mixpanel.com/f/partner" rel="nofollow"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
+    .footer-copyright
+      | &copy; Onebidone, LLC #{Time.now.year}

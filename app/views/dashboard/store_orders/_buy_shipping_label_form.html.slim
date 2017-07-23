@@ -1,0 +1,30 @@
+section.js-enter-tracking-section
+  h4 Do you ship item to buyer? Enter Tracking ID if it exists.
+  = form_tag mark_as_shipped_dashboard_store_order_path(@order) do
+    .row
+      .col-sm-4
+        .form-group
+          input.form-control name="order[shipping_tracking_number]" type="text"
+      .col-sm-4
+        button.btn.btn-success Product Shipped
+    .row
+      .col-sm-8
+        ' I want to
+        a.js-show-enter-tracking-section.link-underlined href="javascript:void(0)" create shipping label
+section.buy-shipping-label-section.js-buy-shipping-label-section.hidden
+  h4 Buy shipping label
+  = simple_form_for @order.shipment, url: buy_shipping_label_dashboard_store_order_path(@order), method: :post do |f|
+    fieldset
+      legend Package Dimensions and Weight
+      .row
+        .col-sm-2
+          = f.input :length
+        .col-sm-2
+          = f.input :height
+        .col-sm-2
+          = f.input :width
+        .col-sm-2
+          = f.input :weight
+    .actions
+      button.btn.btn-success Create Label
+hr.full-width

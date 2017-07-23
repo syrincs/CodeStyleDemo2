@@ -1,0 +1,79 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        - if @products.total_pages > 0
+          .pull-right.actions
+            = link_to 'Add Product', new_dashboard_store_product_path, class: "btn btn-success"
+        h1
+          i.icon-tags
+          Store Products
+      .content
+        - if @products.total_pages > 0
+          nav.dashboard-nav-links
+            .btn-group
+              button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                ' Filter
+                span class="caret"
+              ul.dropdown-menu
+                li class=('active' if @scope == 'all')
+                  = link_to 'All Products', dashboard_store_products_path
+                li class=('active' if @scope == 'on_sale')
+                  = link_to 'On sale', dashboard_store_products_path(scope: :on_sale)
+                li class=('active' if @scope == 'sold')
+                  = link_to 'Sold', dashboard_store_products_path(scope: :sold)
+          table.dashboard-table.products-table
+            thead
+              tr
+                th.photo
+                th Product
+                th Buy Now Price
+                th Current Offer
+                th Bids
+                th Time left
+                th.righted Status
+            tbody
+              - @products.each do |product|
+                tr data-id=product.id
+                  td.photo= link_to product.decorate.thumbnail, product, target: :_blank
+                  td= link_to product.title, product, target: :_blank
+                  td= number_to_currency product.price
+                  td
+                    - if product.highest_offer.present?
+                      p= number_to_currency product.highest_offer.amount
+                      - unless product.sold?
+                        = link_to 'Accept', accept_offer_path(product.highest_offer),
+                                  class: 'btn btn-action btn-sm accept-offer',
+                                  data: { format: "json", method: "patch", remote: "true" }
+                    - else
+                      = "-"
+                  td= product.offers.size > 0 ? product.offers.size : '-'
+                  td
+                    - if product.auction_finish_at.present?
+                      time.js-countdown datetime=product.auction_finish_at.to_s(:iso8601)
+                    - else
+                      = "-"
+                  td.righted
+                    - if product.sold?
+                      p
+                        nobr Sold
+                      = link_to 'Order', dashboard_store_order_path(product.order), class: 'btn btn-default btn-sm'
+                    - elsif product.editable?
+                      p
+                        nobr On Sale
+                      = link_to 'Edit', edit_dashboard_store_product_path(product), class: 'btn btn-default btn-sm'
+                    - else
+                      p
+                        nobr On Sale
+                      = link_to 'Manage', dashboard_store_product_path(product), class: 'btn btn-default btn-sm'
+              - if @products.size == 0
+                tr
+                  td.centered colspan="8" You haven't added products yet.
+          nav.dashboard-nav
+            = paginate_page_status(@products)
+            = paginate @products
+        - else
+          .no-entries
+            .notice You haven't placed any products yet.
+            = link_to 'Sell an item now!', new_product_path, class: 'btn btn-action'

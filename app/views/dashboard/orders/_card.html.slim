@@ -1,0 +1,25 @@
+section.product-form-card-details
+  header.row
+    - cc = current_user.default_credit_card.decorate
+    = hidden_field_tag 'credit_card[id]', cc.id
+    .col-sm-3
+      h4 Card Details
+    .col-sm-6
+      .product-form-card-number = cc.card_details
+    .col-sm-3.product-form-aside
+      small
+        a.product-form-change-card data-target="#cards-tooltip" data-toggle="dropdown" href="javascript:void(0)" Change Card
+      #cards-tooltip.cards-tooltip
+        .angle
+        ul.cards-list
+          - current_user.credit_cards.decorate.each do |cc|
+            li data-expiration_date=cc.expiration_date data-id=cc.id data-last_4=cc.display_number data-type=cc.brand
+              = cc.card_details
+  .form-group
+    h4.col-sm-3.control-label Expiration Date
+    .col-sm-3.product-form-card-exp
+      .form-control-static= cc.expiration_date
+  .form-group
+    label.col-sm-3.control-label CVV/CVV2
+    .col-sm-2
+      input type="text" name="credit_card[verification_value]" autocomplete="off" class="form-control"

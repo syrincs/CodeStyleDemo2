@@ -1,0 +1,9 @@
+header.dashboard-header
+  h1
+    = link_to admin_products_path, class: 'gray-part' do
+      i.icon-tags
+      |  Products
+    | &nbsp; / Edit Product
+
+.content.edit-product-box
+  = render 'form'

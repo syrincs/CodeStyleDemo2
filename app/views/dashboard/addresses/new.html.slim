@@ -1,0 +1,14 @@
+.container.dashboard-add-address
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          = link_to addresses_path, class: 'gray-part' do
+            i.icon-truck
+            |  Shipping Details
+          | &nbsp; / Add New Address
+
+      .content
+        = render 'address_form'

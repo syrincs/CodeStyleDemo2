@@ -1,0 +1,4 @@
+p
+  | Hi #{@order.product.user.full_name},
+p
+  | Your sold product "#{@order.product.title}" was purchased by #{@order.user.full_name}. Please send product to buyer and than you will receive money on your bank account. Mark product as shipped you can #{link_to 'here on manage page', manage_user_product_url(user_id: @order.product.user, id: @order.product)}.

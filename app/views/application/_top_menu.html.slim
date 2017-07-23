@@ -1,0 +1,5 @@
+.top-menu
+ ul.list-inline.text-center
+   - TopCategory.root.ordered.each do |c|
+    li: a href=category_path(c) title="#{c.name} Auctions" = c.name
+

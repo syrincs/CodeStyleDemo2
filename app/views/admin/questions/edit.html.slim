@@ -1,0 +1,18 @@
+header.dashboard-header
+  h1
+    = link_to admin_questions_path, class: 'gray-part' do
+      i.fa.fa-question( style='top: 0px;' )
+      |  Questions
+
+.content
+  h3 Edit a question about "#{@question.product.title}"
+  = simple_form_for @question, url: admin_question_path, method: :put do |f|
+    = f.input :title, label: 'Title:', class: ''
+    = f.input :description, as: :text, label: 'Description:', class: ''
+    = f.button :submit, 'Save changes', class: 'btn btn-success pull-right'
+  = link_to :back, admin_questions_path, class: 'btn btn-action'
+
+
+
+
+

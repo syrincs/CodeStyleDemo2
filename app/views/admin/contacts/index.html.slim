@@ -1,0 +1,28 @@
+header.dashboard-header
+  h1
+    = link_to admin_contacts_path, class: 'gray-part' do
+      i.fa.fa-envelope( style='top: 0px;' )
+      |  Contacts
+
+.content
+  .table-responsive
+    table.table.table-hover.table-messages
+      thead
+        th Phone number
+        th Details
+        th Sent at
+        th
+
+      - @contacts.each do |contact|
+        tr
+          td= contact.phone_number
+          td
+            a data-toggle="popover" data-container="body" data-trigger="hover" href="#" show details
+            .hidden.popover-content = simple_format(strip_tags(contact.details))
+
+          td= l contact.created_at, format: :short
+          td= link_to 'Delete', admin_contact_path(contact), method: :delete
+
+    nav.dashboard-nav
+      = paginate_page_status(@contacts)
+      = paginate @contacts

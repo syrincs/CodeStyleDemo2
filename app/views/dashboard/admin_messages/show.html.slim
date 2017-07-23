@@ -1,0 +1,12 @@
+.container
+  .dashboard-box
+    = render 'dashboard/sidebar'
+
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          a.gray-part href=dashboard_messages_path
+            i.icon-envelope
+            span> My Messages from 1bid1 Admin
+          | / Message Details
+      .content.product-message-details

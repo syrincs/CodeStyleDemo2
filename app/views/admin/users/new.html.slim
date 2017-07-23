@@ -1,0 +1,24 @@
+header.dashboard-header
+  h1
+    = link_to admin_users_path, class: 'gray-part' do
+      i.icon-user
+      |  Users
+    | &nbsp; / Invite User
+
+.content
+  = simple_form_for @invitation_form, as: :user, url: invite_admin_users_path, html: {id: 'invite_user'} do |f|
+    .row
+      .col-sm-4= f.input :first_name
+      .col-sm-4= f.input :last_name
+    .row
+      .col-sm-4= f.input :email
+      .col-sm-4= f.input :assign_role, collection: current_user.decorate.available_roles_for_assign
+    .row
+      .col-sm-8= f.input :invitation_message, as: :text
+
+    br
+
+    .actions
+      = link_to 'Cancel', :back, class: 'btn btn-white'
+      | &nbsp;
+      button type="submit" class="btn btn-success" Invite User

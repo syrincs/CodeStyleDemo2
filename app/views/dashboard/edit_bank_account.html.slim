@@ -1,0 +1,10 @@
+.container.dashboard-add-ba
+  .dashboard-box
+    = render 'sidebar'
+    section.dashboard-content
+      header.dashboard-header
+        h1
+          = link_to '<i class="icon-credit-card"></i> Payment Details'.html_safe, :back, class:"gray-part"
+          | Edit Bank Account
+      .content
+        = render 'bank_account_form'

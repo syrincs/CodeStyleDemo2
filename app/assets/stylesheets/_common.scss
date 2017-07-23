@@ -1,0 +1,274 @@
+/* COMMON */
+
+*{
+  outline: none;
+}
+
+img{
+  max-width: 100%;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1176px;
+//  padding: 0 $spacing-single;
+  width: 100%;
+
+  &.faq {
+    background-color: #ffffff;
+    > .wrapper {
+      margin: 30px 50px;
+
+      > article {
+        margin-top: 20px;
+        > p {
+          &:first-child {
+            font-weight: bolder;
+            font-size: 16px;
+            margin-bottom: 0;
+          }
+          &:last-child {
+            margin-top: 0;
+          }
+          > ul {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.tile {
+  background-color: #FFFFFF;
+  border-radius: $border-radius;
+  box-shadow: 0 0 0 1px #E6E6E6;
+  margin-bottom: 30px;
+}
+
+.links {
+
+  > li {
+    display: inline-block;
+    margin: 0 #{$spacing-half / 2};
+
+    &:before {
+      content: none;
+    }
+  }
+}
+
+%pseudo-bullet {
+  content: '\2022';
+  display: inline-block;
+  font-size: 0.5em;
+  width: 2em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.user-info {
+  @include clearfix;
+  color: #898B8D;
+
+  > * {
+//    float: left;
+    margin-right: 0.5em;
+  }
+
+  > .user {
+    color: #898B8D;
+  }
+
+  > a.user {
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+
+  > .reviews--good {
+    color: #00C486;
+  }
+
+  > .reviews--bad {
+    color: #FF6565;
+  }
+}
+
+.price:before {
+  content: attr(data-currency);
+}
+.reduced-price {
+  color: #FF6565;
+
+  > .price {
+    text-decoration: line-through;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+.price-down {
+  color: #FF6565;
+  &:after {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f175";
+    padding-left: 3px;
+  }
+}
+.product-price .offers {
+  font-weight: bold;
+}
+
+.price-save:before {
+  content: '(';
+}
+
+.price-save:after {
+  content: '%)';
+}
+
+.info {
+  color: #777777;
+}
+
+
+figure{
+  margin: 0;
+}
+
+
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+
+.alert-notice{
+  @extend .alert-success;
+}
+.alert-alert{
+  @extend .alert-danger;
+}
+
+
+
+.card-icon{
+  width: 32px;
+  height: 20px;
+  display: inline-block;
+  background: image_url('cards-icons@2x.png') no-repeat;
+//  background: image_url('cards-icons.png') no-repeat;
+  background-size: 100%;
+
+  &.card-type-maestro{
+    background-position: 0 0;
+  }
+  &.card-type-mastercard{
+    background-position: 0 -40px;
+  }
+  &.card-type-visa{
+    background-position: 0 -60px;
+  }
+  &.card-type-american_express, &.card-type-american-express{
+    background-position: 0 -20px;
+  }
+}
+
+.card_details{
+  .card-icon{
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    margin-right: 10px;
+  }
+}
+
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.sr-only-focusable:active, .sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+
+
+
+.has-error .control-label{
+  color: inherit;
+}
+
+
+.loader{
+  background: image_url('loader.gif') no-repeat;
+  background-size: 100%;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-left: 10px;
+
+  display: none;
+
+  .left-size{
+    margin-left: 0;
+    margin-right: 10px;
+  }
+
+  &.active{
+    display: inline-block;
+  }
+}
+
+.link-underlined {
+  border-bottom: 1px dashed;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.h3,.h4 {
+  font-weight: normal;
+}
+
+.alert.alert-recaptcha_error.alert-dismissible {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+
+.highlight {
+  display: block;
+  -webkit-transition: background-color 1000ms linear;
+  -moz-transition: background-color 1000ms linear;
+  -o-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
+}
+.highlight.on {
+  background: #FFF8C6; /* IE */
+}
+
+

@@ -1,0 +1,11 @@
+p Hi #{@reciever.to_s},
+
+p
+  span> #{@buyer.to_s} wants to return
+  b> #{@product.title.inspect}
+  span> because of #{@issue.subject.inspect}
+
+p Description of the issue from the buyer:
+p #{@issue.description}
+
+= link_to 'See the issue', dashboard_store_return_url(@issue)

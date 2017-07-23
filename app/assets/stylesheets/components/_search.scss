@@ -1,0 +1,113 @@
+.search {
+  display: table;
+  height: $spacing-double;
+  color: $grey-light-very;
+}
+
+%search-child {
+  display: table-cell;
+  vertical-align: middle;
+  border: 1px solid $grey-light-very;
+  border-radius: 5px;
+  padding: 0 $spacing-single;
+  height: inherit;
+  width: 100%;
+
+  &:first-child {
+    border-top-left-radius: $input-border-radius;
+    border-bottom-left-radius: $input-border-radius;
+    border-right: none;
+  }
+
+  &:last-child {
+    -webkit-border-top-right-radius: $input-border-radius;
+    -moz-border-radius-topright: $input-border-radius;
+    border-top-right-radius: $input-border-radius;
+    -webkit-border-bottom-right-radius: $input-border-radius;
+    -moz-border-radius-bottomright: $input-border-radius;
+    border-bottom-right-radius: $input-border-radius;
+    border-left: none;
+  }
+}
+
+.search-input {
+  @extend %search-child;
+  border-right: none;
+  outline: none;
+  color: #2a2b2c;
+  font-style: italic;
+  -webkit-appearance: none;
+  -webkit-border-top-right-radius: $input-border-radius;
+  -moz-border-radius-topright: $input-border-radius;
+  border-top-right-radius: $input-border-radius;
+  -webkit-border-bottom-right-radius: $input-border-radius;
+  -moz-border-radius-bottomright: $input-border-radius;
+  border-bottom-right-radius: $input-border-radius;
+}
+
+.search-categories, .search-button {
+  @extend %search-child;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.search-button {
+  padding: 0;
+  background-color: transparent;
+  border-left: none;
+  height: 32px;
+
+  button {
+    background-color: #000;
+    border: none;
+    color: white;
+    display: inline-block;
+    height: 100%;
+    padding: 0 $spacing-single;
+    cursor: pointer;
+    transition: color .2s;
+    margin-right: -1px;
+    -webkit-border-top-right-radius: $input-border-radius;
+    -moz-border-radius-topright: $input-border-radius;
+    border-top-right-radius: $input-border-radius;
+    -webkit-border-bottom-right-radius: $input-border-radius;
+    -moz-border-radius-bottomright: $input-border-radius;
+    border-bottom-right-radius: $input-border-radius;
+    &:hover{
+      color: $link-color;
+    }
+    &.icon-search:before {
+      padding: 0;
+    }
+  }
+}
+
+.select-combobox .icon-caret-down {
+  margin-left: $spacing-half / 2;
+}
+
+.search-form{
+  &.focused{
+    .search-categories{
+      color: #2a2b2c;
+    }
+    .search-button{
+      button{
+        color: #2a2b2c;
+
+        &:hover{
+          color: $link-hover-color;
+        }
+      }
+    }
+  }
+}
+
+
+.no-products-found{
+  font-size: 18px;
+
+  .keyword{
+    color: #7ac035;
+  }
+}

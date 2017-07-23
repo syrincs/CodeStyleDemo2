@@ -1,0 +1,106 @@
+= simple_form_for @product, url: (@product.new_record? ? (current_user ? dashboard_store_products_path : products_path) : dashboard_store_product_path), html: { class: 'js-store-product-form'} do |f|
+  section.section.product-details
+    aside.leftside
+      h3 Product details
+      p Add a product title and a short description of your item for sale. We encourage our users to give as much information as possible about their products since this is an important factor for potential buyers.
+    aside.rightside
+      = f.input :title, required: false, autofocus: (@product.new_record? || @product.title.blank? ? true : false)
+      = f.input :description, required: false
+      .row
+        .col-sm-6
+          = f.simple_fields_for :categorization do |c|
+            = c.input :category_id, required: true, as: :grouped_select, group_method: :children, collection: TopCategory.root.order(:order_position), prompt: 'Select product category', input_html: {class: 'select2', style: 'width:100%;'}
+        .col-sm-6.car-makes.hidden
+          = f.input :car_make_id, required: false, as: :select, collection: CarMake.all.order(:order_position, :name).map {|x| [x.name, x.id]}, prompt: 'Select make', input_html: {class: 'select2', style: 'width:100%;'}
+        .col-sm-6.manufacturer
+          = f.input :manufacturer, label: 'Manufacturer or Brand', placeholder: 'e.g. Apple'
+      .row
+        .col-sm-6
+          = f.input :condition, as: :select, label: 'Condition', collection: Product.condition.options, prompt: 'Select condition', required: false
+        .car-fields.hidden
+          .col-sm-6
+            = f.input :year, required: true, as: :select, collection: (2000..Date.current.year).to_a.reverse
+          .col-sm-6
+            = f.input :vin, required: true, hint: 'The letters "O", "I", and "Q" never appear in a VIN.'
+          .col-sm-6
+            = f.input :engine, required: true, hint: 'For example: 2.7L V6 gas DOHC naturally aspirated.'
+          .col-sm-6
+            = f.input :mileage, required: true, hint: 'Enter exact miles. e.g. 112038'
+          .col-sm-6
+            = f.input :trim, required: true, hint: 'For example: base coupe 2-door'
+          .col-sm-6
+            = f.input :drive_type, required: true, as: :select, collection: %w(4WD AWD FWD RWD)
+        .col-sm-6
+          .price-wrap
+            = f.input :price, label: 'Buy Now Price', input_html: { class: 'form-control', value: (@product.price.to_f > 0 ? @product.price : '') }, required: false
+            span.currency USD
+      .row
+        .col-sm-12
+          p.price-notification
+            ' 1bid1.com charges a #{fee_percent}% fee of the final price after a successful sale, however this fee will never exceed $200.
+            ' i.e If a car is sold for $10000 the final fee will be just $200. 1bid1.com has the lowest sellers fee over national competitors.
+
+  section.section.shipping-rules
+    .leftside
+      h3 Shipping Location
+      p Choose your shipping location.
+    .rightside
+      - if @product.seller.addresses.blank?
+        = link_to 'Please add your shipping location', new_address_path
+      - else
+        = f.association :ships_from_address, label: 'Ships from', collection: @product.seller.addresses
+  section.section.section-images
+    .leftside
+      h3 Images
+      p Your images are the face of your product, we recommend our users to upload from 4 to 5 high resolution pictures of your item. This will provide visual information to potential buyers.
+    .rightside
+      .images-list
+        p.help-block First photo in a row will be used as thumbnail. You can use drag & drop to reorder them. Only *.jpg, *.jpeg, .*.png, *.gif. Max file size 15 Mb and either width or height of the file must be more than 1024px.
+        .img.img-blank
+          = image_tag ''
+          input.js-photo type="hidden" name="photos[]"
+          span.delete.icon-times-circle
+          .featured-label Featured
+
+        .previews
+          - @product.photos.each do |photo|
+            - if photo.filename.present?
+              .img
+                - if photo.filename.cached?
+                  = image_tag '/uploads/tmp/' + photo.filename_cache
+                - else
+                  = image_tag photo.url(secure: request.ssl?)
+                input.js-photo type="hidden" name="photos[]" value=""
+                span.delete.icon-times-circle
+                .featured-label Featured
+
+        .new-img.js-image-loader
+          i.fa.fa-picture-o.fa-5x
+          div.loader-hint Drop files or click here
+          .form-group.file.optional
+            input accept=".jpg,.jpeg,.png" class="file optional" id="add-photo_fileupload" multiple="multiple" name="loader" type="file"
+          .span.help-block  Please upload at least 2 images
+
+  - if current_user.blank?
+    section.section.guest-email
+      .leftside
+        h3 Email
+        p
+          | Email
+          | After adding your first product you will be registered automatically. We will send login information to this email address.
+      .rightside
+        .input.string
+          = label_tag :email
+          = text_field_tag :email, '', class: 'form-control'
+  - if current_page? new_product_path
+    section.section.actions
+      .leftside
+      aside.rightside
+        span
+          | By submiting this form you accept #{link_to 'Terms & Conditions', '#'} 1bid1.com
+        button.btn.btn-success.submit-btn Submit
+  - else
+    .edit-product-actions
+      - if @product.persisted? && can?(:delete, @product)
+        = link_to 'Delete this product', dashboard_store_product_path(@product), class: 'btn btn-default btn-sm', method: :delete, data: { confirm: 'Your product cannot be found. Sure?' }
+      div.btn.btn-success.pull-right.js-submit-store-product  Save

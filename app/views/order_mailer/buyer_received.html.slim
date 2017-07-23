@@ -1,0 +1,4 @@
+p
+  | Buyer of your product #{@order.product.title} received it.
+p
+  | 1bid1 sent you #{number_to_currency @order.payouts.where(destination: :seller).first.amount} on your bank account.

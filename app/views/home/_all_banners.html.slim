@@ -1,0 +1,15 @@
+- if logged_in?
+  = render 'user_banners'
+- else
+  = render 'banners'
+
+div.reward-banner-wrapper.visible-xs onclick="window.location=#{rewards_path.inspect}"
+  .reward-banner.reward_red-banner
+    - if logged_in?
+      div Make Offers & Win
+    -else
+      div Sign Up & Win
+    div $500 in Rewards
+  .reward-banner.reward_green-banner
+    div: small Last Week Winner
+    div = last_week_winner
